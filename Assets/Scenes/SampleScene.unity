@@ -8178,7 +8178,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 802272674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.36, y: 0.6, z: -2.757753}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1713450390}
@@ -8606,7 +8606,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
-  turnSpeed: 30
+  turnSpeed: 180
+  commandedVector: {x: 0, y: 0, z: 0}
 --- !u!58 &1713450392
 CircleCollider2D:
   m_ObjectHideFlags: 0
