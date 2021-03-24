@@ -47,3 +47,6 @@ TagManager:
   - name: GroundUnits
     uniqueID: 2114107277
     locked: 0
+  - name: Weaponry
+    uniqueID: 4000787089
+    locked: 0

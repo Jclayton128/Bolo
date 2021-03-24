@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack : MonoBehaviour
+public abstract class Attack : MonoBehaviour
 {
     //Attack class is a base class that all unit's attack logic is handled at 
 
     //init
     protected Movement move;
     protected ControlSource cs;
+    [SerializeField] protected GameObject projectilePrefab;
+
+    //param
+
     protected virtual void Start()
     {
         cs = GetComponentInParent<ControlSource>();
@@ -20,4 +24,9 @@ public class Attack : MonoBehaviour
     {
         
     }
+
+    public abstract void LMBDown();
+    public abstract void LMBUp();
+    public abstract void RMBDown();
+    public abstract void RMBUp();
 }

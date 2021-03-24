@@ -16,6 +16,7 @@ public class ControlSource : MonoBehaviour
     //hood
     public float horizComponent;
     public float vertComponent;
+    public Vector3 mousePos = new Vector3(0, 0, 0);
     protected virtual void Start()
     {
         move = GetComponentInChildren<Movement>();

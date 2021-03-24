@@ -28,6 +28,10 @@ public class TankMovement : Movement
         Debug.DrawLine(transform.position, commandedVector.normalized + transform.position, Color.blue);
         CheckForCommandedMovement();
         UpdateCommandedVectorAndAngleOffIt();
+    }
+
+    private void FixedUpdate()
+    {
         RotateToCommandedVector();
         DriveAlongCommandedVector();
     }
