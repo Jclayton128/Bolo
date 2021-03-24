@@ -29,7 +29,7 @@ public class CannonAttack : Attack
     {
         if (timeSinceLastAttack < 0)
         {
-            //TODO: firing sound
+            AudioSource.PlayClipAtPoint(selectedFiringSound, transform.position);
             GameObject shell = Instantiate(projectilePrefab, transform.position + (transform.up * offset), transform.rotation) as GameObject;
             shell.GetComponent<Rigidbody2D>().velocity = shell.transform.up * weaponSpeed;
             Destroy(shell, weaponLifetime);
