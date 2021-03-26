@@ -49,10 +49,12 @@ public class DamageDealer : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!weaponImpactAnimationPrefab) { return; }
-        GameObject animation = Instantiate(weaponImpactAnimationPrefab, collision.gameObject.transform.position, transform.rotation) as GameObject;
+        if (collision.gameObject == transform.root.gameObject) { return; }
+        GameObject animation = Instantiate(weaponImpactAnimationPrefab, transform.position, transform.rotation) as GameObject;
         animation.transform.parent = collision.transform;
         Animator anim = animation.GetComponent<Animator>();
         Destroy(animation, anim.GetCurrentAnimatorStateInfo(0).length);
+        Destroy(gameObject);
     }
 
 
