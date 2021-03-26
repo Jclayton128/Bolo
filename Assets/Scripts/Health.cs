@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ public class Health : MonoBehaviour
     //init
     [SerializeField] AudioClip[] hurtAudioClips = null;
     [SerializeField] AudioClip[] dieAudioClips = null;
+    [SerializeField] Sprite[] spritesByHealth = null;
+    SpriteRenderer sr;
     AudioClip chosenHurtSound;
     AudioClip chosenDieSound;
     Rigidbody2D rb;
@@ -24,10 +27,11 @@ public class Health : MonoBehaviour
 
     void Start()
     {
+        sr = transform.root.GetComponentInChildren<SpriteRenderer>();
         currentHealth = startingHealth;
         if (canMove)
         {
-            rb = transform.root.GetComponent<Rigidbody2D>();
+            rb = transform.root.GetComponentInChildren<Rigidbody2D>();
         }
         SelectDieSound();
     }
@@ -95,6 +99,23 @@ public class Health : MonoBehaviour
 
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, -1, startingHealth);
+        AdjustSpriteToHealthLevel();
+    }
+
+    private void AdjustSpriteToHealthLevel()
+    {
+        if (spritesByHealth.Length == 0) { return; }
+        if (currentHealth <= startingHealth * .66f)
+        {
+            if (currentHealth <= startingHealth * .33f)
+            {
+                sr.sprite = spritesByHealth[2];
+            }
+            else
+            {
+                sr.sprite = spritesByHealth[1];
+            }
+        }
     }
 
     private void SelectHurtSound()

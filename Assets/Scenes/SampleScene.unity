@@ -7989,6 +7989,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3703883621840141363, guid: e9dfdbc19af35184f90a84dde94b6878, type: 3}
+      propertyPath: spritesByHealth.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3703883621840141363, guid: e9dfdbc19af35184f90a84dde94b6878, type: 3}
+      propertyPath: spritesByHealth.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1f6c49ed222b57948a629841f315bdbd, type: 3}
+    - target: {fileID: 3703883621840141363, guid: e9dfdbc19af35184f90a84dde94b6878, type: 3}
+      propertyPath: spritesByHealth.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 27a544f49c17de84fa9cde7334c15de9, type: 3}
+    - target: {fileID: 3703883621840141363, guid: e9dfdbc19af35184f90a84dde94b6878, type: 3}
+      propertyPath: spritesByHealth.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 3ee24a9396392324980a4bcaa01a0bc0, type: 3}
+    - target: {fileID: 3703883621840141363, guid: e9dfdbc19af35184f90a84dde94b6878, type: 3}
+      propertyPath: startingHealth
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5761893168957330715, guid: e9dfdbc19af35184f90a84dde94b6878, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7
@@ -9273,6 +9293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hurtAudioClips: []
   dieAudioClips: []
+  spritesByHealth: []
   startingHealth: 10
   armorLevel: 0
   canMove: 1

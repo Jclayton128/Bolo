@@ -46,7 +46,11 @@ public class DefenseTurret : MonoBehaviour
     private void ScanForTarget()
     {
         targets = ut.FindTargetsWithinSearchRange(gameObject, searchRange);
-        target = targets[0];       
+        if (targets[0])
+        {
+            target = targets[0];
+        }
+     
     }
 
     private void FireWeaponAtTarget()
