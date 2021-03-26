@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[RequireComponent(typeof(IFF))]
 public class ControlSource : MonoBehaviour
 {
     // Control Source class is intended to be the top-level of a unit. It is either the interaction level with the player, or
@@ -10,6 +10,7 @@ public class ControlSource : MonoBehaviour
     //init
     protected Movement move;
     protected Attack attack;
+    protected UnitTracker ut;
 
     //param
 
@@ -19,6 +20,8 @@ public class ControlSource : MonoBehaviour
     public Vector3 mousePos = new Vector3(0, 0, 0);
     protected virtual void Start()
     {
+        ut = FindObjectOfType<UnitTracker>();
+        ut.AddUnitToTargetableList(gameObject);
         move = GetComponentInChildren<Movement>();
         attack = GetComponentInChildren<Attack>();
     }
@@ -27,5 +30,10 @@ public class ControlSource : MonoBehaviour
     void Update()
     {
         
+    }
+
+    protected virtual void OnDestroy()
+    {
+        ut.RemoveUnitFromTargetableList(gameObject);
     }
 }

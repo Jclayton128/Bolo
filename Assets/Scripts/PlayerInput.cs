@@ -16,6 +16,7 @@ public class PlayerInput : ControlSource
     protected override void Start()
     {
         base.Start();
+
     }
 
     // Update is called once per frame
@@ -56,5 +57,10 @@ public class PlayerInput : ControlSource
     {
         horizComponent = Input.GetAxis("Horizontal");
         vertComponent = Input.GetAxis("Vertical");
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
     }
 }

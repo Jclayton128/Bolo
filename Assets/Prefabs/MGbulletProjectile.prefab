@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6006737664831531135
+--- !u!1001 &2104300464428206424
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5714355295485396681, guid: a2188152d3925744da8018601a0f9a15, type: 3}
       propertyPath: m_Name
-      value: Cannon
+      value: MGbulletProjectile
       objectReference: {fileID: 0}
     - target: {fileID: 5714355295485396685, guid: a2188152d3925744da8018601a0f9a15, type: 3}
       propertyPath: m_LocalPosition.x
@@ -54,6 +54,14 @@ PrefabInstance:
     - target: {fileID: 5714355295485396685, guid: a2188152d3925744da8018601a0f9a15, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5714355295485396685, guid: a2188152d3925744da8018601a0f9a15, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5714355295485396685, guid: a2188152d3925744da8018601a0f9a15, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5714355295485396686, guid: a2188152d3925744da8018601a0f9a15, type: 3}
       propertyPath: m_Sprite
