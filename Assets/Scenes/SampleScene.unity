@@ -9203,6 +9203,7 @@ GameObject:
   - component: {fileID: 1713450394}
   - component: {fileID: 1713450392}
   - component: {fileID: 1713450391}
+  - component: {fileID: 1713450393}
   m_Layer: 8
   m_Name: TankChassis
   m_TagString: Untagged
@@ -9258,6 +9259,24 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.2625
+--- !u!114 &1713450393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713450389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65087b887511f3a4c844c475cb9e7056, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtAudioClips: []
+  dieAudioClips: []
+  startingHealth: 10
+  armorLevel: 0
+  canMove: 1
+  currentHealth: 0
 --- !u!212 &1713450394
 SpriteRenderer:
   m_ObjectHideFlags: 0

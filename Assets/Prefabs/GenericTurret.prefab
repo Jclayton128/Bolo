@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1729971658301730476}
   - component: {fileID: 5469791492588898287}
   - component: {fileID: 7441159059086639804}
+  - component: {fileID: 8592627448115405760}
   m_Layer: 8
   m_Name: GenericTurret
   m_TagString: Untagged
@@ -141,6 +142,23 @@ MonoBehaviour:
   timeBetweenShots: 1
   weaponSpeed: 10
   weaponLifetime: 0.25
-  teamAllegiance: 0
+  weaponDamage: 0.5
   searchRange: 10
   target: {fileID: 0}
+--- !u!114 &8592627448115405760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744198805709198696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65087b887511f3a4c844c475cb9e7056, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtAudioClips: []
+  dieAudioClips: []
+  startingHealth: 20
+  armorLevel: 0
+  currentHealth: 0

@@ -15,6 +15,7 @@ public class DefenseTurret : MonoBehaviour
     public float timeBetweenShots = .25f;
     public float weaponSpeed = 20f;
     public float weaponLifetime = .45f;
+    public float weaponDamage = .5f;
     public float searchRange = 10f;
     float bulletOffset = .4f;
 
@@ -63,6 +64,9 @@ public class DefenseTurret : MonoBehaviour
             Quaternion rot = Quaternion.Euler(0, 0, zAng);
             GameObject bullet = Instantiate(weaponPrefab, transform.position + (dir*bulletOffset),rot) as GameObject;
             bullet.GetComponent<Rigidbody2D>().velocity = weaponSpeed * bullet.transform.up;
+            DamageDealer dd = bullet.GetComponent<DamageDealer>();
+            dd.SetDamage(weaponDamage);
+            dd.SetAttackSource(gameObject);
             Destroy(bullet, weaponLifetime);
             timeSinceLastShot = timeBetweenShots;
         }

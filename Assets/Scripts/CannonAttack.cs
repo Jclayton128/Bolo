@@ -10,6 +10,7 @@ public class CannonAttack : Attack
     float timeBetweenAttacks = 1.0f;
     float weaponSpeed = 10f;
     float weaponLifetime = .75f;
+    float weaponDamage = 1f;
     float offset = .5f;
 
     //hood
@@ -32,6 +33,10 @@ public class CannonAttack : Attack
             AudioSource.PlayClipAtPoint(selectedFiringSound, transform.position);
             GameObject shell = Instantiate(projectilePrefab, transform.position + (transform.up * offset), transform.rotation) as GameObject;
             shell.GetComponent<Rigidbody2D>().velocity = shell.transform.up * weaponSpeed;
+            DamageDealer dd = shell.GetComponent<DamageDealer>();
+            dd.SetAttackSource(transform.root.gameObject);
+            dd.SetDamage(weaponDamage);
+
             Destroy(shell, weaponLifetime);
 
 
