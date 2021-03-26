@@ -57,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7441159059086639804, guid: 365fb98bcd30d9844ab7bfe0e7fb43f3, type: 3}
       propertyPath: firingSounds.Array.size
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7441159059086639804, guid: 365fb98bcd30d9844ab7bfe0e7fb43f3, type: 3}
       propertyPath: weaponPrefab
@@ -71,5 +71,17 @@ PrefabInstance:
       propertyPath: firingSounds.Array.data[0]
       value: 
       objectReference: {fileID: 8300000, guid: be3ebac560e5dbc49b8f573a3e433a31, type: 3}
+    - target: {fileID: 7441159059086639804, guid: 365fb98bcd30d9844ab7bfe0e7fb43f3, type: 3}
+      propertyPath: firingSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2ff01e74852eb1b459e55fc849548a52, type: 3}
+    - target: {fileID: 7441159059086639804, guid: 365fb98bcd30d9844ab7bfe0e7fb43f3, type: 3}
+      propertyPath: firingSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: f76bd22b2044724438191f202c4a319f, type: 3}
+    - target: {fileID: 7441159059086639804, guid: 365fb98bcd30d9844ab7bfe0e7fb43f3, type: 3}
+      propertyPath: firingSounds.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 4427cdda9818b7940bd8ab89ffe99663, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 365fb98bcd30d9844ab7bfe0e7fb43f3, type: 3}
