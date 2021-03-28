@@ -6,6 +6,7 @@ public class UnitTracker : MonoBehaviour
 {
     //init
     List<GameObject> targetableUnits = new List<GameObject>();
+    AllegianceManager am;
     private void Awake()
     {
         int utCount = FindObjectsOfType<UnitTracker>().Length;
@@ -17,6 +18,10 @@ public class UnitTracker : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
         }
+    }
+    private void Start()
+    {
+        am = FindObjectOfType<AllegianceManager>();
     }
 
     public void AddUnitToTargetableList(GameObject unit)

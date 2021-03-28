@@ -8,11 +8,16 @@ public class House : MonoBehaviour
     //init
     SpriteRenderer sr;
     [SerializeField] Sprite[] possibleHouseSprites = null;
+
+    //param
+
+    //hood
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
         ChooseHouseImage();
     }
+
 
     private void ChooseHouseImage()
     {

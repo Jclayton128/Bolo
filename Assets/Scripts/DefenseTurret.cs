@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(IFF))]
 public class DefenseTurret : MonoBehaviour
 {
     //init
@@ -31,7 +30,7 @@ public class DefenseTurret : MonoBehaviour
     {
         ut = GameObject.FindObjectOfType<UnitTracker>();
         ut.AddUnitToTargetableList(gameObject);
-        ownIFF = GetComponent<IFF>().GetIFFAllegiance();
+        ownIFF = GetComponentInChildren<IFF>().GetIFFAllegiance();
         attackRange = weaponLifetime * weaponSpeed;
         selectedFiringSound = SelectSoundFromArray(firingSounds);
     }
@@ -48,6 +47,7 @@ public class DefenseTurret : MonoBehaviour
         targets = ut.FindTargetsWithinSearchRange(gameObject, searchRange);
         if (targets[0])
         {
+            //Discriminate based on IFF allegiance
             target = targets[0];
         }
      
