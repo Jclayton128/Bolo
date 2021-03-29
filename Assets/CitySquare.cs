@@ -60,9 +60,13 @@ public class CitySquare : MonoBehaviour
         {
             if (possibleBuilding.TryGetComponent(out IFF possIFF) && possibleBuilding.transform.root.tag == "Building")
             {
+                //Debug.Log(possibleBuilding.transform.root.name);
+                possibleBuilding.transform.root.GetComponentInChildren<House>().SetOwningCity(this);
+
                 int currentAllegiance = iff.GetIFFAllegiance();
                 possIFF.SetIFFAllegiance(currentAllegiance);
                 buildingInCity.Add(possIFF);
+
                 continue;
             }
         }
@@ -131,6 +135,7 @@ public class CitySquare : MonoBehaviour
 
     public void RemoveBuildingFromList(IFF deadThing)
     {
+        //Debug.Log("removal called");
         buildingInCity.Remove(deadThing);
     }
 }

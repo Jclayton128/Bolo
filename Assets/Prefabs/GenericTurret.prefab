@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1729971658301730476}
   - component: {fileID: 7441159059086639804}
   - component: {fileID: 8592627448115405760}
+  - component: {fileID: -1279209213120808475}
   m_Layer: 8
   m_Name: GenericTurret
   m_TagString: Building
@@ -151,6 +152,20 @@ MonoBehaviour:
   armorLevel: 0
   canMove: 0
   currentHealth: 0
+--- !u!114 &-1279209213120808475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744198805709198696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5717bb1cfe087a49aa30f39ab07b732, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  possibleHouseSprites: []
+  isHouse: 0
 --- !u!1001 &6472964685682595181
 PrefabInstance:
   m_ObjectHideFlags: 0

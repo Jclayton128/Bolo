@@ -56,9 +56,10 @@ public class Health : MonoBehaviour
             isDying = true;
             if (chosenDieSound)
             {
-                BroadcastMessage("DyingActions");
+
                 AudioSource.PlayClipAtPoint(chosenDieSound, transform.position);
             }
+            BroadcastMessage("DyingActions");
             Destroy(transform.root.gameObject);
         }
     }

@@ -11,12 +11,16 @@ public class House : MonoBehaviour
     CitySquare cs;
 
     //param
+    public bool isHouse = true;
 
     //hood
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-        ChooseHouseImage();
+        if (isHouse)
+        {
+            ChooseHouseImage();
+        }
     }
     private void ChooseHouseImage()
     {
@@ -36,6 +40,7 @@ public class House : MonoBehaviour
     }
     public void DyingActions()
     {
+        //Debug.Log("dying actions called");
         if (!cs) { return; }
         cs.RemoveBuildingFromList(gameObject.GetComponentInChildren<IFF>());
     }
