@@ -9,6 +9,7 @@ public class DefenseTurret : MonoBehaviour
     [SerializeField] AudioClip[] firingSounds = null;
     UnitTracker ut;
     List<GameObject> targets = new List<GameObject>();
+    IFF ownIFF;
 
     //param
     public float timeBetweenShots = .25f;
@@ -17,20 +18,21 @@ public class DefenseTurret : MonoBehaviour
     public float weaponDamage = .5f;
     public float searchRange = 10f;
     float bulletOffset = .4f;
+    float timeBetweenScans = 0.2f;
 
     //hood
-    int ownIFF;
     float timeSinceLastShot = 0;
     float attackRange;
     AudioClip selectedFiringSound;
     public GameObject target;
+    float timeSinceLastScan = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         ut = GameObject.FindObjectOfType<UnitTracker>();
         ut.AddUnitToTargetableList(gameObject);
-        ownIFF = GetComponentInChildren<IFF>().GetIFFAllegiance();
+        ownIFF = GetComponentInChildren<IFF>();
         attackRange = weaponLifetime * weaponSpeed;
         selectedFiringSound = SelectSoundFromArray(firingSounds);
     }
@@ -44,13 +46,13 @@ public class DefenseTurret : MonoBehaviour
 
     private void ScanForTarget()
     {
-        targets = ut.FindTargetsWithinSearchRange(gameObject, searchRange);
-        if (targets.Count > 0)
+        timeSinceLastScan -= Time.deltaTime;
+        if (timeSinceLastScan <= 0)
         {
-            //Discriminate based on IFF allegiance
-            target = targets[0];
+            target = ut.FindClosestTargetWithinSearchRange(gameObject, searchRange, ownIFF.GetIFFAllegiance());
+            timeSinceLastScan = timeBetweenScans;
         }
-     
+ 
     }
 
     private void FireWeaponAtTarget()

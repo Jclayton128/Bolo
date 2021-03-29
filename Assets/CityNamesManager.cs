@@ -5,21 +5,18 @@ using UnityEngine;
 public class CityNamesManager : MonoBehaviour
 {
     //init
-    [SerializeField] string[] possibleCityNames = null;
-    List<string> cityNames = new List<string>();
+    [SerializeField] List<string> cityNames = new List<string>();
     void Start()
     {
-        foreach (string str in possibleCityNames)
-        {
-            cityNames.Add(str);
-        }
+
     }
 
 
     public string GetRandomCityName()
     {
-        int random = UnityEngine.Random.Range(0, cityNames.Count);
+        int random = Random.Range(0, cityNames.Count);
         string chosenName = cityNames[random];
+        Debug.Log(chosenName);
         cityNames.Remove(chosenName);
         return chosenName;
     }

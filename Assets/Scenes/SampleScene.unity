@@ -10107,12 +10107,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d66a6c864a05aa846acc21b7c1e731f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleCityNames:
+  cityNames:
   - Waco
-  - Devine
-  - Virginia Beach
+  - Happytown
   - Lemoore
-  - Dallas
+  - Virginia Beach
+  - Devine
 --- !u!4 &1629933826
 Transform:
   m_ObjectHideFlags: 0
