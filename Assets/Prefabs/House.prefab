@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1483964688050521132}
   - component: {fileID: 15067783139869750}
   - component: {fileID: 8144384660980897882}
+  - component: {fileID: 1558687450862482328}
   m_Layer: 8
   m_Name: House
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,6 +135,25 @@ MonoBehaviour:
   - {fileID: -2437946883914093047, guid: ddfb37ef8b41bbd488039708bdb8f9dd, type: 3}
   - {fileID: 7925904088023432219, guid: ddfb37ef8b41bbd488039708bdb8f9dd, type: 3}
   - {fileID: 9126172486708747978, guid: ddfb37ef8b41bbd488039708bdb8f9dd, type: 3}
+--- !u!114 &1558687450862482328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2010904512559209385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65087b887511f3a4c844c475cb9e7056, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtAudioClips: []
+  dieAudioClips: []
+  spritesByHealth: []
+  startingHealth: 5
+  armorLevel: 0
+  canMove: 0
+  currentHealth: 0
 --- !u!1001 &518676120622037746
 PrefabInstance:
   m_ObjectHideFlags: 0

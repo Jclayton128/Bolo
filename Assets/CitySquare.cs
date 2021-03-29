@@ -24,7 +24,7 @@ public class CitySquare : MonoBehaviour
 
     //hood
     string cityName;
-    List<IFF> buildingInCity = new List<IFF>();
+    public List<IFF> buildingInCity = new List<IFF>();
     float timeSpentCapturing = 0;
 
     void Start()
@@ -58,7 +58,7 @@ public class CitySquare : MonoBehaviour
         allGOs = Finder.FindAllGameObjectsWithinSearchRange(transform, cityRadius);
         foreach (GameObject possibleBuilding in allGOs)
         {
-            if (possibleBuilding.TryGetComponent(out IFF possIFF))
+            if (possibleBuilding.TryGetComponent(out IFF possIFF) && possibleBuilding.transform.root.tag == "Building")
             {
                 int currentAllegiance = iff.GetIFFAllegiance();
                 possIFF.SetIFFAllegiance(currentAllegiance);
@@ -129,8 +129,8 @@ public class CitySquare : MonoBehaviour
         }
     }
 
-    public void RemoveHouseFromList(IFF deadHouse)
+    public void RemoveBuildingFromList(IFF deadThing)
     {
-        buildingInCity.Remove(deadHouse);
+        buildingInCity.Remove(deadThing);
     }
 }

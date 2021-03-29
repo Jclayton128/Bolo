@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class IFF : MonoBehaviour
 {
     //init
     SpriteRenderer flagSR;
     AllegianceManager am;
+    Image flagImage;
 
     //param
-    public int iffAllegiance;
+    [SerializeField] int iffAllegiance;
+    public bool isPlayer = false;
 
     private void Start()
     {
@@ -17,7 +20,13 @@ public class IFF : MonoBehaviour
         {
             flagSR = sr;
         }
+
         am = FindObjectOfType<AllegianceManager>();
+        if (isPlayer)
+        {
+            flagImage = GameObject.FindGameObjectWithTag("OwnFlag").GetComponent<Image>();
+            flagImage.sprite = am.GetFlagOfAllegiance(iffAllegiance);
+        }
         SetFlag();
     }
 
@@ -25,7 +34,7 @@ public class IFF : MonoBehaviour
     {
         iffAllegiance = value;
         SetFlag();
-        Debug.Log(gameObject.name + " is now aligned with: " + iffAllegiance);
+        //Debug.Log(gameObject.name + " is now aligned with: " + iffAllegiance);
     }
 
     public int GetIFFAllegiance()

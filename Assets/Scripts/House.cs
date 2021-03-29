@@ -34,9 +34,9 @@ public class House : MonoBehaviour
     {
         cs = citysq;
     }
-    private void OnDestroy()
+    public void DyingActions()
     {
         if (!cs) { return; }
-        cs.RemoveHouseFromList(gameObject.GetComponentInChildren<IFF>());
+        cs.RemoveBuildingFromList(gameObject.GetComponentInChildren<IFF>());
     }
 }

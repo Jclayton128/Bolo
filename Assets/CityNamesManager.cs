@@ -16,7 +16,7 @@ public class CityNamesManager : MonoBehaviour
     {
         int random = Random.Range(0, cityNames.Count);
         string chosenName = cityNames[random];
-        Debug.Log(chosenName);
+        //Debug.Log(chosenName);
         cityNames.Remove(chosenName);
         return chosenName;
     }
