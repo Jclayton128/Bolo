@@ -23,8 +23,8 @@ public class CitySquare : MonoBehaviour
     float captureRange = 0.5f;
 
     //hood
-    string cityName;
-    public List<IFF> buildingInCity = new List<IFF>();
+    public string cityName;
+    public List<IFF> buildingsInCity = new List<IFF>();
     float timeSpentCapturing = 0;
 
     void Start()
@@ -49,7 +49,7 @@ public class CitySquare : MonoBehaviour
 
     private void SelectCityName()
     {
-        CityNamesManager cnm = FindObjectOfType<CityNamesManager>();
+        CityManager cnm = FindObjectOfType<CityManager>();
         cityName = cnm.GetRandomCityName();
     }
     private void FindHousesWithinCityAndAdjustAllegiance()
@@ -65,7 +65,7 @@ public class CitySquare : MonoBehaviour
 
                 int currentAllegiance = iff.GetIFFAllegiance();
                 possIFF.SetIFFAllegiance(currentAllegiance);
-                buildingInCity.Add(possIFF);
+                buildingsInCity.Add(possIFF);
 
                 continue;
             }
@@ -87,7 +87,7 @@ public class CitySquare : MonoBehaviour
         {
             int newAllegiance = playerIFF.GetIFFAllegiance();
             iff.SetIFFAllegiance(newAllegiance);
-            foreach (IFF buildingIFF in buildingInCity)
+            foreach (IFF buildingIFF in buildingsInCity)
             {
                 buildingIFF.SetIFFAllegiance(newAllegiance);
             }
@@ -115,19 +115,19 @@ public class CitySquare : MonoBehaviour
         float dist = (player.transform.position - transform.position).magnitude;
         if (dist <= cityRadius)
         {
-            cityNameTextBar.text = cityName;
+            cityNameTextBar.fontStyle = TMPro.FontStyles.Bold;
             cityCaptureSlider.value = timeSpentCapturing;
         }
         else
         {
-            cityNameTextBar.text = " ";
+            cityNameTextBar.fontStyle = TMPro.FontStyles.Normal;
             cityCaptureSlider.value = 0;
         }
     }
 
     private void CheckForHousesRemaining()
     {
-        if (buildingInCity.Count <= 0)
+        if (buildingsInCity.Count <= 0)
         {
             sr.color = Color.red;
         }
@@ -136,6 +136,6 @@ public class CitySquare : MonoBehaviour
     public void RemoveBuildingFromList(IFF deadThing)
     {
         //Debug.Log("removal called");
-        buildingInCity.Remove(deadThing);
+        buildingsInCity.Remove(deadThing);
     }
 }

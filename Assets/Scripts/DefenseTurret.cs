@@ -31,7 +31,7 @@ public class DefenseTurret : MonoBehaviour
     void Start()
     {
         ut = GameObject.FindObjectOfType<UnitTracker>();
-        ut.AddUnitToTargetableList(gameObject);  //TODO: why is this defense turret a targetable unit? Can turret attack each other?
+        ut.AddUnitToTargetableList(gameObject);  //TODO: why is this defense turret a targetable unit? Can turrets attack each other?
         ownIFF = GetComponentInChildren<IFF>();
         attackRange = weaponLifetime * weaponSpeed;
         selectedFiringSound = SelectSoundFromArray(firingSounds);
