@@ -24,6 +24,7 @@ public class IFF : MonoBehaviour
     public void SetIFFAllegiance(int value)
     {
         iffAllegiance = value;
+        SetFlag();
     }
 
     public int GetIFFAllegiance()

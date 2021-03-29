@@ -15,10 +15,11 @@ public static class Finder : object
         }
         for (int i = 0; i < possibleTargets_array.Length; i++)
         {
-            float dist = (sourceTransform.position - possibleTargets[i].transform.position).magnitude;
+            float dist = (sourceTransform.position - possibleTargets_array[i].transform.position).magnitude;
             if (dist <= searchRange)
             {
-                possibleTargets.Add(possibleTargets_array[i]);
+                GameObject go = possibleTargets_array[i];
+                possibleTargets.Add(go);
             }
         }
         return possibleTargets;

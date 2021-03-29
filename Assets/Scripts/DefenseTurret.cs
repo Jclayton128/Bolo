@@ -45,7 +45,7 @@ public class DefenseTurret : MonoBehaviour
     private void ScanForTarget()
     {
         targets = ut.FindTargetsWithinSearchRange(gameObject, searchRange);
-        if (targets[0])
+        if (targets.Count > 0)
         {
             //Discriminate based on IFF allegiance
             target = targets[0];

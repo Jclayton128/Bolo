@@ -8,6 +8,7 @@ public class House : MonoBehaviour
     //init
     SpriteRenderer sr;
     [SerializeField] Sprite[] possibleHouseSprites = null;
+    CitySquare cs;
 
     //param
 
@@ -17,8 +18,6 @@ public class House : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         ChooseHouseImage();
     }
-
-
     private void ChooseHouseImage()
     {
         int rand = UnityEngine.Random.Range(0, possibleHouseSprites.Length);
@@ -29,5 +28,14 @@ public class House : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void SetOwningCity(CitySquare citysq)
+    {
+        cs = citysq;
+    }
+    private void OnDestroy()
+    {
+        cs.RemoveHouseFromList(this);
     }
 }
