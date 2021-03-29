@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3688cab646727ca4f89bc8b2dad83823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cityCaptureSlider: {fileID: 0}
 --- !u!1001 &9060486981818709967
 PrefabInstance:
   m_ObjectHideFlags: 0

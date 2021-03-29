@@ -36,6 +36,7 @@ public class House : MonoBehaviour
     }
     private void OnDestroy()
     {
-        cs.RemoveHouseFromList(this);
+        if (!cs) { return; }
+        cs.RemoveHouseFromList(gameObject.GetComponentInChildren<IFF>());
     }
 }

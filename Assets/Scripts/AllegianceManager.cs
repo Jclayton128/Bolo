@@ -8,6 +8,9 @@ public class AllegianceManager : MonoBehaviour
     //Init
     [SerializeField] Sprite[] flagSource = null;
 
+    //hood
+    int playerAllegiance = 3;
+
     private void Awake()
     {
         int amCount = FindObjectsOfType<AllegianceManager>().Length;
@@ -22,7 +25,8 @@ public class AllegianceManager : MonoBehaviour
     }
     void Start()
     {
-
+        GameObject.FindGameObjectWithTag("Player").GetComponent<IFF>().SetIFFAllegiance(playerAllegiance);
+        Debug.Log("Forcing Player to allegiance 3");
     }
 
 

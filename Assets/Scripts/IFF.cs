@@ -9,7 +9,7 @@ public class IFF : MonoBehaviour
     AllegianceManager am;
 
     //param
-    public int iffAllegiance = 0;
+    public int iffAllegiance;
 
     private void Start()
     {
@@ -25,6 +25,7 @@ public class IFF : MonoBehaviour
     {
         iffAllegiance = value;
         SetFlag();
+        Debug.Log(gameObject.name + " is now aligned with: " + iffAllegiance);
     }
 
     public int GetIFFAllegiance()

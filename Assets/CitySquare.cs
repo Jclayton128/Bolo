@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 [RequireComponent (typeof(IFF))]
 
 public class CitySquare : MonoBehaviour
@@ -11,26 +12,39 @@ public class CitySquare : MonoBehaviour
     IFF iff;
     SpriteRenderer sr;
     TextMeshProUGUI cityNameTextBar;
+    Slider cityCaptureSlider;
     GameObject player;
+    IFF playerIFF;
 
 
     //param
     float cityRadius = 5f;
+    float timeToCapture = 15; //seconds
+    float captureRange = 0.5f;
 
     //hood
     string cityName;
-    List<House> housesInCity = new List<House>();
-    int allegiance;
+    List<IFF> buildingInCity = new List<IFF>();
+    float timeSpentCapturing = 0;
 
     void Start()
     {
+        SetupCityCaptureSlider();
         player = Finder.FindNearestGameObjectWithTag(transform, "Player");
+        playerIFF = player.GetComponent<IFF>();
         cityNameTextBar = GameObject.FindGameObjectWithTag("CityNameTextBar").GetComponent<TextMeshProUGUI>();
         sr = GetComponent<SpriteRenderer>();
         iff = GetComponentInChildren<IFF>();
-        allegiance = iff.GetIFFAllegiance();
         SelectCityName();
-        FindHousesWithinCityAndAdjustAllegiance();        
+        FindHousesWithinCityAndAdjustAllegiance();
+    }
+
+    private void SetupCityCaptureSlider()
+    {
+        cityCaptureSlider = GameObject.FindGameObjectWithTag("CCB").GetComponent<Slider>();
+        cityCaptureSlider.maxValue = timeToCapture;
+        cityCaptureSlider.minValue = 0;
+        cityCaptureSlider.value = 0;
     }
 
     private void SelectCityName()
@@ -42,24 +56,54 @@ public class CitySquare : MonoBehaviour
     {
         List<GameObject> allGOs = new List<GameObject>();
         allGOs = Finder.FindAllGameObjectsWithinSearchRange(transform, cityRadius);
-        foreach (GameObject possibleHouse in allGOs)
+        foreach (GameObject possibleBuilding in allGOs)
         {
-            if (possibleHouse.TryGetComponent(out House house))
+            if (possibleBuilding.TryGetComponent(out IFF possIFF))
             {
-                possibleHouse.GetComponentInChildren<IFF>().SetIFFAllegiance(allegiance);
-                housesInCity.Add(house);
+                int currentAllegiance = iff.GetIFFAllegiance();
+                possIFF.SetIFFAllegiance(currentAllegiance);
+                buildingInCity.Add(possIFF);
                 continue;
             }
         }
-        Debug.Log(housesInCity.Count);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //HandleBeingCaptured();
+        HandleCaptureAttempts();
+        CheckIfCaptured();
         //CheckForHousesRemaining();
         DisplayCityNameIfWithinRange();
+    }
+
+    private void CheckIfCaptured()
+    {
+        if (timeSpentCapturing >= timeToCapture)
+        {
+            int newAllegiance = playerIFF.GetIFFAllegiance();
+            iff.SetIFFAllegiance(newAllegiance);
+            foreach (IFF buildingIFF in buildingInCity)
+            {
+                buildingIFF.SetIFFAllegiance(newAllegiance);
+            }
+            timeSpentCapturing = 0;
+        }
+    }
+
+    private void HandleCaptureAttempts()
+    {
+        if (playerIFF.GetIFFAllegiance() == iff.GetIFFAllegiance()) { return; }
+        if ((player.transform.position - transform.position).magnitude <= captureRange)
+        {
+            timeSpentCapturing += Time.deltaTime;
+        }
+        else
+        {
+            timeSpentCapturing -= Time.deltaTime * 2;
+            timeSpentCapturing = Mathf.Clamp(timeSpentCapturing, 0, timeToCapture);
+        }
+        cityCaptureSlider.value = timeSpentCapturing;
     }
 
     private void DisplayCityNameIfWithinRange()
@@ -68,23 +112,25 @@ public class CitySquare : MonoBehaviour
         if (dist <= cityRadius)
         {
             cityNameTextBar.text = cityName;
+            cityCaptureSlider.value = timeSpentCapturing;
         }
         else
         {
             cityNameTextBar.text = " ";
+            cityCaptureSlider.value = 0;
         }
     }
 
     private void CheckForHousesRemaining()
     {
-        if (housesInCity.Count <= 0)
+        if (buildingInCity.Count <= 0)
         {
             sr.color = Color.red;
         }
     }
 
-    public void RemoveHouseFromList(House deadHouse)
+    public void RemoveHouseFromList(IFF deadHouse)
     {
-        housesInCity.Remove(deadHouse);
+        buildingInCity.Remove(deadHouse);
     }
 }

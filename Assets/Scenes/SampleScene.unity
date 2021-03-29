@@ -8046,7 +8046,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &214920216
 PrefabInstance:
@@ -8105,7 +8105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5761893168957330715, guid: e9dfdbc19af35184f90a84dde94b6878, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5761893168957330715, guid: e9dfdbc19af35184f90a84dde94b6878, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8244,7 +8244,7 @@ Transform:
   - {fileID: 1821491172}
   - {fileID: 1398222354}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -8364,7 +8364,7 @@ Transform:
   m_Children:
   - {fileID: 30492352}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &519420033
 MonoBehaviour:
@@ -8427,7 +8427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4528525314631757559, guid: 6e379e2a52bd88248b90e202099daf2d, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4528525314631757559, guid: 6e379e2a52bd88248b90e202099daf2d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8618,7 +8618,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &782472404
 GameObject:
@@ -8806,7 +8806,7 @@ GameObject:
   - component: {fileID: 802272675}
   m_Layer: 0
   m_Name: Tank
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8841,7 +8841,7 @@ Transform:
   m_Children:
   - {fileID: 1713450390}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &802272677
 Rigidbody2D:
@@ -8876,7 +8876,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beb073c21ed3d1e4b8dd4583668e5ec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iffAllegiance: 1
+  iffAllegiance: 5
 --- !u!1 &804005737
 GameObject:
   m_ObjectHideFlags: 0
@@ -8925,7 +8925,7 @@ GameObject:
   - component: {fileID: 830501360}
   m_Layer: 5
   m_Name: CityNameCaptureBar
-  m_TagString: Untagged
+  m_TagString: CCB
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8997,8 +8997,8 @@ MonoBehaviour:
   m_Direction: 1
   m_MinValue: 0
   m_MaxValue: 1
-  m_WholeNumbers: 0
-  m_Value: 1
+  m_WholeNumbers: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -9097,7 +9097,7 @@ RectTransform:
   - {fileID: 830501359}
   - {fileID: 1337270544}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9191,8 +9191,8 @@ GameObject:
   - component: {fileID: 1337270546}
   - component: {fileID: 1337270545}
   m_Layer: 5
-  m_Name: CityNameSpot
-  m_TagString: Untagged
+  m_Name: CityNameTextBar
+  m_TagString: CityNameTextBar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10078,6 +10078,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1539255043}
   m_CullTransparentMesh: 0
+--- !u!1 &1629933824
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1629933826}
+  - component: {fileID: 1629933825}
+  m_Layer: 0
+  m_Name: CityNameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1629933825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629933824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d66a6c864a05aa846acc21b7c1e731f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  possibleCityNames:
+  - Waco
+  - Devine
+  - Virginia Beach
+  - Lemoore
+  - Dallas
+--- !u!4 &1629933826
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629933824}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.5, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1713450389
 GameObject:
   m_ObjectHideFlags: 0
@@ -10618,9 +10667,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 917822860788727028, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
+      propertyPath: cityCaptureSlider
+      value: 
+      objectReference: {fileID: 830501360}
     - target: {fileID: 1869670495775819084, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
       propertyPath: m_Name
-      value: CommandSquare
+      value: CitySquare
       objectReference: {fileID: 0}
     - target: {fileID: 7210906992845139574, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10636,15 +10689,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7210906992845139574, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7210906992845139574, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7210906992845139574, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7210906992845139574, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
       propertyPath: m_LocalRotation.w
