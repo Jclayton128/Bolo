@@ -83,5 +83,9 @@ PrefabInstance:
       propertyPath: firingSounds.Array.data[3]
       value: 
       objectReference: {fileID: 8300000, guid: 4427cdda9818b7940bd8ab89ffe99663, type: 3}
+    - target: {fileID: 8592627448115405760, guid: 365fb98bcd30d9844ab7bfe0e7fb43f3, type: 3}
+      propertyPath: startingHealth
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 365fb98bcd30d9844ab7bfe0e7fb43f3, type: 3}

@@ -1,21 +1,72 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using System;
 
 public class CityManager : MonoBehaviour
 {
     //init
     [SerializeField] List<string> cityNames = new List<string>();
     CitySquare[] citySquares;
+    Slider cityCaptureSlider;
+    TextMeshProUGUI cityNameTextBar;
+    GameObject player;
+
+    //hood
+    CitySquare closestCS;
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         citySquares = FindObjectsOfType<CitySquare>();
+        SetupCityCaptureSlider();
+        cityNameTextBar = GameObject.FindGameObjectWithTag("CityNameTextBar").GetComponent<TextMeshProUGUI>();
     }
 
 
+    private void SetupCityCaptureSlider()
+    {
+        cityCaptureSlider = GameObject.FindGameObjectWithTag("CCB").GetComponent<Slider>();
+        cityCaptureSlider.maxValue = citySquares[0].timeToCapture;
+        cityCaptureSlider.minValue = 0;
+        cityCaptureSlider.value = 0;
+    }
+    private void Update()
+    {
+        closestCS = FindNearestCitySquare(player.transform);
+        DisplayCityName();
+        BoldCityNameIfWithinRange();
+        UpdateCaptureBarWithClosestCityInfo();
+        
+    }
+
+    private void DisplayCityName()
+    {
+        cityNameTextBar.text = closestCS.cityName;
+    }
+
+    private void UpdateCaptureBarWithClosestCityInfo()
+    {
+        cityCaptureSlider.value = closestCS.timeSpentCapturing;
+    }
+
+    private void BoldCityNameIfWithinRange()
+    {
+        float dist = (player.transform.position - closestCS.transform.position).magnitude;
+        if (dist <= closestCS.cityRadius)
+        {
+            cityNameTextBar.fontStyle = TMPro.FontStyles.Bold;
+        }
+        else
+        {
+            cityNameTextBar.fontStyle = TMPro.FontStyles.Normal;
+        }
+    }
+
     public string GetRandomCityName()
     {
-        int random = Random.Range(0, cityNames.Count);
+        int random = UnityEngine.Random.Range(0, cityNames.Count);
         string chosenName = cityNames[random];
         //Debug.Log(chosenName);
         cityNames.Remove(chosenName);
@@ -46,4 +97,6 @@ public class CityManager : MonoBehaviour
         float ang = Vector3.SignedAngle(Vector3.up, dir, Vector3.forward);
         return ang;
     }
+
+
 }

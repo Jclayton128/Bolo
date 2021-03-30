@@ -2,20 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class TankMovement : Movement
 {
     //init
 
     //param
-    public float moveSpeed = 1.0f;
-    public float turnSpeed = 360f; //deg/sec
+    public float moveSpeed_normal = 1.0f;
+    public float turnSpeed_normal = 360f; //deg/sec
 
     //hood
     public Vector3 commandedVector = new Vector3();
     float maxAngleOffBoresightToDrive = 10f;
     bool isCommandedToMove = false;
     float angleOffCommandedVector;
+    float moveSpeed_current;
+    float turnSpeed_current;
 
     protected override void Start()
     {
@@ -28,8 +31,8 @@ public class TankMovement : Movement
         Debug.DrawLine(transform.position, commandedVector.normalized + transform.position, Color.blue);
         CheckForCommandedMovement();
         UpdateCommandedVectorAndAngleOffIt();
+        //UpdateMoveTurnPerformanceWithCurrentTerrain();
     }
-
     private void FixedUpdate()
     {
         RotateToCommandedVector();
@@ -59,11 +62,11 @@ public class TankMovement : Movement
         {
             if (Mathf.Abs(angleOffCommandedVector) < maxAngleOffBoresightToDrive * 4)
             {
-                rb.velocity = commandedVector * (moveSpeed / 2);
+                rb.velocity = commandedVector * (moveSpeed_normal / 2);
             }
             if (Mathf.Abs(angleOffCommandedVector) < maxAngleOffBoresightToDrive)
             {
-                rb.velocity = commandedVector * moveSpeed;
+                rb.velocity = commandedVector * moveSpeed_normal;
             }
         }
     }
@@ -85,11 +88,11 @@ public class TankMovement : Movement
         }
         if (angleOffCommandedVector > -0.1f)
         {
-            rb.angularVelocity = turnSpeed;
+            rb.angularVelocity = turnSpeed_normal;
         }
         if (angleOffCommandedVector < 0.1f)
         {
-            rb.angularVelocity = -turnSpeed;
+            rb.angularVelocity = -turnSpeed_normal;
         }
     }
 }

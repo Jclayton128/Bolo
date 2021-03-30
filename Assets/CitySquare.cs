@@ -11,41 +11,34 @@ public class CitySquare : MonoBehaviour
     //init
     IFF iff;
     SpriteRenderer sr;
-    TextMeshProUGUI cityNameTextBar;
-    Slider cityCaptureSlider;
+
+
     GameObject player;
     IFF playerIFF;
 
 
     //param
-    float cityRadius = 5f;
-    float timeToCapture = 15; //seconds
+    public float cityRadius = 5f;
+    public float timeToCapture = 15; //seconds
     float captureRange = 0.5f;
 
     //hood
     public string cityName;
     public List<IFF> buildingsInCity = new List<IFF>();
-    float timeSpentCapturing = 0;
+    public float timeSpentCapturing = 0;
 
     void Start()
     {
-        SetupCityCaptureSlider();
+
         player = Finder.FindNearestGameObjectWithTag(transform, "Player");
         playerIFF = player.GetComponent<IFF>();
-        cityNameTextBar = GameObject.FindGameObjectWithTag("CityNameTextBar").GetComponent<TextMeshProUGUI>();
+
         sr = GetComponent<SpriteRenderer>();
         iff = GetComponentInChildren<IFF>();
         SelectCityName();
         FindHousesWithinCityAndAdjustAllegiance();
     }
 
-    private void SetupCityCaptureSlider()
-    {
-        cityCaptureSlider = GameObject.FindGameObjectWithTag("CCB").GetComponent<Slider>();
-        cityCaptureSlider.maxValue = timeToCapture;
-        cityCaptureSlider.minValue = 0;
-        cityCaptureSlider.value = 0;
-    }
 
     private void SelectCityName()
     {
@@ -78,7 +71,7 @@ public class CitySquare : MonoBehaviour
         HandleCaptureAttempts();
         CheckIfCaptured();
         //CheckForHousesRemaining();
-        DisplayCityNameIfWithinRange();
+
     }
 
     private void CheckIfCaptured()
@@ -107,23 +100,8 @@ public class CitySquare : MonoBehaviour
             timeSpentCapturing -= Time.deltaTime * 2;
             timeSpentCapturing = Mathf.Clamp(timeSpentCapturing, 0, timeToCapture);
         }
-        cityCaptureSlider.value = timeSpentCapturing;
     }
 
-    private void DisplayCityNameIfWithinRange()
-    {
-        float dist = (player.transform.position - transform.position).magnitude;
-        if (dist <= cityRadius)
-        {
-            cityNameTextBar.fontStyle = TMPro.FontStyles.Bold;
-            cityCaptureSlider.value = timeSpentCapturing;
-        }
-        else
-        {
-            cityNameTextBar.fontStyle = TMPro.FontStyles.Normal;
-            cityCaptureSlider.value = 0;
-        }
-    }
 
     private void CheckForHousesRemaining()
     {
