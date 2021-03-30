@@ -7,10 +7,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5675006714847496409, guid: a2188152d3925744da8018601a0f9a15, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5675006714847496409, guid: a2188152d3925744da8018601a0f9a15, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -3179343214716242642, guid: a2188152d3925744da8018601a0f9a15, type: 3}
       propertyPath: weaponImpactAnimationPrefab
       value: 
       objectReference: {fileID: 4459788169365239128, guid: e82f95c5a460eed4a81327ff68cf7efe, type: 3}
+    - target: {fileID: -3179343214716242642, guid: a2188152d3925744da8018601a0f9a15, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5714355295485396681, guid: a2188152d3925744da8018601a0f9a15, type: 3}
       propertyPath: m_Name
       value: CannonProjectile

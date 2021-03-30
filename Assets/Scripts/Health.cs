@@ -87,7 +87,7 @@ public class Health : MonoBehaviour
         if (incomingDamage == 0) { return; }
 
         ModifyHealth(incomingDamage * -1);
-        Destroy(other);
+        //Destroy(other);
 
     }
 

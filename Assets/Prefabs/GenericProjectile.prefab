@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5714355295485396687}
   - component: {fileID: 5714355295485396680}
   - component: {fileID: -3179343214716242642}
+  - component: {fileID: -7134614670591467265}
   m_Layer: 9
   m_Name: GenericProjectile
   m_TagString: Untagged
@@ -95,7 +96,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -120,7 +121,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &-3179343214716242642
 MonoBehaviour:
@@ -135,3 +136,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponImpactAnimationPrefab: {fileID: 0}
+--- !u!70 &-7134614670591467265
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5714355295485396681}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.08, y: 0.26}
+  m_Direction: 0
