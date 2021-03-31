@@ -75,7 +75,7 @@ public class TankMovement : Movement
     {
         commandedVector.x = cs.horizComponent;
         commandedVector.y = cs.vertComponent;
-        commandedVector.Normalize();
+        //commandedVector.Normalize();
         angleOffCommandedVector = Vector3.SignedAngle(transform.up, commandedVector, Vector3.forward);
     }
 
