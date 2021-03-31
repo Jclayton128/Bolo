@@ -12,6 +12,7 @@ public class PlayerInput : ControlSource
     //hood
     public bool LMBdown = false;
     public bool RMBdown = false;
+    public Vector3 mousePos = new Vector3(0, 0, 0);
 
     protected override void Start()
     {

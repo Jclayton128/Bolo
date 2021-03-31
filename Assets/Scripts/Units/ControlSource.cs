@@ -15,9 +15,9 @@ public class ControlSource : MonoBehaviour
     //param
 
     //hood
-    public float horizComponent;
-    public float vertComponent;
-    public Vector3 mousePos = new Vector3(0, 0, 0);
+    public float horizComponent { get; protected set; }
+    public float vertComponent { get; protected set; }
+
     protected virtual void Start()
     {
         ut = FindObjectOfType<UnitTracker>();
@@ -27,7 +27,7 @@ public class ControlSource : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         
     }

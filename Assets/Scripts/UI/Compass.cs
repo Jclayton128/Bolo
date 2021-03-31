@@ -40,7 +40,6 @@ public class Compass : MonoBehaviour
         float factor = 1 - (dist / maxCityDistance);
 
         factor = Mathf.Clamp(factor, .3f, 1.0f);
-        Debug.Log("post clamp factor: " + factor);
         transform.localScale = Vector3.one * factor * initialScale;
     }
 

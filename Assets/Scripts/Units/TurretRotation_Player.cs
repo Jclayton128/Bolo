@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretRotation : MonoBehaviour
+public class TurretRotation_Player : MonoBehaviour
 {
     //init
-    ControlSource cs;
+    PlayerInput playerInput;
 
     //param
     public float rotationSpeed = 360;
 
     //hood
     Vector3 dirToMouse = new Vector3(0, 0, 0);
-    public float angleAwayFromMouse = 0;
+    float angleAwayFromMouse = 0;
     void Start()
     {
-        cs = GetComponentInParent<ControlSource>();
+        playerInput = GetComponentInParent<PlayerInput>();  //TODO Why can't I just look for a Control Source? Only compiles if I search for Player Input directly
     }
 
     // Update is called once per frame
@@ -48,7 +48,7 @@ public class TurretRotation : MonoBehaviour
 
     private void FindAngleFromMousePos()
     {
-        dirToMouse = (cs.mousePos - transform.position).normalized;
+        dirToMouse = (playerInput.mousePos - transform.position).normalized;
         angleAwayFromMouse = Vector3.SignedAngle(transform.up, dirToMouse, Vector3.forward);
         //Debug.Log(angleAwayFromMouse);
     }

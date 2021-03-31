@@ -9,8 +9,8 @@ public class TankMovement : Movement
     //init
 
     //param
-    public float moveSpeed_normal = 1.0f;
-    public float turnSpeed_normal = 360f; //deg/sec
+    public float moveSpeed_normal;
+    public float turnSpeed_normal; //deg/sec
 
     //hood
     public Vector3 commandedVector = new Vector3();
@@ -75,7 +75,10 @@ public class TankMovement : Movement
     {
         commandedVector.x = cs.horizComponent;
         commandedVector.y = cs.vertComponent;
-        //commandedVector.Normalize();
+        if (commandedVector.magnitude > 1)
+        {
+            commandedVector.Normalize();
+        }
         angleOffCommandedVector = Vector3.SignedAngle(transform.up, commandedVector, Vector3.forward);
     }
 
