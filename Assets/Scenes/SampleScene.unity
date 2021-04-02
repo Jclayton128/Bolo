@@ -8824,6 +8824,10 @@ PrefabInstance:
       propertyPath: m_Height
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 9099403132476446125, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
+      propertyPath: m_WalkableMask
+      value: 252
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
 --- !u!1 &744384700
@@ -12247,7 +12251,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1821491171}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -12580,7 +12584,7 @@ TilemapCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0.00001
+  m_ExtrusionFactor: 0.5
 --- !u!114 &1821491176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12594,7 +12598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_OverrideArea: 1
-  m_Area: 6
+  m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
 --- !u!1 &1891616050
@@ -12607,7 +12611,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1891616052}
   - component: {fileID: 1891616051}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: NavMeshSurface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12638,13 +12642,13 @@ MonoBehaviour:
   m_UseMeshPrefab: {fileID: 0}
   m_CompressBounds: 0
   m_OverrideVector: {x: 1, y: 1, z: 1}
-  m_DefaultArea: 1
+  m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.23333333
+  m_VoxelSize: 0.1
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 23800000, guid: 83d576bbd3defd840b14ddad7582eae2, type: 2}
 --- !u!4 &1891616052
