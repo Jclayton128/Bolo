@@ -8,9 +8,11 @@ public class ControlSource : MonoBehaviour
     // the level where an AI-controlled unit's inputs come from.
 
     //init
+    protected GameObject targetGO;
     protected Movement move;
     protected Attack attack;
     protected UnitTracker ut;
+
 
     //param
 
@@ -24,6 +26,7 @@ public class ControlSource : MonoBehaviour
         ut.AddUnitToTargetableList(gameObject);
         move = GetComponentInChildren<Movement>();
         attack = GetComponentInChildren<Attack>();
+        targetGO = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -35,5 +38,10 @@ public class ControlSource : MonoBehaviour
     protected virtual void OnDestroy()
     {
         ut.RemoveUnitFromTargetableList(gameObject);
+    }
+
+    public GameObject GetTargetObject()
+    {
+        return targetGO;
     }
 }

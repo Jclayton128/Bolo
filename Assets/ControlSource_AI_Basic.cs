@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class ControlSource_AI_Basic : ControlSource
 {
     //init
-    GameObject player;
+
     NavMeshAgent nma;
 
     //param
@@ -18,7 +18,7 @@ public class ControlSource_AI_Basic : ControlSource
     protected override void Start()
     {
         base.Start();
-        player = GameObject.FindGameObjectWithTag("Player");
+
         nma = GetComponent<NavMeshAgent>();
         nma.updateRotation = false;
     }
@@ -34,7 +34,7 @@ public class ControlSource_AI_Basic : ControlSource
 
     private void SetNavTarget()
     {
-        navTarget_current = player.transform.position;               
+        navTarget_current = targetGO.transform.position;               
     }
     private void GenerateControlVectorToDriveTowardsNavTarget()
     {
@@ -65,4 +65,6 @@ public class ControlSource_AI_Basic : ControlSource
         }
         Debug.DrawLine(corners[0], corners[1], Color.red);
     }
+
+
 }
