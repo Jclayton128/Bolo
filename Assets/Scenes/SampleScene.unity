@@ -8814,7 +8814,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 182887018754021694, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
       propertyPath: turnSpeed_normal
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 9099403132476446125, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
       propertyPath: m_Radius

@@ -51,30 +51,35 @@ public class TurretRotation_AI : MonoBehaviour
     {
         Vector3 dir = Vector3.zero;
         float ang = 0;
-        if (distToTargetGO > 2* attackRange)
+        if (distToTargetGO > 2 * attackRange)
         {
             Vector3 vel = rb.velocity;
-            dir = (vel - transform.position).normalized;
+            dir = (vel - transform.position);
             ang = Vector3.SignedAngle(transform.up, dir, Vector3.forward);
-            Debug.Log("outside range, " + ang);
+            //Debug.Log("outside range, " + ang);
         }
         if (distToTargetGO <= 2 * attackRange)
         {
-            dir = (cs.GetTargetObject().transform.position - transform.position).normalized;
+            dir = (cs.GetTargetObject().transform.position - transform.position);
             Debug.DrawLine(transform.position, transform.position + dir, Color.red);
             ang = Vector3.SignedAngle(transform.up, dir, Vector3.forward);
-            Debug.Log("within range, " + ang);
+            //Debug.Log("within range, " + ang);
         }
+        float angClamped = Mathf.Clamp01(Mathf.Abs(ang)/5);
+        float currentRotSpeed = rotationSpeed * angClamped;
+        Debug.Log("ang: " + angClamped + " . CRS: " + currentRotSpeed);
 
         if (ang > acceptableAngleOffBoresight)
         {
-            transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
+            transform.Rotate(Vector3.forward, currentRotSpeed * Time.deltaTime);
         }
         if (ang < -acceptableAngleOffBoresight)
         {
-            transform.Rotate(Vector3.forward, -1 * rotationSpeed * Time.deltaTime);
+            transform.Rotate(Vector3.forward, -1 * currentRotSpeed * Time.deltaTime);
         }
+
     }
+
     private void CalculateDistanceToTargetGO()
     {
         distToTargetGO = (cs.GetTargetObject().transform.position - transform.position).magnitude;
