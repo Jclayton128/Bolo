@@ -32,22 +32,22 @@ public class PlayerInput : ControlSource
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             LMBdown = true;
-            attack.LMBDown();
+            attack.AttackCommence();
         }
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             LMBdown = false;
-            attack.LMBUp();
+            attack.AttackRelease();
         }
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             RMBdown = true;
-            attack.RMBDown();
+            //attack.RMBDown();
         }
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             RMBdown = false;
-            attack.RMBUp();
+            //attack.RMBUp();
         }
 
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

@@ -8809,24 +8809,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 182887018754021694, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
-      propertyPath: moveSpeed_normal
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 182887018754021694, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
       propertyPath: turnSpeed_normal
       value: 180
       objectReference: {fileID: 0}
-    - target: {fileID: 9099403132476446125, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
-      propertyPath: m_Radius
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 9099403132476446125, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
-      propertyPath: m_Height
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9099403132476446125, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
-      propertyPath: m_WalkableMask
-      value: 252
+    - target: {fileID: 5884238059541052863, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
+      propertyPath: rotationSpeed
+      value: 180
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}

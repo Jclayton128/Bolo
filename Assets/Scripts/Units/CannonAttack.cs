@@ -26,7 +26,7 @@ public class CannonAttack : Attack
         timeSinceLastAttack -= Time.deltaTime;
     }
 
-    public override void LMBDown()
+    public override void AttackCommence()
     {
         if (timeSinceLastAttack < 0)
         {
@@ -45,21 +45,16 @@ public class CannonAttack : Attack
 
     }
 
-    public override void LMBUp()
+    public override void AttackRelease()
     {
         
     }
 
-    public override void RMBDown()
+    public override float GetAttackRange()
     {
-        
+        float range = weaponLifetime * weaponSpeed;
+        return range;
     }
-
-    public override void RMBUp()
-    {
-        
-    }
-
 
 
 }

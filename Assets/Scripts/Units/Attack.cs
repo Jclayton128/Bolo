@@ -38,8 +38,9 @@ public abstract class Attack : MonoBehaviour
         
     }
 
-    public abstract void LMBDown();
-    public abstract void LMBUp();
-    public abstract void RMBDown();
-    public abstract void RMBUp();
+    public abstract void AttackCommence();
+    public abstract void AttackRelease();
+
+    public abstract float GetAttackRange();
+
 }

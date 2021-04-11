@@ -8,7 +8,6 @@ public class TurretRotation_AI : MonoBehaviour
     //init
     GameObject targetGO;
     ControlSource cs;
-    [SerializeField] GameObject weaponProjectile = null;
     Rigidbody2D rb;
     Attack attack;
 
@@ -16,22 +15,21 @@ public class TurretRotation_AI : MonoBehaviour
 
     //param
     public float rotationSpeed = 360; //deg per second
-    public float weaponSpeed = 10;
-    public float weaponLifetime = 0.3f;
-    float acceptableAngleOffBoresight = 0.1f;
+    float acceptableAngleOffBoresight = 5f;
     
 
     //hood
     float distToTargetGO;
-    Vector3 dirToTargetGO;
-    float attackRange;
-       
+    Vector3 dirToTargetGO = Vector3.zero;
+    float ang = 0;
+    float attackRange = 0;
+
     void Start()
     {
         cs = GetComponentInParent<ControlSource>();
-        attackRange = weaponLifetime * weaponSpeed;
         rb = GetComponentInParent<Rigidbody2D>();
         attack = GetComponent<Attack>();
+        attackRange = attack.GetAttackRange();
     }
 
     // Update is called once per frame
@@ -39,7 +37,16 @@ public class TurretRotation_AI : MonoBehaviour
     {
         targetGO = cs.GetTargetObject();
         CalculateDistanceToTargetGO();
-        //FireWeapon();
+        FireWeapon();
+    }
+
+    private void FireWeapon()
+    {
+        if (distToTargetGO <= attackRange && Mathf.Abs(ang) <= acceptableAngleOffBoresight)
+        {
+            Debug.Log("kaboom!");
+            attack.AttackCommence();
+        }
     }
 
     void FixedUpdate()
@@ -49,24 +56,23 @@ public class TurretRotation_AI : MonoBehaviour
 
     private void TurnToFaceTargetGO()
     {
-        Vector3 dir = Vector3.zero;
-        float ang = 0;
+
         if (distToTargetGO > 2 * attackRange)
         {
             Vector3 vel = rb.velocity;
-            dir = (vel - transform.position);
-            ang = Vector3.SignedAngle(transform.up, dir, Vector3.forward);
+            dirToTargetGO = (vel - transform.position);
+            ang = Vector3.SignedAngle(transform.up, dirToTargetGO, Vector3.forward);
             //Debug.Log("outside range, " + ang);
         }
         if (distToTargetGO <= 2 * attackRange)
         {
-            dir = (cs.GetTargetObject().transform.position - transform.position);
-            Debug.DrawLine(transform.position, transform.position + dir, Color.red);
-            ang = Vector3.SignedAngle(transform.up, dir, Vector3.forward);
+            dirToTargetGO = (cs.GetTargetObject().transform.position - transform.position);
+            Debug.DrawLine(transform.position, transform.position + dirToTargetGO, Color.red);
+            ang = Vector3.SignedAngle(transform.up, dirToTargetGO, Vector3.forward);
             //Debug.Log("within range, " + ang);
         }
-        float angClamped = Mathf.Clamp01(Mathf.Abs(ang)/5);
-        float currentRotSpeed = rotationSpeed * angClamped;
+        float angClamped = Mathf.Clamp01(Mathf.Abs(ang)/10);
+        float currentRotSpeed = rotationSpeed * angClamped * angClamped;
         Debug.Log("ang: " + angClamped + " . CRS: " + currentRotSpeed);
 
         if (ang > acceptableAngleOffBoresight)
