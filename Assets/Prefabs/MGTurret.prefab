@@ -84,8 +84,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 4427cdda9818b7940bd8ab89ffe99663, type: 3}
     - target: {fileID: 8592627448115405760, guid: 365fb98bcd30d9844ab7bfe0e7fb43f3, type: 3}
+      propertyPath: spritesByHealth.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8592627448115405760, guid: 365fb98bcd30d9844ab7bfe0e7fb43f3, type: 3}
       propertyPath: startingHealth
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8592627448115405760, guid: 365fb98bcd30d9844ab7bfe0e7fb43f3, type: 3}
+      propertyPath: spritesByHealth.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1f6c49ed222b57948a629841f315bdbd, type: 3}
+    - target: {fileID: 8592627448115405760, guid: 365fb98bcd30d9844ab7bfe0e7fb43f3, type: 3}
+      propertyPath: spritesByHealth.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 27a544f49c17de84fa9cde7334c15de9, type: 3}
+    - target: {fileID: 8592627448115405760, guid: 365fb98bcd30d9844ab7bfe0e7fb43f3, type: 3}
+      propertyPath: spritesByHealth.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 3ee24a9396392324980a4bcaa01a0bc0, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 365fb98bcd30d9844ab7bfe0e7fb43f3, type: 3}

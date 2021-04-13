@@ -12,6 +12,9 @@ public class ControlSource : MonoBehaviour
     protected Movement move;
     protected Attack attack;
     protected UnitTracker ut;
+    protected IFF iff;
+    protected CityManager cm;
+    protected Health health;
 
 
     //param
@@ -27,6 +30,9 @@ public class ControlSource : MonoBehaviour
         move = GetComponentInChildren<Movement>();
         attack = GetComponentInChildren<Attack>();
         targetGO = GameObject.FindGameObjectWithTag("Player");
+        iff = GetComponent<IFF>();
+        cm = FindObjectOfType<CityManager>();
+        health = GetComponentInChildren<Health>();
     }
 
     // Update is called once per frame
@@ -40,7 +46,7 @@ public class ControlSource : MonoBehaviour
         ut.RemoveUnitFromTargetableList(gameObject);
     }
 
-    public GameObject GetTargetObject()
+    public virtual GameObject GetTargetObject()
     {
         return targetGO;
     }

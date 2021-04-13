@@ -6,6 +6,7 @@ using UnityEngine;
 public class House : MonoBehaviour
 {
     //init
+    UnitTracker ut;
     SpriteRenderer sr;
     [SerializeField] Sprite[] possibleHouseSprites = null;
     CitySquare cs;
@@ -21,6 +22,8 @@ public class House : MonoBehaviour
         {
             ChooseHouseImage();
         }
+        ut = FindObjectOfType<UnitTracker>();
+        ut.AddUnitToTargetableList(gameObject);
     }
     private void ChooseHouseImage()
     {
@@ -43,5 +46,6 @@ public class House : MonoBehaviour
         //Debug.Log("dying actions called");
         if (!cs) { return; }
         cs.RemoveBuildingFromList(gameObject.GetComponentInChildren<IFF>());
+        ut.RemoveUnitFromTargetableList(gameObject);
     }
 }

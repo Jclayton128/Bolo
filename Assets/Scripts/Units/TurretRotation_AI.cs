@@ -42,6 +42,7 @@ public class TurretRotation_AI : MonoBehaviour
 
     private void FireWeapon()
     {
+        if (!targetGO) { return; }
         if (distToTargetGO <= attackRange && Mathf.Abs(ang) <= acceptableAngleOffBoresight)
         {
             Debug.Log("kaboom!");
@@ -56,7 +57,7 @@ public class TurretRotation_AI : MonoBehaviour
 
     private void TurnToFaceTargetGO()
     {
-
+        if (!targetGO) { return; }
         if (distToTargetGO > 2 * attackRange)
         {
             Vector3 vel = rb.velocity;
@@ -73,7 +74,7 @@ public class TurretRotation_AI : MonoBehaviour
         }
         float angClamped = Mathf.Clamp01(Mathf.Abs(ang)/10);
         float currentRotSpeed = rotationSpeed * angClamped * angClamped;
-        Debug.Log("ang: " + angClamped + " . CRS: " + currentRotSpeed);
+        //Debug.Log("ang: " + angClamped + " . CRS: " + currentRotSpeed);
 
         if (ang > acceptableAngleOffBoresight)
         {
@@ -88,6 +89,7 @@ public class TurretRotation_AI : MonoBehaviour
 
     private void CalculateDistanceToTargetGO()
     {
+        if (!targetGO) { return; }
         distToTargetGO = (cs.GetTargetObject().transform.position - transform.position).magnitude;
     }
 }

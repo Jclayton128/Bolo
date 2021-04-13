@@ -87,8 +87,37 @@ public class CityManager : MonoBehaviour
                 distance = diff;
             }
         }
-        return closestCitySquare;
-       
+        return closestCitySquare;       
+    }
+
+    public bool TryFindNearestCitySquare(Transform sourceTransform, int allegianceToIgnore, out CitySquare closestCitySquare)
+    {
+        citySquares = FindObjectsOfType<CitySquare>();
+        bool foundSomething = false;
+        closestCitySquare = null;
+        float distance = Mathf.Infinity;
+        foreach (CitySquare currentCS in citySquares)
+        {
+            Debug.Log("this city: " + currentCS.cityName + " belongs to: " + currentCS.GetComponentInChildren<IFF>().GetIFFAllegiance().ToString());
+            if (currentCS.GetComponentInChildren<IFF>().GetIFFAllegiance() == allegianceToIgnore)
+            {               
+                foundSomething = false;
+                continue;
+            }
+            float diff = (currentCS.transform.position - sourceTransform.position).magnitude;
+            if (diff < distance)
+            {
+                closestCitySquare = currentCS;
+                distance = diff;
+            }
+        }
+
+        if (closestCitySquare)
+        {
+            foundSomething = true;
+        }
+        Debug.Log(foundSomething);
+        return foundSomething;
     }
 
     public float FindAngleToCitySquare(Transform sourceTransform, CitySquare targetCitySquare)

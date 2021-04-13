@@ -8,14 +8,13 @@ using UnityEngine.UI;
 
 public class CitySquare : MonoBehaviour
 {
+
     //init
     IFF iff;
     SpriteRenderer sr;
-
-
     GameObject player;
     IFF playerIFF;
-
+    int layerMask_groundObjects = 1 << 8;
 
     //param
     public float cityRadius = 5f;
@@ -26,32 +25,34 @@ public class CitySquare : MonoBehaviour
     public string cityName;
     public List<IFF> buildingsInCity = new List<IFF>();
     public float timeSpentCapturing = 0;
+    public int iffOfPreviousCaptureAttempt = 0;
+    public GameObject capturingGO = null;
 
     void Start()
     {
 
         player = Finder.FindNearestGameObjectWithTag(transform, "Player");
         playerIFF = player.GetComponent<IFF>();
-
         sr = GetComponent<SpriteRenderer>();
         iff = GetComponentInChildren<IFF>();
         SelectCityName();
-        FindHousesWithinCityAndAdjustAllegiance();
+        FindHousesAndTurretsWithinCityAndAdjustAllegiance();
+        
     }
-
 
     private void SelectCityName()
     {
         CityManager cnm = FindObjectOfType<CityManager>();
         cityName = cnm.GetRandomCityName();
     }
-    private void FindHousesWithinCityAndAdjustAllegiance()
+    private void FindHousesAndTurretsWithinCityAndAdjustAllegiance()
     {
         List<GameObject> allGOs = new List<GameObject>();
         allGOs = Finder.FindAllGameObjectsWithinSearchRange(transform, cityRadius);
         foreach (GameObject possibleBuilding in allGOs)
         {
-            if (possibleBuilding.TryGetComponent(out IFF possIFF) && possibleBuilding.transform.root.tag == "Building")
+            if (possibleBuilding.TryGetComponent(out IFF possIFF) && 
+                (possibleBuilding.transform.root.tag == "Building" || possibleBuilding.transform.root.tag == "Turret"))
             {
                 //Debug.Log(possibleBuilding.transform.root.name);
                 possibleBuilding.transform.root.GetComponentInChildren<House>().SetOwningCity(this);
@@ -68,34 +69,54 @@ public class CitySquare : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleCaptureAttempts();
-        CheckIfCaptured();
+        ReduceCaptureTimeIfNotBeingCaptured();
+        HandleCaptureAttempt();
         //CheckForHousesRemaining();
-
     }
 
-    private void CheckIfCaptured()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (timeSpentCapturing >= timeToCapture)
-        {
-            int newAllegiance = playerIFF.GetIFFAllegiance();
-            iff.SetIFFAllegiance(newAllegiance);
-            foreach (IFF buildingIFF in buildingsInCity)
-            {
-                buildingIFF.SetIFFAllegiance(newAllegiance);
-            }
-            timeSpentCapturing = 0;
-        }
+        capturingGO = collision.gameObject;
     }
 
-    private void HandleCaptureAttempts()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (playerIFF.GetIFFAllegiance() == iff.GetIFFAllegiance()) { return; }
-        if ((player.transform.position - transform.position).magnitude <= captureRange)
+        capturingGO = null;
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!capturingGO) { return; }
+        if (capturingGO.GetComponentInParent<IFF>().GetIFFAllegiance() != iff.GetIFFAllegiance() && timeSpentCapturing < timeToCapture)
         {
             timeSpentCapturing += Time.deltaTime;
         }
-        else
+    }
+
+    private void HandleCaptureAttempt()
+    {
+        if (!capturingGO) { return; }
+
+        if (timeSpentCapturing >= timeToCapture)
+        {
+            CompleteSuccessfulCapture();
+        }
+    }
+
+    private void CompleteSuccessfulCapture()
+    {
+        int newAllegiance = capturingGO.GetComponentInParent<IFF>().GetIFFAllegiance();
+        iff.SetIFFAllegiance(newAllegiance);
+        foreach (IFF buildingIFF in buildingsInCity)
+        {
+            buildingIFF.SetIFFAllegiance(newAllegiance);
+        }
+        timeSpentCapturing = 0;
+    }
+
+    private void ReduceCaptureTimeIfNotBeingCaptured()
+    {
+        if (!capturingGO)
         {
             timeSpentCapturing -= Time.deltaTime * 2;
             timeSpentCapturing = Mathf.Clamp(timeSpentCapturing, 0, timeToCapture);

@@ -8,6 +8,7 @@ TagManager:
   - CCB
   - OwnFlag
   - Building
+  - Turret
   layers:
   - Default
   - TransparentFX

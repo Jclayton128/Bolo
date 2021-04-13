@@ -30,8 +30,7 @@ public class DefenseTurret : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ut = GameObject.FindObjectOfType<UnitTracker>();
-        ut.AddUnitToTargetableList(gameObject);  //TODO: why is this defense turret a targetable unit? Can turrets attack each other?
+        ut = FindObjectOfType<UnitTracker>();
         ownIFF = GetComponentInChildren<IFF>();
         attackRange = weaponLifetime * weaponSpeed;
         selectedFiringSound = SelectSoundFromArray(firingSounds);
@@ -88,10 +87,7 @@ public class DefenseTurret : MonoBehaviour
         return audioArray[random];
     }
 
-    private void OnDestroy()
-    {
-        ut.RemoveUnitFromTargetableList(gameObject);
-    }
+
 }
 
 
