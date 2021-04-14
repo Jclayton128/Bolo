@@ -29,10 +29,20 @@ public class TankMovement : Movement
     void Update()
     {
         Debug.DrawLine(transform.position, commandedVector.normalized + transform.position, Color.blue);
+        UpdateCurrentMoveSpeed();
         CheckForCommandedMovement();
         UpdateCommandedVectorAndAngleOffIt();
-        //UpdateMoveTurnPerformanceWithCurrentTerrain();
     }
+
+    private void UpdateCurrentMoveSpeed()
+    {
+        //TODO: Get and use terrain speed modifier
+        float gearModifier = (cs.speedSetting) / 2f;
+        moveSpeed_current = moveSpeed_normal * gearModifier;
+        Debug.Log("CS speed setting: " + cs.speedSetting +  ". gear mod: " + gearModifier + " . MSC: " + moveSpeed_current);
+
+    }
+
     private void FixedUpdate()
     {
         RotateToCommandedVector();
@@ -62,11 +72,11 @@ public class TankMovement : Movement
         {
             if (Mathf.Abs(angleOffCommandedVector) < maxAngleOffBoresightToDrive * 4)
             {
-                rb.velocity = commandedVector * (moveSpeed_normal / 2);
+                rb.velocity = commandedVector * (moveSpeed_current / 2);
             }
             if (Mathf.Abs(angleOffCommandedVector) < maxAngleOffBoresightToDrive)
             {
-                rb.velocity = commandedVector * moveSpeed_normal;
+                rb.velocity = commandedVector * moveSpeed_current;
             }
         }
     }

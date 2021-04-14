@@ -23,6 +23,8 @@ public class ControlSource : MonoBehaviour
     public float horizComponent { get; protected set; }
     public float vertComponent { get; protected set; }
 
+    public int speedSetting { get; protected set; } = 1;
+
     protected virtual void Start()
     {
         ut = FindObjectOfType<UnitTracker>();
@@ -33,6 +35,7 @@ public class ControlSource : MonoBehaviour
         iff = GetComponent<IFF>();
         cm = FindObjectOfType<CityManager>();
         health = GetComponentInChildren<Health>();
+
     }
 
     // Update is called once per frame

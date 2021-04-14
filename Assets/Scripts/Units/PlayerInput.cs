@@ -2,10 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInput : ControlSource
 {
     //init
+    GameObject shiftKnob;
+    [SerializeField] Transform[] gearShiftPositions = null;
 
 
     //param
@@ -13,11 +16,13 @@ public class PlayerInput : ControlSource
     //hood
     public bool LMBdown = false;
     public bool RMBdown = false;
-    public Vector3 mousePos = new Vector3(0, 0, 0);
+    public Vector3 mousePos = new Vector3(0, 0, 0);    
 
     protected override void Start()
     {
         base.Start();
+        shiftKnob = GameObject.FindGameObjectWithTag("ShiftKnob");
+
 
     }
 
@@ -59,6 +64,23 @@ public class PlayerInput : ControlSource
     {
         horizComponent = Input.GetAxis("Horizontal");
         vertComponent = Input.GetAxis("Vertical");
+        HandleGearShifting();
+
+    }
+
+    private void HandleGearShifting()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {            
+            speedSetting++;
+            //TODO: Play an audioclip with gear shifting 'clunk'
+            if (speedSetting > gearShiftPositions.Length)
+            {
+                speedSetting = 1;
+            }
+        }
+
+        shiftKnob.transform.position = gearShiftPositions[speedSetting-1].transform.position;
     }
 
     protected override void OnDestroy()
