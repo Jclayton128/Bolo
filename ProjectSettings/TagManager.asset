@@ -10,6 +10,7 @@ TagManager:
   - Turret
   - ShiftKnob
   - House
+  - MoneyBar
   layers:
   - Default
   - TransparentFX
@@ -23,8 +24,8 @@ TagManager:
   - Weaponry
   - Driveable
   - Undriveable
-  - 
-  - 
+  - StealthHider
+  - SealthSeeker
   - 
   - 
   - 

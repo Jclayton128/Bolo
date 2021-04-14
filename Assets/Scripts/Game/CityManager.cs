@@ -98,7 +98,6 @@ public class CityManager : MonoBehaviour
         float distance = Mathf.Infinity;
         foreach (CitySquare currentCS in citySquares)
         {
-            Debug.Log("this city: " + currentCS.cityName + " belongs to: " + currentCS.GetComponentInChildren<IFF>().GetIFFAllegiance().ToString());
             if (currentCS.GetComponentInChildren<IFF>().GetIFFAllegiance() == allegianceToIgnore)
             {               
                 foundSomething = false;
@@ -116,7 +115,6 @@ public class CityManager : MonoBehaviour
         {
             foundSomething = true;
         }
-        Debug.Log(foundSomething);
         return foundSomething;
     }
 
