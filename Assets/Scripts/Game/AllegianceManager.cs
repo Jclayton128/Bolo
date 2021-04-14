@@ -9,7 +9,7 @@ public class AllegianceManager : MonoBehaviour
     [SerializeField] Sprite[] flagSource = null;
 
     //hood
-    int playerAllegiance = 3;
+    public int playerAllegiance = 3;
 
     private void Awake()
     {
@@ -39,4 +39,5 @@ public class AllegianceManager : MonoBehaviour
     {
         return flagSource[key];
     }
+
 }

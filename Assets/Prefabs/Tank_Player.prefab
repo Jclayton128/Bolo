@@ -72,7 +72,7 @@ TrailRenderer:
   m_SortingLayerID: 225263011
   m_SortingLayer: 1
   m_SortingOrder: 9
-  m_Time: 30
+  m_Time: 5
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -94,8 +94,8 @@ TrailRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 0.21953988, g: 0.31132078, b: 0.21342115, a: 0.7058824}
-      key1: {r: 0.21953988, g: 0.31132078, b: 0.21342115, a: 0.5529412}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key1: {r: 0.21953988, g: 0.31132078, b: 0.21342115, a: 0.29411766}
+      key2: {r: 0, g: 0, b: 0, a: 0.29411766}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -110,7 +110,7 @@ TrailRenderer:
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 47609
+      atime1: 64957
       atime2: 64957
       atime3: 0
       atime4: 0
@@ -119,7 +119,7 @@ TrailRenderer:
       atime7: 0
       m_Mode: 0
       m_NumColorKeys: 2
-      m_NumAlphaKeys: 3
+      m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
@@ -555,7 +555,7 @@ TrailRenderer:
   m_SortingLayerID: 225263011
   m_SortingLayer: 1
   m_SortingOrder: 9
-  m_Time: 30
+  m_Time: 5
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -577,8 +577,8 @@ TrailRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 0.21953988, g: 0.31132078, b: 0.21342115, a: 0.7058824}
-      key1: {r: 0.21953988, g: 0.31132078, b: 0.21342115, a: 0.5529412}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key1: {r: 0.21953988, g: 0.31132078, b: 0.21342115, a: 0.29411766}
+      key2: {r: 0, g: 0, b: 0, a: 0.29411766}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -593,7 +593,7 @@ TrailRenderer:
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 47609
+      atime1: 64957
       atime2: 64957
       atime3: 0
       atime4: 0
@@ -602,7 +602,7 @@ TrailRenderer:
       atime7: 0
       m_Mode: 0
       m_NumColorKeys: 2
-      m_NumAlphaKeys: 3
+      m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
