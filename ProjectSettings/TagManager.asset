@@ -7,8 +7,9 @@ TagManager:
   - CityNameTextBar
   - CCB
   - OwnFlag
-  - Building
   - Turret
+  - ShiftKnob
+  - House
   layers:
   - Default
   - TransparentFX

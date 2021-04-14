@@ -141,7 +141,8 @@ GameObject:
   - component: {fileID: 182887017551331596}
   - component: {fileID: 182887017551331599}
   - component: {fileID: 182887017551331594}
-  m_Layer: 0
+  - component: {fileID: 2044764351183017485}
+  m_Layer: 8
   m_Name: Tank_Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -210,11 +211,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba8e860ea9ec77740a17ac999417a4c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizComponent: 0
-  vertComponent: 0
-  mousePos: {x: 0, y: 0, z: 0}
+  gearShiftPositions:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   LMBdown: 0
   RMBdown: 0
+  mousePos: {x: 0, y: 0, z: 0}
+--- !u!114 &2044764351183017485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182887017551331595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9125f48ad823a4ab23f83bef44b017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &182887017605779120
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,7 +459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed_normal: 1
-  turnSpeed_normal: 360
+  turnSpeed_normal: 180
   commandedVector: {x: 0, y: 0, z: 0}
 --- !u!114 &182887018754021680
 MonoBehaviour:

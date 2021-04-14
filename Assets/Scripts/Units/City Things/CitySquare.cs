@@ -12,27 +12,26 @@ public class CitySquare : MonoBehaviour
     //init
     IFF iff;
     SpriteRenderer sr;
-    GameObject player;
-    IFF playerIFF;
-    int layerMask_groundObjects = 1 << 8;
+    public MoneyHolder ownerMoneyHolder = null;
 
     //param
     public float cityRadius = 5f;
     public float timeToCapture = 15; //seconds
-    float captureRange = 0.5f;
+    public float timeBetweenMoneyDrops = 5f;
 
     //hood
     public string cityName;
     public List<IFF> buildingsInCity = new List<IFF>();
+    List<IFF> housesInCity = new List<IFF>();
+    List<IFF> turretsInCity = new List<IFF>();
     public float timeSpentCapturing = 0;
     public int iffOfPreviousCaptureAttempt = 0;
     public GameObject capturingGO = null;
 
+    float timeSinceLastMoneyDrop = 0;
+
     void Start()
     {
-
-        player = Finder.FindNearestGameObjectWithTag(transform, "Player");
-        playerIFF = player.GetComponent<IFF>();
         sr = GetComponent<SpriteRenderer>();
         iff = GetComponentInChildren<IFF>();
         SelectCityName();
@@ -51,16 +50,20 @@ public class CitySquare : MonoBehaviour
         allGOs = Finder.FindAllGameObjectsWithinSearchRange(transform, cityRadius);
         foreach (GameObject possibleBuilding in allGOs)
         {
-            if (possibleBuilding.TryGetComponent(out IFF possIFF) && 
-                (possibleBuilding.transform.root.tag == "Building" || possibleBuilding.transform.root.tag == "Turret"))
+            if (possibleBuilding.TryGetComponent(out IFF possIFF) && (possibleBuilding.transform.root.tag == "House" ))
             {
-                //Debug.Log(possibleBuilding.transform.root.name);
                 possibleBuilding.transform.root.GetComponentInChildren<House>().SetOwningCity(this);
-
                 int currentAllegiance = iff.GetIFFAllegiance();
                 possIFF.SetIFFAllegiance(currentAllegiance);
-                buildingsInCity.Add(possIFF);
-
+                housesInCity.Add(possIFF);
+                continue;
+            }
+            if (possibleBuilding.TryGetComponent(out IFF possIFF_2) && (possibleBuilding.transform.root.tag == "Turret"))
+            {
+                possibleBuilding.transform.root.GetComponentInChildren<House>().SetOwningCity(this);
+                int currentAllegiance = iff.GetIFFAllegiance();
+                possIFF_2.SetIFFAllegiance(currentAllegiance);
+                turretsInCity.Add(possIFF_2);
                 continue;
             }
         }
@@ -72,6 +75,18 @@ public class CitySquare : MonoBehaviour
         ReduceCaptureTimeIfNotBeingCaptured();
         HandleCaptureAttempt();
         //CheckForHousesRemaining();
+
+        ProvideMoneyDropToOwner();
+    }
+    private void ProvideMoneyDropToOwner()
+    {
+        timeSinceLastMoneyDrop -= Time.deltaTime;
+        if (timeSinceLastMoneyDrop <= 0)
+        {
+            if (!ownerMoneyHolder) { return; }
+            ownerMoneyHolder.AddMoney(housesInCity.Count);
+            timeSinceLastMoneyDrop = timeBetweenMoneyDrops;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -107,9 +122,14 @@ public class CitySquare : MonoBehaviour
     {
         int newAllegiance = capturingGO.GetComponentInParent<IFF>().GetIFFAllegiance();
         iff.SetIFFAllegiance(newAllegiance);
-        foreach (IFF buildingIFF in buildingsInCity)
+        ownerMoneyHolder = capturingGO.transform.root.GetComponentInChildren<MoneyHolder>();
+        foreach (IFF houseIFF in housesInCity)
         {
-            buildingIFF.SetIFFAllegiance(newAllegiance);
+            houseIFF.SetIFFAllegiance(newAllegiance);
+        }
+        foreach (IFF turretIFF in turretsInCity)
+        {
+            turretIFF.SetIFFAllegiance(newAllegiance);
         }
         timeSpentCapturing = 0;
     }
@@ -135,6 +155,7 @@ public class CitySquare : MonoBehaviour
     public void RemoveBuildingFromList(IFF deadThing)
     {
         //Debug.Log("removal called");
-        buildingsInCity.Remove(deadThing);
+        housesInCity.Remove(deadThing);
+        turretsInCity.Remove(deadThing);
     }
 }

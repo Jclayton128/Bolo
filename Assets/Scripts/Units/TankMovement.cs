@@ -39,7 +39,7 @@ public class TankMovement : Movement
         //TODO: Get and use terrain speed modifier
         float gearModifier = (cs.speedSetting) / 2f;
         moveSpeed_current = moveSpeed_normal * gearModifier;
-        Debug.Log("CS speed setting: " + cs.speedSetting +  ". gear mod: " + gearModifier + " . MSC: " + moveSpeed_current);
+        //Debug.Log("CS speed setting: " + cs.speedSetting +  ". gear mod: " + gearModifier + " . MSC: " + moveSpeed_current);
 
     }
 

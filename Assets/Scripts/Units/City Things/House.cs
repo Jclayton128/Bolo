@@ -14,7 +14,10 @@ public class House : MonoBehaviour
     //param
     public bool isHouse = true;
 
+
     //hood
+
+
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -34,8 +37,9 @@ public class House : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
+
 
     public void SetOwningCity(CitySquare citysq)
     {
