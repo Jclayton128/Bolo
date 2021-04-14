@@ -11,7 +11,7 @@ public class IFF : MonoBehaviour
     Image flagImage;
 
     //param
-    [SerializeField] int iffAllegiance;
+    int iffAllegiance;
     public bool isPlayer = false;
 
     private void Start()
@@ -25,6 +25,7 @@ public class IFF : MonoBehaviour
         if (isPlayer)
         {
             flagImage = GameObject.FindGameObjectWithTag("OwnFlag").GetComponent<Image>();
+            iffAllegiance = am.playerAllegiance;
             flagImage.sprite = am.GetFlagOfAllegiance(iffAllegiance);
         }
         SetFlag();

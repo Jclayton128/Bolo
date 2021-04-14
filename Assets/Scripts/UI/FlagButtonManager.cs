@@ -10,11 +10,13 @@ public class FlagButtonManager : MonoBehaviour
     //init
     [SerializeField] List<Button> buttons = new List<Button>();
     AllegianceManager am;
+    SceneLoader sl;
 
     // Start is called before the first frame update
     void Start()
     {
         am = FindObjectOfType<AllegianceManager>();
+        sl = FindObjectOfType<SceneLoader>();
         SetButtonFlags();
     }
 
@@ -35,7 +37,7 @@ public class FlagButtonManager : MonoBehaviour
     {
         int allegiance = buttons.IndexOf(button);
         am.playerAllegiance = allegiance;
-        Debug.Log("ready to start, allegiance: " + am.playerAllegiance);
+        sl.LoadNextScene();
         
     }
 

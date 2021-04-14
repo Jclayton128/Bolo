@@ -8,8 +8,9 @@ public class AllegianceManager : MonoBehaviour
     //Init
     [SerializeField] Sprite[] flagSource = null;
 
+
     //hood
-    public int playerAllegiance = 3;
+    public int playerAllegiance;
 
     private void Awake()
     {
@@ -26,7 +27,6 @@ public class AllegianceManager : MonoBehaviour
     void Start()
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<IFF>().SetIFFAllegiance(playerAllegiance);
-        Debug.Log("Forcing Player to allegiance 3");
     }
 
 
@@ -39,5 +39,7 @@ public class AllegianceManager : MonoBehaviour
     {
         return flagSource[key];
     }
+
+
 
 }
