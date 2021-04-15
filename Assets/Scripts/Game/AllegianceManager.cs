@@ -7,7 +7,7 @@ public class AllegianceManager : MonoBehaviour
 {
     //Init
     [SerializeField] Sprite[] flagSource = null;
-
+    SortedList<int, FactionLeader> factionLeaders = new SortedList<int, FactionLeader>();
 
     //hood
     public int playerAllegiance;
@@ -26,13 +26,28 @@ public class AllegianceManager : MonoBehaviour
     }
     void Start()
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<IFF>().SetIFFAllegiance(playerAllegiance);
+        //GameObject.FindGameObjectWithTag("Player").GetComponent<IFF>().SetIFFAllegiance(playerAllegiance);
+
     }
 
 
     // Update is called once per frame
     void Update()
     {
+
+    }
+    public void AddFactionLeaderToList(int allegiance, FactionLeader fl) //call this when the Arena scene is loaded.
+    {
+        if (factionLeaders.ContainsKey(allegiance))
+        {
+            Debug.Log("faction " + allegiance + " already has a leader!");
+        }
+        else
+        {
+            Debug.Log("added faction leader for faction " + allegiance + ".");
+            factionLeaders.Add(allegiance, fl);
+        }
+
     }
 
     public Sprite GetFlagOfAllegiance(int key)

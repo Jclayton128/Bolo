@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MoneyHolder : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class MoneyHolder : MonoBehaviour
             moneyBar.text = "$ " + money.ToString();
         }
     }
+    
 
     // Update is called once per frame
     void Update()

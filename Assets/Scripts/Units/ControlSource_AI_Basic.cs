@@ -71,26 +71,26 @@ public class ControlSource_AI_Basic : ControlSource
         {
             if(eGO.GetComponentInChildren<IFF>().GetIFFAllegiance() == iff.GetIFFAllegiance())
             {
-                Debug.Log("case 1");
+                //Debug.Log("case 1");
                 strategicTarget = null;
                 continue;
             }
             if (eGO.tag == "Player" && isHealthy) //attack player if I am healthy
             {
-                Debug.Log("case 2");
+                //Debug.Log("case 2");
                 tacticalTarget = eGO;
                 continue;
             }
             if (eGO.tag == "Player" && !isHealthy)
             {
-                Debug.Log("case 3");
+                //Debug.Log("case 3");
                 tacticalTarget = eGO;
                 // strategicTarget = an allied base in order to heal
                 continue;
             }
             if (eGO.tag == "Turret")
             {
-                Debug.Log("case 4");
+                //Debug.Log("case 4");
                 tacticalTarget = eGO;
                 continue;
             }
@@ -106,7 +106,7 @@ public class ControlSource_AI_Basic : ControlSource
             }
             else
             {
-                Debug.Log("nowhere really to drive to");
+                //Debug.Log("nowhere really to drive to");
             }
         }
         

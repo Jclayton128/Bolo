@@ -11,12 +11,12 @@ public class IFF : MonoBehaviour
     Image flagImage;
 
     //param
-    int iffAllegiance;
+    public int iffAllegiance;
     public bool isPlayer = false;
 
     private void Start()
     {
-        if (TryGetComponent<SpriteRenderer>(out SpriteRenderer sr)) //units don't have allegiance overtop?
+        if (TryGetComponent<SpriteRenderer>(out SpriteRenderer sr))
         {
             if (GetComponent<ControlSource>()) { return; }  //things with a control source don't have an allegiance flag.
             flagSR = sr;

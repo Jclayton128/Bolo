@@ -16,8 +16,20 @@ public class PlayerInput : ControlSource
     //hood
     public bool LMBdown = false;
     public bool RMBdown = false;
-    public Vector3 mousePos = new Vector3(0, 0, 0);    
+    public Vector3 mousePos = new Vector3(0, 0, 0);
 
+    private void Awake()
+    {
+        int amCount = FindObjectsOfType<AllegianceManager>().Length;
+        if (amCount > 1)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+    }
     protected override void Start()
     {
         base.Start();
