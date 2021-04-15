@@ -18,6 +18,7 @@ public class IFF : MonoBehaviour
     {
         if (TryGetComponent<SpriteRenderer>(out SpriteRenderer sr)) //units don't have allegiance overtop?
         {
+            if (GetComponent<ControlSource>()) { return; }  //things with a control source don't have an allegiance flag.
             flagSR = sr;
         }
 
