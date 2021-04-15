@@ -14,6 +14,7 @@ public class ControlSource : MonoBehaviour
     protected UnitTracker ut;
     protected IFF iff;
     protected CityManager cm;
+    protected AllegianceManager am;
     protected Health health;
 
 
@@ -35,6 +36,7 @@ public class ControlSource : MonoBehaviour
         iff = GetComponent<IFF>();
         cm = FindObjectOfType<CityManager>();
         health = GetComponentInChildren<Health>();
+        am = FindObjectOfType<AllegianceManager>();
 
     }
 

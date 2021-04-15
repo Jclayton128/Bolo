@@ -90,6 +90,24 @@ public class CityManager : MonoBehaviour
         return closestCitySquare;       
     }
 
+    public CitySquare FindNearestCitySquare(Transform sourceTransform, int allegianceToLookFor)
+    {
+        citySquares = FindObjectsOfType<CitySquare>();
+        CitySquare closestCitySquare = null;
+        float distance = Mathf.Infinity;
+        foreach (CitySquare currentCS in citySquares)
+        {
+            if (currentCS.GetComponentInChildren<IFF>().GetIFFAllegiance() != allegianceToLookFor) { continue; }
+            float diff = (currentCS.transform.position - sourceTransform.position).magnitude;
+            if (diff < distance)
+            {
+                closestCitySquare = currentCS;
+                distance = diff;
+            }
+        }
+        return closestCitySquare;
+    }
+
     public bool TryFindNearestCitySquare(Transform sourceTransform, int allegianceToIgnore, out CitySquare closestCitySquare)
     {
         citySquares = FindObjectsOfType<CitySquare>();

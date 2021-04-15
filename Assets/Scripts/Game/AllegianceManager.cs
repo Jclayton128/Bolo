@@ -47,7 +47,13 @@ public class AllegianceManager : MonoBehaviour
             Debug.Log("added faction leader for faction " + allegiance + ".");
             factionLeaders.Add(allegiance, fl);
         }
+    }
 
+    public FactionLeader GetFactionLeader(int iffAllegiance)
+    {
+        Debug.Log("GFL asked for " + iffAllegiance);
+        FactionLeader fl = factionLeaders[iffAllegiance];
+        return fl;
     }
 
     public Sprite GetFlagOfAllegiance(int key)

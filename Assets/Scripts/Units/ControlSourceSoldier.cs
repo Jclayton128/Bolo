@@ -14,6 +14,9 @@ public class ControlSourceSoldier : ControlSource
 
     private void DetermineMissionAtStart()
     {
+        int iffAlleg = iff.GetIFFAllegiance();
+        CitySquare closest = cm.FindNearestCitySquare(am.GetFactionLeader(iffAlleg).transform, iffAlleg);
+        Debug.Log(closest.transform.position);
         //get closest city to the player. if its friendly, then just start moving towards the player. if cc2p is non-friendly, then move towards it.
         //cm.FindNearestCitySquare();
     }
