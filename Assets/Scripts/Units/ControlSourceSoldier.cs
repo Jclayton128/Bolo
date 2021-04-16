@@ -28,7 +28,7 @@ public class ControlSourceSoldier : ControlSource
         ownAllegiance = iff.GetIFFAllegiance();
         attackRange = attack.GetAttackRange();
         DetermineMissionAtStart();
-
+        speedSetting = 2;
     }
 
     private void DetermineMissionAtStart()
@@ -96,16 +96,42 @@ public class ControlSourceSoldier : ControlSource
     {
         if (closestAttackingUnit)
         {
-            //move to within 50% attack range of closest attacking unit and face it
-            navTarget = closestAttackingUnit.transform.position;
+            //move to within 50% attack range of closest attacking unit and face i
+            if (TestForLOSForAttack(closestAttackingUnit.transform.position, attackRange * .5f))
+            {
+                Debug.Log("called for attack");
+                attack.AttackCommence();
+                speedSetting = 1; //slowdown
+                Vector3 dir = (transform.position - closestAttackingUnit.transform.position).normalized;
+                navTarget = closestAttackingUnit.transform.position + (dir * attackRange * .25f);
+            }
+            else
+            {
+                speedSetting = 2;
+                navTarget = closestAttackingUnit.transform.position;
+            }
+
             Debug.Log("closest attacking unit");
             return;
         }
-        if (isInvader && closestDefenseTurret)
+        if (closestDefenseTurret)
         {
             //move to within 50% attack range of closest Defense Turret and face it.
-            navTarget = closestDefenseTurret.transform.position;
+            if (TestForLOSForAttack(closestDefenseTurret.transform.position, attackRange * .5f))
+            {
+                Debug.Log("called for attack");
+                attack.AttackCommence();
+                speedSetting = 1; //slowdown
+                Vector3 dir = (closestDefenseTurret.transform.position - transform.position).normalized;
+                navTarget = transform.position + (dir * 0.5f);
+            }
+            else
+            {
+                speedSetting = 2;
+                navTarget = closestAttackingUnit.transform.position;
+            }
             Debug.Log("closest defense turret");
+            speedSetting = 1;
             return;
         }
 
@@ -114,6 +140,7 @@ public class ControlSourceSoldier : ControlSource
             //move to exactly on target CitySquare.
             navTarget = targetCity.transform.position;
             Debug.Log("capturing city");
+            speedSetting = 2;
             return;
         }
 
@@ -126,6 +153,7 @@ public class ControlSourceSoldier : ControlSource
                 navTarget = CUR.CreateRandomPointNearInputPoint(centerPos, 1.0f, 0.5f);
             }
             Debug.Log("following faction leader");
+            speedSetting = 2;
             return;
         }
         if (!isInvader && !factionLeader)
@@ -137,10 +165,13 @@ public class ControlSourceSoldier : ControlSource
                 navTarget = CUR.CreateRandomPointNearInputPoint(centerPos, 1.0f, 0.5f);
             }
             Debug.Log("guarding home");
+            speedSetting = 2;
             return;
         }
 
     }
+
+
 
     protected override void Scan()
     {

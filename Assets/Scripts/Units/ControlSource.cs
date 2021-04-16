@@ -23,6 +23,7 @@ public abstract class ControlSource : MonoBehaviour
     //param
     public float scanRange = 3f;
     protected float timeBetweenScans = 0.2f;
+    protected int layerMask_weaponryBlockers = 1 << 8;
 
     //hood
     public float horizComponent { get; protected set; }
@@ -81,6 +82,38 @@ public abstract class ControlSource : MonoBehaviour
             Debug.DrawLine(corners[i], corners[i + 1], Color.blue);
         }
         Debug.DrawLine(corners[0], corners[1], Color.red);
+    }
+
+    protected virtual bool TestForLOSForAttack(Vector3 targetPos, float attackRange)
+    {
+        bool hasLOS;
+        float dist = (transform.position - targetPos).magnitude;
+        if (dist > attackRange)
+        {
+            Debug.Log("out of range");
+            hasLOS = false;
+            return hasLOS;
+        }
+        RaycastHit2D hit = Physics2D.Linecast(transform.position, targetPos, layerMask_weaponryBlockers);
+        float hitDist = (targetPos - hit.transform.position).magnitude;
+        if (hitDist <= 0.1f)
+        {
+            Debug.Log("clear path to target");
+            hasLOS = true;
+            return hasLOS;
+
+        }
+        if (hitDist > 0.1f)
+        {
+            Debug.Log(hit.collider.name + " is between " + gameObject.name + " and " + targetPos);
+            hasLOS = false;
+            return hasLOS;
+        }
+        else
+        {
+            hasLOS = false;
+            return hasLOS;
+        }
     }
 
 }
