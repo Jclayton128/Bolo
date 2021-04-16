@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,11 +9,8 @@ public class Movement_Soldier : Movement
 
     //param
 
-
     //hood
     public Vector3 commandedVector = new Vector3();
-    float maxAngleOffBoresightToDrive = 10f;
-    float angleOffCommandedVector;
 
     protected override void Start()
     {
@@ -28,10 +26,30 @@ public class Movement_Soldier : Movement
 
     private void FixedUpdate()
     {
-        //turn towards steering target instantly
-        //walk towards steering target
         commandedVector.x = cs.horizComponent;
         commandedVector.y = cs.vertComponent;
+        WalkInCommandedVector();
+        TurnToCommandedVector();
+
+    }
+
+    private void TurnToCommandedVector()
+    {
+        if (!isCommandedToMove) { return; }
+        float ang = Vector3.SignedAngle(transform.up, commandedVector, Vector3.forward);
+        if (ang > -0.1f)
+        {
+            rb.angularVelocity = turnSpeed_normal;
+        }
+        if (ang < 0.1f)
+        {
+            rb.angularVelocity = -turnSpeed_normal;
+        }
+    }
+
+    private void WalkInCommandedVector()
+    {
+        if (!isCommandedToMove) { return; }
         rb.velocity = commandedVector * moveSpeed_current;
     }
 }

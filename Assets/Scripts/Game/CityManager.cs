@@ -150,7 +150,7 @@ public class CityManager : MonoBehaviour
         foreach (CitySquare cs in citySquares)
         {
             float dist = (cs.transform.position - sourceTransform.position).magnitude;
-            if (dist < searchRange) { continue; }
+            if (dist >= searchRange) { continue; }
             if (cs.transform.root.GetComponentInChildren<IFF>().GetIFFAllegiance() == iffToIgnore) { continue; }
             else
             {

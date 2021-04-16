@@ -34,7 +34,7 @@ public class Movement : MonoBehaviour
     }
     protected virtual void CheckForCommandedMovement()
     {
-        if (Mathf.Abs(cs.horizComponent) > 0 || Mathf.Abs(cs.vertComponent) > 0) //if move commands are non-zero;
+        if (Mathf.Abs(cs.horizComponent) > Mathf.Epsilon || Mathf.Abs(cs.vertComponent) > Mathf.Epsilon) //if move commands are non-zero;
         {
             isCommandedToMove = true;
         }

@@ -20,19 +20,22 @@ public class ControlSourceSoldier : ControlSource
     Vector3 navTarget;
     Vector3 nextSteeringPoint;
     public bool isInvader = false;
+    int ownAllegiance; //this is fine to set because combat units don't just change allegiance...
 
     protected override void Start()
     {
         base.Start();
-        DetermineMissionAtStart();
+        ownAllegiance = iff.GetIFFAllegiance();
         attackRange = attack.GetAttackRange();
+        DetermineMissionAtStart();
+
     }
 
     private void DetermineMissionAtStart()
     {
-        int iffAlleg = iff.GetIFFAllegiance();
-        Transform factionLeaderTransform = am.GetFactionLeader(iffAlleg).transform;
-        CitySquare closestAlliedCS = cm.FindNearestCitySquare(factionLeaderTransform, iffAlleg);
+
+        Transform factionLeaderTransform = am.GetFactionLeader(ownAllegiance).transform;
+        CitySquare closestAlliedCS = cm.FindNearestCitySquare(factionLeaderTransform, ownAllegiance);
 
         CitySquare closestCSOfAll = cm.FindNearestCitySquare(factionLeaderTransform);
 
@@ -106,13 +109,14 @@ public class ControlSourceSoldier : ControlSource
             return;
         }
 
-        if (isInvader && !closestDefenseTurret)
+        if (targetCity && !closestDefenseTurret)
         {
             //move to exactly on target CitySquare.
             navTarget = targetCity.transform.position;
             Debug.Log("capturing city");
             return;
         }
+
         if (!isInvader && factionLeader)
         {
             //move to a point nearby leader via CUR picker.
@@ -140,18 +144,18 @@ public class ControlSourceSoldier : ControlSource
 
     protected override void Scan()
     {
-        int ownAlleg = iff.GetIFFAllegiance();
         if (!isInvader)
         {
-            factionLeader = am.GetFactionLeader(ownAlleg).gameObject;
+            factionLeader = am.GetFactionLeader(ownAllegiance).gameObject;
             if ((factionLeader.transform.position - transform.position).magnitude > scanRange)
             {
                 factionLeader = null;
-            } 
+            }
+            Debug.Log(cm.TryGetCitySquareWithinRange(transform, scanRange, ownAllegiance, out targetCity));
         }
         if (isInvader)
         {
-            if (targetCity.transform.root.GetComponentInChildren<IFF>().GetIFFAllegiance() == ownAlleg)
+            if (targetCity.transform.root.GetComponentInChildren<IFF>().GetIFFAllegiance() == ownAllegiance)
             {
                 isInvader = false;
                 homeCity = targetCity;
@@ -160,7 +164,7 @@ public class ControlSourceSoldier : ControlSource
         }
 
         ut.TryGetClosestUnitWithinRange(gameObject, scanRange, "Turret", out closestDefenseTurret);
-        ut.TryGetClosestAttackerWithinRange(gameObject, scanRange, iff.GetIFFAllegiance(), out closestAttackingUnit);
+        ut.TryGetClosestAttackerWithinRange(gameObject, scanRange, ownAllegiance, out closestAttackingUnit);
     }
 
 
