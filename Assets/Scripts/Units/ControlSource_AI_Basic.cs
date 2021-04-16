@@ -7,16 +7,13 @@ using UnityEngine.AI;
 public class ControlSource_AI_Basic : ControlSource
 {
     //init
-    NavMeshAgent nma;
+
 
     //param
-    public float scanRange = 3f;
-    float timeBetweenScans = 0.2f;
 
     //hood
     Vector3 navTarget_current;    
     Vector3 nextSteeringPoint;
-    float timeSinceLastScan = 0;
     List<GameObject> targets = new List<GameObject>();
     public GameObject tacticalTarget = null;
     public GameObject strategicTarget = null;
@@ -27,15 +24,12 @@ public class ControlSource_AI_Basic : ControlSource
     {
         base.Start();
 
-        nma = GetComponent<NavMeshAgent>();
-        nma.updateRotation = false;
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
-        Scan();
         UpdateHealthyStatus();
         DetermineTargets();
         GenerateControlVectorToDriveTowardsNavTarget();
@@ -54,14 +48,9 @@ public class ControlSource_AI_Basic : ControlSource
         }
     }
 
-    private void Scan()
+    protected override void Scan()
     {
-        timeSinceLastScan -= Time.deltaTime;
-        if (timeSinceLastScan <= 0)
-        {
-            targets = ut.FindTargetsWithinSearchRange(gameObject, scanRange);
-            timeSinceLastScan = timeBetweenScans;
-        }
+        targets = ut.FindTargetsWithinSearchRange(gameObject, scanRange);
     }
 
     private void DetermineTargets()
@@ -144,16 +133,7 @@ public class ControlSource_AI_Basic : ControlSource
         return go;
     }
 
-    public static void DebugDrawPath(Vector3[] corners)
-    {
-        if (corners.Length < 2) { return; }
-        int i = 0;
-        for (; i < corners.Length - 1; i++)
-        {
-            Debug.DrawLine(corners[i], corners[i + 1], Color.blue);
-        }
-        Debug.DrawLine(corners[0], corners[1], Color.red);
-    }
+
 
 
 }

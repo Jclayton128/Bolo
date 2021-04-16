@@ -143,5 +143,23 @@ public class CityManager : MonoBehaviour
         return ang;
     }
 
+    public bool TryGetCitySquareWithinRange(Transform sourceTransform, float searchRange, int iffToIgnore, out CitySquare outCS)
+    {
+        outCS = null;
+        bool foundSomething = false;
+        foreach (CitySquare cs in citySquares)
+        {
+            float dist = (cs.transform.position - sourceTransform.position).magnitude;
+            if (dist < searchRange) { continue; }
+            if (cs.transform.root.GetComponentInChildren<IFF>().GetIFFAllegiance() == iffToIgnore) { continue; }
+            else
+            {
+                foundSomething = true;
+                outCS = cs;
+            }
+        }
+        return foundSomething;
+    }
+
 
 }

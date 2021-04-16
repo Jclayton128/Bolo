@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerInput : ControlSource
 {
     //init
-    GameObject shiftKnob;
+    public GameObject shiftKnob;
     [SerializeField] Transform[] gearShiftPositions = null;
 
 
@@ -34,13 +34,16 @@ public class PlayerInput : ControlSource
     {
         base.Start();
         shiftKnob = GameObject.FindGameObjectWithTag("ShiftKnob");
-
+        gearShiftPositions[0] = GameObject.FindGameObjectWithTag("ShiftPos1").transform;
+        gearShiftPositions[1] = GameObject.FindGameObjectWithTag("ShiftPos2").transform;
+        gearShiftPositions[2] = GameObject.FindGameObjectWithTag("ShiftPos3").transform;
 
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+
         HandleKeyboardInput();
         HandleMouseInput();
     }
@@ -98,6 +101,11 @@ public class PlayerInput : ControlSource
     protected override void OnDestroy()
     {
         base.OnDestroy();
+    }
+
+    protected override void Scan()
+    {
+        //players have to do their own scanning...
     }
 
 }

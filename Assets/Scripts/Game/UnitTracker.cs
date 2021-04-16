@@ -58,14 +58,14 @@ public class UnitTracker : MonoBehaviour
         return unitsWithinRange;
     }
 
-    public List<GameObject> FindTargetsWithinSearchRange(GameObject callingGameObject, float searchRange, int ownAllegiance)
+    public List<GameObject> FindTargetsWithinSearchRange(GameObject callingGameObject, float searchRange, int allegianceToIgnore)
     {
         List<GameObject> unitsWithinRange = new List<GameObject>();
 
         foreach (GameObject unit in targetableUnits)
         {
             if (unit == callingGameObject) { continue; }
-            if (unit.GetComponentInChildren<IFF>().GetIFFAllegiance() == ownAllegiance ) { continue; }
+            if (unit.GetComponentInChildren<IFF>().GetIFFAllegiance() == allegianceToIgnore ) { continue; }
             float diff = (callingGameObject.transform.position - unit.transform.position).magnitude;
             if (diff <= searchRange)
             {
@@ -75,14 +75,77 @@ public class UnitTracker : MonoBehaviour
         return unitsWithinRange;
     }
 
-    public GameObject FindClosestTargetWithinSearchRange(GameObject callingGameObject, float searchRange, int ownAllegiance)
+    public GameObject FindClosestTargetWithAllegiance(GameObject callingGameObject, float searchRange, int allegianceToFind)
     {
         GameObject closetTarget = null;
         float distance = searchRange;
         foreach (GameObject unit in targetableUnits)
         {
             if (unit == callingGameObject) { continue; }
-            if (unit.GetComponentInChildren<IFF>().GetIFFAllegiance() == ownAllegiance) { continue; }
+            if (unit.GetComponentInChildren<IFF>().GetIFFAllegiance() != allegianceToFind) { continue; }
+
+            float diff = (callingGameObject.transform.position - unit.transform.position).magnitude;
+
+            if (diff < distance)
+            {
+                closetTarget = unit;
+                distance = diff;
+            }
+        }
+        return closetTarget;
+    }
+
+    public bool TryGetClosestUnitWithinRange(GameObject callingGameObject, float searchRange, int allegianceToFind, out GameObject foundUnit)
+    {
+        bool foundSomething = false;
+        foundUnit = null;
+        float distance = searchRange;
+        foreach (GameObject unit in targetableUnits)
+        {
+            if (unit == callingGameObject) { continue; }
+            if (unit.GetComponentInChildren<IFF>().GetIFFAllegiance() != allegianceToFind) { continue; }
+
+            float diff = (callingGameObject.transform.position - unit.transform.position).magnitude;
+
+            if (diff < distance)
+            {
+                foundUnit = unit;
+                distance = diff;
+            }
+        }
+        return foundSomething;
+    }
+
+    public bool TryGetClosestUnitWithinRange(GameObject callingGameObject, float searchRange, string tagToLookFor, out GameObject foundUnit)
+    {
+        bool foundSomething = false;
+        foundUnit = null;
+        float distance = searchRange;
+        foreach (GameObject unit in targetableUnits)
+        {
+            if (unit == callingGameObject) { continue; }
+            if (unit.tag != tagToLookFor) { continue; }
+
+            float diff = (callingGameObject.transform.position - unit.transform.position).magnitude;
+
+            if (diff < distance)
+            {
+                foundUnit = unit;
+                distance = diff;
+            }
+        }
+        return foundSomething;
+    }
+
+
+    public GameObject FindClosestTargetWithinSearchRange(GameObject callingGameObject, float searchRange, int allegianceToIgnore)
+    {
+        GameObject closetTarget = null;
+        float distance = searchRange;
+        foreach (GameObject unit in targetableUnits)
+        {
+            if (unit == callingGameObject) { continue; }
+            if (unit.GetComponentInChildren<IFF>().GetIFFAllegiance() == allegianceToIgnore) { continue; }
 
             float diff = (callingGameObject.transform.position - unit.transform.position).magnitude;
 

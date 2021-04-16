@@ -11,6 +11,9 @@ TagManager:
   - ShiftKnob
   - House
   - MoneyBar
+  - ShiftPos1
+  - ShiftPos2
+  - ShiftPos3
   layers:
   - Default
   - TransparentFX
