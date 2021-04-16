@@ -137,6 +137,29 @@ public class UnitTracker : MonoBehaviour
         return foundSomething;
     }
 
+    public bool TryGetClosestAttackerWithinRange(GameObject callingGameObject, float searchRange, int allegianceToIgnore, out GameObject foundUnit)
+    {
+        bool foundSomething = false;
+        foundUnit = null;
+        float distance = searchRange;
+        foreach (GameObject unit in targetableUnits)
+        {
+            if (unit == callingGameObject) { continue; }
+            if (unit.GetComponentInChildren<IFF>().GetIFFAllegiance() == allegianceToIgnore) { continue; }
+            if (!unit.GetComponentInChildren<Attack>()) { continue; }
+
+            float diff = (callingGameObject.transform.position - unit.transform.position).magnitude;
+
+            if (diff < distance)
+            {
+                foundSomething = true;
+                foundUnit = unit;
+                distance = diff;
+            }
+        }
+        return foundSomething;
+    }
+
 
     public GameObject FindClosestTargetWithinSearchRange(GameObject callingGameObject, float searchRange, int allegianceToIgnore)
     {
