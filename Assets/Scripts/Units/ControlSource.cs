@@ -95,6 +95,11 @@ public abstract class ControlSource : MonoBehaviour
             return hasLOS;
         }
         RaycastHit2D hit = Physics2D.Linecast(transform.position, targetPos, layerMask_weaponryBlockers);
+        if (!hit)
+        {
+            hasLOS = false;
+            return hasLOS;
+        }
         float hitDist = (targetPos - hit.transform.position).magnitude;
         if (hitDist <= 0.1f)
         {
@@ -114,6 +119,7 @@ public abstract class ControlSource : MonoBehaviour
             hasLOS = false;
             return hasLOS;
         }
+
     }
 
 }

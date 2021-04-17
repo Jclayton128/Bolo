@@ -97,13 +97,13 @@ public class ControlSourceSoldier : ControlSource
         if (closestAttackingUnit)
         {
             //move to within 50% attack range of closest attacking unit and face i
-            if (TestForLOSForAttack(closestAttackingUnit.transform.position, attackRange * .5f))
+            if (TestForLOSForAttack(closestAttackingUnit.transform.position, attackRange * .7f))
             {
                 Debug.Log("called for attack");
                 attack.AttackCommence();
                 speedSetting = 1; //slowdown
                 Vector3 dir = (transform.position - closestAttackingUnit.transform.position).normalized;
-                navTarget = closestAttackingUnit.transform.position + (dir * attackRange * .25f);
+                navTarget = closestAttackingUnit.transform.position + (dir * attackRange * .5f);
             }
             else
             {
@@ -128,7 +128,7 @@ public class ControlSourceSoldier : ControlSource
             else
             {
                 speedSetting = 2;
-                navTarget = closestAttackingUnit.transform.position;
+                navTarget = closestDefenseTurret.transform.position;
             }
             Debug.Log("closest defense turret");
             speedSetting = 1;
