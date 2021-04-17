@@ -50,30 +50,30 @@ public class StealthHider : MonoBehaviour
 
     private float GetTerrainModifier()
     {
-        int terrain = cs.GetCurrentTerrainType();
+        int terrain = cs.currentTerrainType;
 
         if (terrain == 4) //road
         {
             hiderRadius_TerrainModifier = 1.25f;
-            Debug.Log("hiding in road");
+            //Debug.Log("hiding in road");
             return hiderRadius_TerrainModifier;
         }
         if (terrain == 5)  //hills
         {
             hiderRadius_TerrainModifier = .5f;
-            Debug.Log("hiding in hills");
+            //Debug.Log("hiding in hills");
             return hiderRadius_TerrainModifier;
         }
         if (terrain == 6) //forest
         {
             hiderRadius_TerrainModifier = .75f;
-            Debug.Log("hiding in forest");
+            //Debug.Log("hiding in forest");
             return hiderRadius_TerrainModifier;
         }
         else
         {
             hiderRadius_TerrainModifier = 1;
-            Debug.Log("hiding in field");
+            //Debug.Log("hiding in field");
             return hiderRadius_TerrainModifier;
         }
 

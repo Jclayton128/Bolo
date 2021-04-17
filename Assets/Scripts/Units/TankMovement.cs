@@ -9,12 +9,17 @@ public class TankMovement : Movement
     //init
 
     //param
+    public float terrainMod_field = 1;
+    public float terrainMod_road = 1.25f;
+    public float terrainMod_hills = 0.5f;
+    public float terrainMod_forest = 0.5f;
 
     //hood
     public Vector3 commandedVector = new Vector3();
     float maxAngleOffBoresightToDrive = 10f;
-
     float angleOffCommandedVector;
+    public float terrainMod;
+    public float moveSpeed_Current_Terrain;
 
     protected override void Start()
     {
@@ -27,7 +32,39 @@ public class TankMovement : Movement
         base.Update();
         Debug.DrawLine(transform.position, commandedVector.normalized + transform.position, Color.blue);
         UpdateCurrentMoveSpeed();
+        UpdateCurrentMoveSpeedWithTerrainModifier();
         UpdateCommandedVectorAndAngleOffIt();
+    }
+
+    private void UpdateCurrentMoveSpeedWithTerrainModifier()
+    {
+        int terrain = cs.currentTerrainType;
+        if (terrain == 4)
+        {
+            terrainMod = terrainMod_road;
+            moveSpeed_Current_Terrain = moveSpeed_current * terrainMod;
+            return;
+        }
+        if (terrain == 5)
+        {
+            terrainMod = terrainMod_hills;
+            moveSpeed_Current_Terrain = moveSpeed_current * terrainMod;
+            return;
+
+        }
+        if (terrainMod == 6)
+        {
+            terrainMod = terrainMod_forest;
+            moveSpeed_Current_Terrain = moveSpeed_current * terrainMod;
+            return;
+        }
+        else
+        {
+            terrainMod = terrainMod_field;
+            moveSpeed_Current_Terrain = moveSpeed_current * terrainMod;
+            return;
+        }
+        
     }
 
     private void FixedUpdate()
@@ -49,11 +86,11 @@ public class TankMovement : Movement
         {
             if (Mathf.Abs(angleOffCommandedVector) < maxAngleOffBoresightToDrive * 4)
             {
-                rb.velocity = commandedVector * (moveSpeed_current / 2);
+                rb.velocity = commandedVector * (moveSpeed_Current_Terrain / 2);
             }
             if (Mathf.Abs(angleOffCommandedVector) < maxAngleOffBoresightToDrive)
             {
-                rb.velocity = commandedVector * moveSpeed_current;
+                rb.velocity = commandedVector * moveSpeed_Current_Terrain;
             }
         }
     }

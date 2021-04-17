@@ -31,6 +31,8 @@ public abstract class ControlSource : MonoBehaviour
     public int speedSetting { get; protected set; } = 1;
 
     protected float timeSinceLastScan = 0;
+    //public int currentTerrainType { get; protected set; } = 3;
+    public int currentTerrainType;
 
     protected virtual void Start()
     {
@@ -53,6 +55,7 @@ public abstract class ControlSource : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+        currentTerrainType = GetCurrentTerrainType();
         timeSinceLastScan -= Time.deltaTime;
         if (timeSinceLastScan <= 0)
         {
@@ -122,7 +125,7 @@ public abstract class ControlSource : MonoBehaviour
 
     }
 
-    public int GetCurrentTerrainType()
+    private int GetCurrentTerrainType()
     {
         NavMeshHit hit;
         NavMesh.SamplePosition(transform.position, out hit, 0.1f, NavMesh.AllAreas);
