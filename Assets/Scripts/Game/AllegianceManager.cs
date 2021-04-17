@@ -10,7 +10,7 @@ public class AllegianceManager : MonoBehaviour
     SortedList<int, FactionLeader> factionLeaders = new SortedList<int, FactionLeader>();
 
     //hood
-    public int playerAllegiance;
+    public int playerAllegiance = 1;
 
     private void Awake()
     {
