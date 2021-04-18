@@ -44,6 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76701173f64e384a978e7522896649e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hiderRadius_Base: 1
+  hiderGrowthRate: 0.5
+  hiderShrinkRate: 0.2
+  hiderRadius_TerrainModifier: 1
 --- !u!58 &1175755379160955192
 CircleCollider2D:
   m_ObjectHideFlags: 0

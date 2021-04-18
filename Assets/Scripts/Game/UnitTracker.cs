@@ -75,6 +75,23 @@ public class UnitTracker : MonoBehaviour
         return unitsWithinRange;
     }
 
+    public List<GameObject> FindUnitsWithinSearchRange(GameObject callingGameObject, float searchRange)
+    {
+        List<GameObject> unitsWithinRange = new List<GameObject>();
+
+        foreach (GameObject unit in targetableUnits)
+        {
+            if (unit == callingGameObject) { continue; }
+            if (unit.transform.root.GetComponent<ControlSource>() == false) { continue ; }
+            float diff = (callingGameObject.transform.position - unit.transform.position).magnitude;
+            if (diff <= searchRange)
+            {
+                unitsWithinRange.Add(unit);
+            }
+        }
+        return unitsWithinRange;
+    }
+
     public GameObject FindClosestTargetWithAllegiance(GameObject callingGameObject, float searchRange, int allegianceToFind)
     {
         GameObject closetTarget = null;

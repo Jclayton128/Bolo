@@ -201,6 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beb073c21ed3d1e4b8dd4583668e5ec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iffAllegiance: 0
   isPlayer: 0
 --- !u!195 &9099403132476446125
 NavMeshAgent:
@@ -237,6 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scanRange: 3
+  currentTerrainType: 0
   tacticalTarget: {fileID: 0}
   strategicTarget: {fileID: 0}
 --- !u!114 &1577564535
@@ -375,7 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 887d0da09b40fdb4292ba02f652a9dcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 5.18
+  rotationSpeed: 180
 --- !u!1 &182887018754021692
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,9 +494,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c382cdbd5984de9499dca545478515da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed_normal: 0
+  moveSpeed_normal: 1
   turnSpeed_normal: 180
+  terrainMod_field: 1
+  terrainMod_road: 1.25
+  terrainMod_hills: 0.5
+  terrainMod_forest: 0.5
   commandedVector: {x: 0, y: 0, z: 0}
+  terrainMod: 0
+  moveSpeed_Current_Terrain: 0
 --- !u!114 &182887018754021680
 MonoBehaviour:
   m_ObjectHideFlags: 0
