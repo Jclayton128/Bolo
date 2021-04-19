@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 [RequireComponent (typeof(IFF))]
 
 public class CitySquare : MonoBehaviour
 {
 
     //init
-    IFF iff;
+    public IFF iff;
     SpriteRenderer sr;
     public MoneyHolder ownerMoneyHolder = null;
 
@@ -20,10 +19,8 @@ public class CitySquare : MonoBehaviour
     public float timeBetweenMoneyDrops = 5f;
 
     //hood
-    public string cityName;
-    public List<IFF> buildingsInCity = new List<IFF>();
-    List<IFF> housesInCity = new List<IFF>();
-    List<IFF> turretsInCity = new List<IFF>();
+    public string cityName { get; protected set; }
+    public List<House> buildingsInCity = new List<House>();
     public float timeSpentCapturing = 0;
     public int iffOfPreviousCaptureAttempt = 0;
     public GameObject capturingGO = null;
@@ -35,8 +32,8 @@ public class CitySquare : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         iff = GetComponentInChildren<IFF>();
         SelectCityName();
-        FindHousesAndTurretsWithinCityAndAdjustAllegiance();
-        
+        FindBuildingsWithinCity();
+        SetAllegianceForBuildingsInCity(iff.GetIFFAllegiance());       
     }
 
     private void SelectCityName()
@@ -44,38 +41,34 @@ public class CitySquare : MonoBehaviour
         CityManager cnm = FindObjectOfType<CityManager>();
         cityName = cnm.GetRandomCityName();
     }
-    private void FindHousesAndTurretsWithinCityAndAdjustAllegiance()
+
+    private void FindBuildingsWithinCity()
     {
-        List<GameObject> allGOs = new List<GameObject>();
-        allGOs = Finder.FindAllGameObjectsWithinSearchRange(transform, cityRadius);
-        foreach (GameObject possibleBuilding in allGOs)
+        buildingsInCity.Clear();
+        List<GameObject> allGOs = Finder.FindAllGameObjectsWithinSearchRange(transform, cityRadius);
+        foreach (GameObject currentHouseGO in allGOs)
         {
-            if (possibleBuilding.TryGetComponent(out IFF possIFF) && (possibleBuilding.transform.root.tag == "House" ))
-            {
-                possibleBuilding.transform.root.GetComponentInChildren<House>().SetOwningCity(this);
-                int currentAllegiance = iff.GetIFFAllegiance();
-                possIFF.SetIFFAllegiance(currentAllegiance);
-                housesInCity.Add(possIFF);
-                continue;
-            }
-            if (possibleBuilding.TryGetComponent(out IFF possIFF_2) && (possibleBuilding.transform.root.tag == "Turret"))
-            {
-                possibleBuilding.transform.root.GetComponentInChildren<House>().SetOwningCity(this);
-                int currentAllegiance = iff.GetIFFAllegiance();
-                possIFF_2.SetIFFAllegiance(currentAllegiance);
-                turretsInCity.Add(possIFF_2);
-                continue;
-            }
+            House currentHouse;
+            if (currentHouseGO.TryGetComponent<House>(out currentHouse) == false) { continue; }
+            buildingsInCity.Add(currentHouse);
+            currentHouse.SetOwningCity(this);
         }
     }
+
+    private void SetAllegianceForBuildingsInCity(int newIFF)
+    {
+        foreach (House house in buildingsInCity)
+        {
+            house.SetHouseIFFAllegiance(newIFF);
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
     {
         ReduceCaptureTimeIfNotBeingCaptured();
         HandleCaptureAttempt();
-        //CheckForHousesRemaining();
-
         ProvideMoneyDropToOwner();
     }
     private void ProvideMoneyDropToOwner()
@@ -84,7 +77,7 @@ public class CitySquare : MonoBehaviour
         if (timeSinceLastMoneyDrop <= 0)
         {
             if (!ownerMoneyHolder) { return; }
-            ownerMoneyHolder.AddMoney(housesInCity.Count);
+            ownerMoneyHolder.AddMoney(buildingsInCity.Count);
             timeSinceLastMoneyDrop = timeBetweenMoneyDrops;
         }
     }
@@ -123,14 +116,9 @@ public class CitySquare : MonoBehaviour
         int newAllegiance = capturingGO.GetComponentInParent<IFF>().GetIFFAllegiance();
         iff.SetIFFAllegiance(newAllegiance);
         ownerMoneyHolder = capturingGO.transform.root.GetComponentInChildren<MoneyHolder>();
-        foreach (IFF houseIFF in housesInCity)
-        {
-            houseIFF.SetIFFAllegiance(newAllegiance);
-        }
-        foreach (IFF turretIFF in turretsInCity)
-        {
-            turretIFF.SetIFFAllegiance(newAllegiance);
-        }
+
+        FindBuildingsWithinCity();
+        SetAllegianceForBuildingsInCity(newAllegiance);
         timeSpentCapturing = 0;
     }
 
@@ -143,19 +131,8 @@ public class CitySquare : MonoBehaviour
         }
     }
 
-
-    private void CheckForHousesRemaining()
+    public void RemoveBuildingFromList(House deadThing)
     {
-        if (buildingsInCity.Count <= 0)
-        {
-            sr.color = Color.red;
-        }
-    }
-
-    public void RemoveBuildingFromList(IFF deadThing)
-    {
-        //Debug.Log("removal called");
-        housesInCity.Remove(deadThing);
-        turretsInCity.Remove(deadThing);
+        buildingsInCity.Remove(deadThing);
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(SpriteRenderer), typeof(IFF))]
 public class House : MonoBehaviour
 {
     //init
@@ -10,6 +10,8 @@ public class House : MonoBehaviour
     SpriteRenderer sr;
     [SerializeField] Sprite[] possibleHouseSprites = null;
     CitySquare cs;
+    HouseHolder hh;
+    public IFF iff;
 
     //param
     public bool isHouse = true;
@@ -20,6 +22,7 @@ public class House : MonoBehaviour
 
     void Start()
     {
+        iff = GetComponentInChildren<IFF>();
         sr = GetComponent<SpriteRenderer>();
         if (isHouse)
         {
@@ -49,7 +52,17 @@ public class House : MonoBehaviour
     {
         //Debug.Log("dying actions called");
         if (!cs) { return; }
-        cs.RemoveBuildingFromList(gameObject.GetComponentInChildren<IFF>());
+        cs.RemoveBuildingFromList(this);
         ut.RemoveUnitFromTargetableList(gameObject);
+    }
+
+    public void SetHouseIFFAllegiance(int newIFF)
+    {
+        iff.SetIFFAllegiance(newIFF);
+    }
+
+    public int GetHouseIFFAllegiance()
+    {
+        return iff.GetIFFAllegiance();
     }
 }

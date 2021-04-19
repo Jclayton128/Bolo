@@ -24,6 +24,33 @@ public static class Finder : object
         }
         return possibleTargets;
     }
+
+    public static List<GameObject> FindAllGameObjectsWithinSearchRange(Transform sourceTransform, float searchRange, string desiredTag)
+    {
+
+        List<GameObject> possibleTargets = new List<GameObject>();
+        GameObject[] possibleTargets_array = Object.FindObjectsOfType<GameObject>();
+        if (possibleTargets_array.Length <= 0)
+        {
+            Debug.Log("no targets within search range");
+            return null;
+        }
+        for (int i = 0; i < possibleTargets_array.Length; i++)
+        {
+            if (possibleTargets_array[i].CompareTag(desiredTag))
+            {
+                Debug.Log("ignore object with tag: " + possibleTargets_array[i].tag);
+                continue;
+            }
+            float dist = (sourceTransform.position - possibleTargets_array[i].transform.position).magnitude;
+            if (dist <= searchRange)
+            {
+                GameObject go = possibleTargets_array[i];
+                possibleTargets.Add(go);
+            }
+        }
+        return possibleTargets;
+    }
     public static GameObject FindNearestGameObjectWithTag(Transform sourceTransform, string tagName)
     {
         GameObject closestTarget = null;
