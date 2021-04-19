@@ -22,7 +22,6 @@ public class StealthHider : MonoBehaviour
     public float hiderRadius_Modified;
     public float hiderRadius_TerrainModifier = 1;
 
-
     // Start is called before the first frame update
     void Start()
     {

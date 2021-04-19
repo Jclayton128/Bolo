@@ -10803,8 +10803,8 @@ MonoBehaviour:
   targets: []
   radarRange: 20
   fadePerSecond: 0.4
-  risePerSecond: 1
-  signalIntensity: 0.8
+  risePerSecond: 2
+  signalFudge: 0.3
   radarAccuracy: 45
 --- !u!114 &638955289
 MonoBehaviour:
@@ -12782,7 +12782,7 @@ MonoBehaviour:
   radarRange: 20
   fadePerSecond: 0.3
   risePerSecond: 1
-  signalIntensity: 0
+  signalFudge: 0
   radarAccuracy: 15
 --- !u!1 &1064105123
 GameObject:
@@ -13452,7 +13452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5942882949806822670, guid: 68c3a6bfd3c023d4f91fdc868519f183, type: 3}
       propertyPath: hiderRadius_Base
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68c3a6bfd3c023d4f91fdc868519f183, type: 3}

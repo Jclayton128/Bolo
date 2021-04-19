@@ -62,9 +62,21 @@ public class RadarScreen : MonoBehaviour
         ResetSectorIntensityToZero();
         GetTargets();
         IncreaseIntensityFromNoiseInEachSector();
+        ClampIntensityLevelFloorToSelfNoiseInEachSector();
         //ConstantIntensityDecreaseForEachSector();
         AssignCurrentIntensityToEachSector();
         //TurnIntensityIntoImageAdjustment();
+    }
+
+    private void ClampIntensityLevelFloorToSelfNoiseInEachSector()
+    {
+        float rawNoiseLevel = player.GetComponentInChildren<StealthHider>().gameObject.GetComponent<CircleCollider2D>().radius;
+        float selfNoiseLevel = (rawNoiseLevel - .5f) / 4f;
+        for (int i = 0; i < 8; i++)
+        {
+            sectorIntensities[i] = Mathf.Clamp(sectorIntensities[i], selfNoiseLevel, 1);
+        }
+
     }
 
     private void ResetSectorIntensityToZero()
@@ -98,13 +110,14 @@ public class RadarScreen : MonoBehaviour
 
     }
 
+
     private float DetermineSignalIntensity(GameObject target)
     {
         float dist = (target.transform.position - player.transform.position).magnitude;
         float dist_normalized = dist / radarRange;
         float targetNoiseLevel = target.GetComponentInChildren<StealthHider>().gameObject.GetComponent<CircleCollider2D>().radius;
         float intensity = targetNoiseLevel / dist_normalized * signalFudge;
-        Debug.Log("intensity: " + intensity);
+        //Debug.Log("intensity: " + intensity);
         return intensity;
 
     }
