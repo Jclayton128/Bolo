@@ -7,8 +7,9 @@ using UnityEngine.UI;
 public class PlayerInput : ControlSource
 {
     //init
-    public GameObject shiftKnob;
-    [SerializeField] Transform[] gearShiftPositions = null;
+    public UIManager uim;
+    public GameObject shiftKnob; 
+    public Transform[] gearShiftPositions = null;
 
 
     //param
@@ -33,11 +34,16 @@ public class PlayerInput : ControlSource
     protected override void Start()
     {
         base.Start();
-        shiftKnob = GameObject.FindGameObjectWithTag("ShiftKnob");
-        gearShiftPositions[0] = GameObject.FindGameObjectWithTag("ShiftPos1").transform;
-        gearShiftPositions[1] = GameObject.FindGameObjectWithTag("ShiftPos2").transform;
-        gearShiftPositions[2] = GameObject.FindGameObjectWithTag("ShiftPos3").transform;
+        uim = FindObjectOfType<UIManager>();
+        AssignShiftKnobs();
+    }
 
+    private void AssignShiftKnobs()
+    {
+        shiftKnob = uim.shiftKnob;
+        gearShiftPositions[0] = uim.shiftPos_1;
+        gearShiftPositions[1] = uim.shiftPos_2;
+        gearShiftPositions[2] = uim.shiftPos_3;
     }
 
     // Update is called once per frame

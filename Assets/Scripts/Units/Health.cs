@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class Health : MonoBehaviour
@@ -10,6 +11,8 @@ public class Health : MonoBehaviour
     [SerializeField] AudioClip[] hurtAudioClips = null;
     [SerializeField] AudioClip[] dieAudioClips = null;
     [SerializeField] Sprite[] spritesByHealth = null;
+    UIManager uim;
+
     SpriteRenderer sr;
     AudioClip chosenHurtSound;
     AudioClip chosenDieSound;
@@ -24,9 +27,12 @@ public class Health : MonoBehaviour
     bool isDying = false;
     public float currentHealth;
     GameObject ownerOfLastDamageDealerToBeHitBy;
+    Slider healthBar;
 
     void Start()
     {
+        uim = FindObjectOfType<UIManager>();
+        healthBar = uim.healthBar;
         sr = transform.root.GetComponentInChildren<SpriteRenderer>();
         currentHealth = startingHealth;
         if (canMove)

@@ -12,6 +12,7 @@ public class RadarScreen : MonoBehaviour
     [SerializeField] RadarSector[] radarSectors = null;
     public List<GameObject> targets = new List<GameObject>();
     Dictionary<int, float> sectorIntensities = new Dictionary<int, float>();
+    UIManager uim;
 
 
 
