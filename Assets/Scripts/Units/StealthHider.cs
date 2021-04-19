@@ -19,7 +19,7 @@ public class StealthHider : MonoBehaviour
     public float hiderShrinkRate = .2f; //per second;
 
     //hood
-    float hiderRadius_Modified;
+    public float hiderRadius_Modified;
     public float hiderRadius_TerrainModifier = 1;
 
 
@@ -82,6 +82,7 @@ public class StealthHider : MonoBehaviour
 
     private void AdjustHiderRadius()
     {
+
         if (hiderRadius_Modified > hiderColl.radius)
         {
             Debug.Log("hider radius needs to grow");

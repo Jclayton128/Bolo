@@ -19,7 +19,8 @@ public class RadarScreen : MonoBehaviour
     public float radarRange = 20;
     public float fadePerSecond = 0.3f;
     public float risePerSecond = 1.0f;
-    public float signalIntensity;
+    //public float signalIntensity;
+    public float signalFudge;
     public float radarAccuracy; //how far off can the direction-of-arrival be, in degrees.
 
     //hood
@@ -86,33 +87,59 @@ public class RadarScreen : MonoBehaviour
     {
         foreach (GameObject target in targets)
         {
-            Vector3 dir = target.transform.position - player.transform.position;
-            float signedAngFromNorth = Vector3.SignedAngle(dir, Vector3.up, Vector3.forward) - 22.5f ;
-            if (signedAngFromNorth < 0)
-            {
-                signedAngFromNorth += 360;
-            }
+            int sector = DetermineSector(target);
+            //Debug.Log("angleFromNorth: " + signedAngFromNorth + " goes into approxSector: " + approxSector + " rounds to: " + sector);
 
-            //float randomSpread = 0;
-            float randomSpread = UnityEngine.Random.Range(-radarAccuracy, radarAccuracy);
-            signedAngFromNorth += randomSpread;
-
-            float approxSector = (signedAngFromNorth /45 );
-            int sector = Mathf.RoundToInt(approxSector);
-
-            if (sector >= 8)
-            {
-                sector = 0;
-            }
-            if (sector < 0)
-            {
-                sector = 7;
-            }
-            Debug.Log("angleFromNorth: " + signedAngFromNorth + " goes into approxSector: " + approxSector + " rounds to: " + sector);
+            float signalIntensity = DetermineSignalIntensity(target);
+            
             //TODO: Get the current target's noise and add it instead of the arbitrary value;
             sectorIntensities[sector] = sectorIntensities[sector] + signalIntensity;
         }
 
+    }
+
+    private float DetermineSignalIntensity(GameObject target)
+    {
+        float dist = (target.transform.position - player.transform.position).magnitude;
+        float dist_normalized = dist / radarRange;
+        float targetNoiseLevel = target.GetComponentInChildren<StealthHider>().gameObject.GetComponent<CircleCollider2D>().radius;
+        float intensity = targetNoiseLevel / dist_normalized * signalFudge;
+        Debug.Log("intensity: " + intensity);
+        return intensity;
+
+    }
+
+    private int DetermineSector(GameObject target)
+    {
+        Vector3 dir = target.transform.position - player.transform.position;
+        float signedAngFromNorth = Vector3.SignedAngle(dir, Vector3.up, Vector3.forward) - 22.5f;
+        if (signedAngFromNorth < 0)
+        {
+            signedAngFromNorth += 360;
+        }
+
+        signedAngFromNorth = InputRandomSignalSpread(signedAngFromNorth);
+
+        float approxSector = (signedAngFromNorth / 45);
+        int sector = Mathf.RoundToInt(approxSector);
+
+        if (sector >= 8)
+        {
+            sector = 0;
+        }
+        if (sector < 0)
+        {
+            sector = 7;
+        }
+
+        return sector;
+    }
+
+    private float InputRandomSignalSpread(float signedAngFromNorth)
+    {
+        float randomSpread = UnityEngine.Random.Range(-radarAccuracy, radarAccuracy);
+        signedAngFromNorth += randomSpread;
+        return signedAngFromNorth;
     }
 
     private void GetTargets()
