@@ -9713,6 +9713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f8296092e559245b2b7446b9368778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfHouses: 0
 --- !u!1 &479298204
 GameObject:
   m_ObjectHideFlags: 0
@@ -10529,11 +10530,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 182887017551331597, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.5
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 182887017551331597, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.5
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 182887017551331597, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10569,14 +10570,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 182887017551331597, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 182887017551331599, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
-      propertyPath: iffAllegiance
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 182887018754021694, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
-      propertyPath: moveSpeed_normal
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

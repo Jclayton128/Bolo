@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 7929236462182589372}
   - component: {fileID: 1577564535}
   - component: {fileID: -4730800967115459532}
+  - component: {fileID: 3253020640716071680}
   m_Layer: 0
   m_Name: Tank_AI
   m_TagString: Untagged
@@ -266,6 +267,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c0b2edc92f17e4a90c342117c2097b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3253020640716071680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182887017551331595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49f8296092e559245b2b7446b9368778, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfHouses: 0
 --- !u!1 &182887017605779120
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,7 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c382cdbd5984de9499dca545478515da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed_normal: 1
+  moveSpeed_normal: 0
   turnSpeed_normal: 180
   terrainMod_field: 1
   terrainMod_road: 1.25

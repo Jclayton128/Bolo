@@ -7,10 +7,10 @@ public class House : MonoBehaviour
 {
     //init
     UnitTracker ut;
+    AllegianceManager am;
     SpriteRenderer sr;
     [SerializeField] Sprite[] possibleHouseSprites = null;
     CitySquare cs;
-    HouseHolder hh;
     public IFF iff;
 
     //param
@@ -22,6 +22,7 @@ public class House : MonoBehaviour
 
     void Start()
     {
+        am = FindObjectOfType<AllegianceManager>();
         iff = GetComponentInChildren<IFF>();
         sr = GetComponent<SpriteRenderer>();
         if (isHouse)
@@ -54,11 +55,22 @@ public class House : MonoBehaviour
         if (!cs) { return; }
         cs.RemoveBuildingFromList(this);
         ut.RemoveUnitFromTargetableList(gameObject);
+        if (!GetComponent<DefenseTurret>())
+        {
+            GameObject owner = am.GetFactionLeader(iff.GetIFFAllegiance()).gameObject;
+            owner.GetComponent<HouseHolder>().DecrementHouseCount();
+        }
     }
 
     public void SetHouseIFFAllegiance(int newIFF)
     {
         iff.SetIFFAllegiance(newIFF);
+        Debug.Log("asking AM for this iff: " + newIFF);
+        if (!GetComponent<DefenseTurret>())
+        {
+            GameObject owner = am.GetFactionLeader(newIFF).gameObject;
+            owner.GetComponent<HouseHolder>().IncrementHouseCount();
+        }
     }
 
     public int GetHouseIFFAllegiance()

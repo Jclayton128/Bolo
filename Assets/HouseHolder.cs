@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class HouseHolder : MonoBehaviour
 {
+    //init
+
+    //param
+
+    //hood
+    public int numberOfHouses = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,4 +22,15 @@ public class HouseHolder : MonoBehaviour
     {
         
     }
+
+    public void DecrementHouseCount()
+    {
+        numberOfHouses--;
+    }
+
+    public void IncrementHouseCount()
+    {
+        numberOfHouses++;
+    }
+
 }
