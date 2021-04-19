@@ -35,11 +35,19 @@ public class Health : MonoBehaviour
         healthBar = uim.healthBar;
         sr = transform.root.GetComponentInChildren<SpriteRenderer>();
         currentHealth = startingHealth;
+        UpdateHealthBar();
         if (canMove)
         {
             rb = transform.root.GetComponentInChildren<Rigidbody2D>();
         }
         SelectDieSound();
+    }
+
+    private void UpdateHealthBar()
+    {
+        healthBar.maxValue = startingHealth;
+        healthBar.minValue = 0;
+        healthBar.value = currentHealth;
     }
 
     private void SelectDieSound()
@@ -107,6 +115,7 @@ public class Health : MonoBehaviour
 
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, -1, startingHealth);
+        UpdateHealthBar();
         AdjustSpriteToHealthLevel();
     }
 
