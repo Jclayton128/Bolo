@@ -65,7 +65,7 @@ public class House : MonoBehaviour
     public void SetHouseIFFAllegiance(int newIFF)
     {
         iff.SetIFFAllegiance(newIFF);
-        Debug.Log("asking AM for this iff: " + newIFF);
+        //Debug.Log("asking AM for this iff: " + newIFF);
         if (!GetComponent<DefenseTurret>())
         {
             GameObject owner = am.GetFactionLeader(newIFF).gameObject;
