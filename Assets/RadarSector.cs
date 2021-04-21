@@ -10,7 +10,9 @@ public class RadarSector : MonoBehaviour
     [SerializeField] Image[] dotLevels = null;
 
     //param
-    Color myGreen = new Color(0.2195399f, 0.95f, .2134212f);
+    Color radarGreen = new Color(0.2195399f, 0.95f, .2134212f);
+    Color radarYellow = Color.yellow;
+    Color radarRed = Color.red;
 
     //hood
     float intensityActual;
@@ -57,12 +59,14 @@ public class RadarSector : MonoBehaviour
     private void IlluminateDotsBasedOnIntensity()
     {
         float alpha_0 = (intensityActual - 0) / .25f;
-        float alpha_1 = (intensityActual - .25f) / .25f;
-        float alpha_2 = (intensityActual - .5f) / .25f;
-        float alpha_3 = (intensityActual - .75f) / .25f;
-        dotLevels[0].color = new Color(0.2195399f, 0.95f, .2134212f, alpha_0);
-        dotLevels[1].color = new Color(0.2195399f, 0.95f, .2134212f, alpha_1);
-        dotLevels[2].color = new Color(0.2195399f, 0.95f, .2134212f, alpha_2);
-        dotLevels[3].color = new Color(0.2195399f, 0.95f, .2134212f, alpha_3);
+        float alpha_1 = (intensityActual - .20f) / .25f;
+        float alpha_2 = (intensityActual - .4f) / .25f;
+        float alpha_3 = (intensityActual - .6f) / .25f;
+        float alpha_4 = (intensityActual - .8f) / .25f;
+        dotLevels[0].color = new Color(radarGreen.r, radarGreen.g, radarGreen.b, alpha_0);
+        dotLevels[1].color = new Color(radarGreen.r, radarGreen.g, radarGreen.b, alpha_1);
+        dotLevels[2].color = new Color(radarGreen.r, radarGreen.g, radarGreen.b, alpha_2);
+        dotLevels[3].color = new Color(radarYellow.r, radarYellow.g, radarYellow.b, alpha_3);
+        dotLevels[4].color = new Color(radarRed.r, radarRed.g, radarRed.b, alpha_4);
     }
 }
