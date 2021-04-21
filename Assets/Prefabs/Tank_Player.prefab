@@ -143,6 +143,8 @@ GameObject:
   - component: {fileID: 182887017551331594}
   - component: {fileID: 2044764351183017485}
   - component: {fileID: 4093555450821579845}
+  - component: {fileID: -1022281838741169838}
+  - component: {fileID: 472877991}
   m_Layer: 8
   m_Name: Tank_Player
   m_TagString: Player
@@ -200,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beb073c21ed3d1e4b8dd4583668e5ec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iffAllegiance: 0
+  iffAllegiance: 1
   isPlayer: 1
 --- !u!114 &182887017551331594
 MonoBehaviour:
@@ -215,6 +217,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scanRange: 3
+  currentTerrainType: 0
+  uim: {fileID: 0}
   shiftKnob: {fileID: 0}
   gearShiftPositions:
   - {fileID: 0}
@@ -248,6 +252,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c0b2edc92f17e4a90c342117c2097b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1022281838741169838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182887017551331595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
+--- !u!114 &472877991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182887017551331595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49f8296092e559245b2b7446b9368778, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfHouses: 0
 --- !u!1 &182887017605779120
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,7 +512,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed_normal: 1
   turnSpeed_normal: 180
+  terrainMod_field: 1
+  terrainMod_road: 1.25
+  terrainMod_hills: 0.5
+  terrainMod_forest: 0.5
   commandedVector: {x: 0, y: 0, z: 0}
+  terrainMod: 0
+  moveSpeed_Current_Terrain: 0
 --- !u!114 &182887018754021680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -696,6 +736,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 182887017551331597}
     m_Modifications:
+    - target: {fileID: 98783280044415056, guid: c79ca92d78de98e409367e9aa8836258, type: 3}
+      propertyPath: hiderRadius_Base
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4088707487694004261, guid: c79ca92d78de98e409367e9aa8836258, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
