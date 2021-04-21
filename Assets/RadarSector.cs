@@ -58,11 +58,11 @@ public class RadarSector : MonoBehaviour
 
     private void IlluminateDotsBasedOnIntensity()
     {
-        float alpha_0 = (intensityActual - 0) / .25f;
-        float alpha_1 = (intensityActual - .20f) / .25f;
-        float alpha_2 = (intensityActual - .4f) / .25f;
-        float alpha_3 = (intensityActual - .6f) / .25f;
-        float alpha_4 = (intensityActual - .8f) / .25f;
+        float alpha_0 = (intensityActual - 0) / .2f;
+        float alpha_1 = (intensityActual - .20f) / .2f;
+        float alpha_2 = (intensityActual - .4f) / .2f;
+        float alpha_3 = (intensityActual - .6f) / .2f;
+        float alpha_4 = (intensityActual - .8f) / .2f;
         dotLevels[0].color = new Color(radarGreen.r, radarGreen.g, radarGreen.b, alpha_0);
         dotLevels[1].color = new Color(radarGreen.r, radarGreen.g, radarGreen.b, alpha_1);
         dotLevels[2].color = new Color(radarGreen.r, radarGreen.g, radarGreen.b, alpha_2);
