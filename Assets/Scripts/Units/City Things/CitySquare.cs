@@ -17,8 +17,8 @@ public class CitySquare : MonoBehaviour
     [SerializeField] GameObject turretPrefab = null;
 
     //param
-    public float cityRadius = 2f;
-    public float cityMinDistFromSquare = 1f;
+    public float cityRadius { get; private set; } = 2f;
+    float cityMinDistFromSquare = 0f;
     public float timeToCapture = 15; //seconds
     public float timeBetweenMoneyDrops = 5f;
     public int numberOfHousesToSpawn = 6;
@@ -49,30 +49,35 @@ public class CitySquare : MonoBehaviour
     private void SpawnHousesWithinCity(int numberOfHouses)
     {
         Grid grid = FindObjectOfType<Grid>();
-        float gridUnit = grid.cellSize.x * 2;
+        float gridUnit = grid.cellSize.x;
         for(int i = 0; i< numberOfHouses; i++)
         {
-            Vector3 gridSnappedPos = Vector3.zero;
+            Vector3 actualPos = Vector3.zero;
             do
             {
-                Vector2 pos = UnityEngine.Random.insideUnitCircle;
-                pos = pos * cityRadius;
+                Vector3 gridSnappedPos = Vector3.zero;
+                Vector2 pos = UnityEngine.Random.insideUnitCircle * cityRadius;
+                Vector3 pos3 = pos;
                 gridSnappedPos = new Vector3(Mathf.Round(pos.x / gridUnit), Mathf.Round(pos.y / gridUnit), 0);
-                if (Mathf.Abs(gridSnappedPos.x) < cityMinDistFromSquare)
-                {
-                    float sign = Mathf.Sign(gridSnappedPos.x);
-                    gridSnappedPos.x = cityMinDistFromSquare * sign;
-                }
-                if (Mathf.Abs(gridSnappedPos.y) < cityMinDistFromSquare)
-                {
-                    float sign = Mathf.Sign(gridSnappedPos.y);
-                    gridSnappedPos.y = cityMinDistFromSquare * sign;
-                }
-            }
-            while (IsTestLocationValid_NavMesh(transform.position + gridSnappedPos) == false 
-            && IsTestLocationValid_Physics(transform.position + gridSnappedPos) == false);
+                //if (Mathf.Abs(gridSnappedPos.x) < cityMinDistFromSquare)
+                //{
+                //    float sign = Mathf.Sign(gridSnappedPos.x);
+                //    gridSnappedPos.x = cityMinDistFromSquare * sign;
+                //}
+                //if (Mathf.Abs(gridSnappedPos.y) < cityMinDistFromSquare)
+                //{
+                //    float sign = Mathf.Sign(gridSnappedPos.y);
+                //    gridSnappedPos.y = cityMinDistFromSquare * sign;
+                //}
 
-            GameObject newHouse = Instantiate(housePrefab, transform.position + gridSnappedPos, housePrefab.transform.rotation) as GameObject;
+                //Vector3 halfStep = (new Vector3(1, 1, 1)) * gridUnit / 2f;
+                actualPos = transform.position + gridSnappedPos;
+                Debug.Log($"generated pos: {pos}, which is dist {(transform.position- pos3).magnitude} and {gridSnappedPos} is gsp.  ActualPos is {actualPos}. Distance is {(transform.position - actualPos).magnitude}");
+
+            }
+            while (IsTestLocationValid_NavMesh(actualPos) == false && IsTestLocationValid_Physics(actualPos) == false);
+
+            GameObject newHouse = Instantiate(housePrefab, actualPos, housePrefab.transform.rotation) as GameObject;
             
         }
     }
