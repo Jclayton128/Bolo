@@ -69,28 +69,52 @@ public class CitySquare : MonoBehaviour
                     gridSnappedPos.y = cityMinDistFromSquare * sign;
                 }
             }
-            while (IsTestLocationValid(transform.position + gridSnappedPos) == false);
+            while (IsTestLocationValid_NavMesh(transform.position + gridSnappedPos) == false 
+            && IsTestLocationValid_Physics(transform.position + gridSnappedPos) == false);
 
             GameObject newHouse = Instantiate(housePrefab, transform.position + gridSnappedPos, housePrefab.transform.rotation) as GameObject;
             
-
         }
     }
 
-    private bool IsTestLocationValid(Vector3 testPos)
+    private bool IsTestLocationValid_Physics(Vector3 testPos)
     {
-        RaycastHit2D hit = Physics2D.BoxCast(testPos, Vector2.one, 0, Vector2.one, 1 << 8);
-        if (hit)
+        Collider2D rchit = Physics2D.OverlapCircle(testPos, 0.5f, 1 << 8);
+        if (rchit)
         {
-            Debug.Log($"{testPos} was not valid because of {hit.transform.gameObject.name}");
+            Debug.Log($"invalid due to physics at {rchit.transform.position} on {rchit.transform.gameObject.name}");
+            return false;
+        }
+        else
+        {
+            Debug.Log("physics is good");
+            return true;
+        }
+    }
+
+    private bool IsTestLocationValid_NavMesh(Vector3 testPos)
+    {
+        NavMeshHit hit;
+        NavMesh.SamplePosition(testPos, out hit, 1.0f, NavMesh.AllAreas);
+        bool[] layersFound = LayerMaskExtensions.HasLayers(hit.mask);
+
+        if (layersFound[3])
+        {
+            Debug.Log($"3 is good at {testPos}");
             return true;
         }
         else
         {
-            Debug.Log("location " + testPos + "must be valid");
-            return true;
+            Debug.Log($"Invalid at {testPos}");
+            return false;
         }
+
     }
+
+
+
+
+
 
     private void SelectCityName()
     {
