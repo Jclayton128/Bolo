@@ -57,7 +57,10 @@ public class CitySquare : MonoBehaviour
             int random = UnityEngine.Random.Range(0, housesInCity.Count);
             GameObject houseToReplace = housesInCity[random].gameObject;
             GameObject newTurret = Instantiate(turretPrefab, houseToReplace.transform.position, turretPrefab.transform.rotation) as GameObject;
-            turretsInCity.Add(newTurret.GetComponent<House>());
+            House turret = newTurret.GetComponent<House>();
+            turret.am = am;
+            turret.SetOwningCity(this);
+            turretsInCity.Add(turret);
             housesInCity.Remove(houseToReplace.GetComponent<House>());
             Destroy(houseToReplace);
         }     
