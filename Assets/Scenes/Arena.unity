@@ -30319,6 +30319,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 405894642}
   m_CullTransparentMesh: 0
+--- !u!21 &425711278
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sprites/Default
+  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - PixelSnap: 0
+    - _EnableExternalAlpha: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &430752256
 GameObject:
   m_ObjectHideFlags: 0
@@ -36052,17 +36087,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -2545676521935054652, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
-      propertyPath: m_AffectedAgents.Array.data[0]
-      value: -1372625422
-      objectReference: {fileID: 0}
-    - target: {fileID: 917822860788727028, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
-      propertyPath: numberOfHousesToSpawn
-      value: 12
+    - target: {fileID: -868820066139582871, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1869670495775819084, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
       propertyPath: m_Name
       value: CitySquare
+      objectReference: {fileID: 0}
+    - target: {fileID: 4527291408254638474, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
+      propertyPath: iffAllegiance
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7210906992845139574, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
       propertyPath: m_LocalPosition.x
@@ -36108,30 +36143,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: -868820066139582871, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
---- !u!1 &1543902467 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1869670495775819084, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
-  m_PrefabInstance: {fileID: 1543902466}
-  m_PrefabAsset: {fileID: 0}
---- !u!208 &1543902468
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1543902467}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.25, y: 0.25, z: 0.1}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &1549328185
 GameObject:
   m_ObjectHideFlags: 0
@@ -106002,7 +106015,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 425711278}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

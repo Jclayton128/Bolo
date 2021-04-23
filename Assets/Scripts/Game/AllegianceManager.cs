@@ -41,20 +41,21 @@ public class AllegianceManager : MonoBehaviour
     {
         if (factionLeaders.ContainsKey(allegiance))
         {
-            Debug.Log("faction " + allegiance + " already has a leader!");
+            //Debug.Log("faction " + allegiance + " already has a leader!");
         }
         else
         {
-            Debug.Log("added faction leader for faction " + allegiance + ".");
+            //Debug.Log("added faction leader for faction " + allegiance + ".");
             factionLeaders.Add(allegiance, fl);
         }
     }
 
     public FactionLeader GetFactionLeader(int iffAllegiance)
     {
-        if (!factionLeaders[iffAllegiance])
+        //Debug.Log($"I was asked for the faction leader for {iffAllegiance}");
+        if (!factionLeaders.ContainsKey(iffAllegiance))
         {
-            Debug.Log($"A faction leader doesn't exist for {iffAllegiance}. Creating a dummy");
+            //Debug.Log($"A faction leader doesn't exist for {iffAllegiance}. Creating a dummy");
             GameObject dummy = Instantiate(dummyFactionLeaderPrefab, Vector3.zero, Quaternion.identity) as GameObject;
             dummyFactionLeaderPrefab.GetComponentInChildren<IFF>().SetIFFAllegiance(iffAllegiance);
             factionLeaders[iffAllegiance] = dummy.GetComponent<FactionLeader>();

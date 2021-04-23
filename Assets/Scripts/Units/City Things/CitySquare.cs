@@ -19,15 +19,15 @@ public class CitySquare : MonoBehaviour
 
     //param
     public float cityRadius { get; private set; } = 4f;
-    public float timeToCapture { get; private set; } = 15; //seconds
+    public float timeToCapture { get; private set; } = 3; //seconds
     public float timeBetweenMoneyDrops = 5f;
     int numberOfHousesToSpawn = 6;
     int numberOfTurretsToSpawn = 1;
 
     //hood
     public string cityName { get; protected set; }
-    List<House> housesInCity = new List<House>();
-    List<House> turretsInCity = new List<House>();
+    public List<House> housesInCity = new List<House>();
+    public List<House> turretsInCity = new List<House>();
     public float timeSpentCapturing { get; private set; } = 0;
     int iffOfPreviousCaptureAttempt = 0;
     public GameObject capturingGO = null;
@@ -41,41 +41,16 @@ public class CitySquare : MonoBehaviour
         SelectCityName();
         SpawnHousesWithinCity(numberOfHousesToSpawn);
         ConvertHousesToTurrets();
-        TurnOnNavMeshObstacle();
         SetAllegianceForBuildingsInCity(iff.GetIFFAllegiance());
-
-
-        //FindBuildingsWithinCity();
-        //SetAllegianceForBuildingsInCity(iff.GetIFFAllegiance());       
     }
 
-    private void ConvertHousesToTurrets()
-    {
-        for (int i = 0; i < numberOfTurretsToSpawn; i++)
-        {
-            if (housesInCity.Count == 0) { return; }
-            int random = UnityEngine.Random.Range(0, housesInCity.Count);
-            GameObject houseToReplace = housesInCity[random].gameObject;
-            GameObject newTurret = Instantiate(turretPrefab, houseToReplace.transform.position, turretPrefab.transform.rotation) as GameObject;
-            House turret = newTurret.GetComponent<House>();
-            turret.am = am;
-            turret.SetOwningCity(this);
-            turretsInCity.Add(turret);
-            housesInCity.Remove(houseToReplace.GetComponent<House>());
-            Destroy(houseToReplace);
-        }     
-    }
-
-    private void TurnOnNavMeshObstacle()
-    {
-        GetComponent<NavMeshObstacle>().enabled = true;
-    }
+    #region creation
 
     private void SpawnHousesWithinCity(int numberOfHouses)
     {
         Grid grid = FindObjectOfType<Grid>();
         float gridUnit = grid.cellSize.x;
-        for(int i = 0; i< numberOfHouses; i++)
+        for (int i = 0; i < numberOfHouses; i++)
         {
             Vector3 actualPos = Vector3.zero;
             do
@@ -110,6 +85,22 @@ public class CitySquare : MonoBehaviour
         }
     }
 
+    private void ConvertHousesToTurrets()
+    {
+        for (int i = 0; i < numberOfTurretsToSpawn; i++)
+        {
+            if (housesInCity.Count == 0) { return; }
+            int random = UnityEngine.Random.Range(0, housesInCity.Count);
+            GameObject houseToReplace = housesInCity[random].gameObject;
+            GameObject newTurret = Instantiate(turretPrefab, houseToReplace.transform.position, turretPrefab.transform.rotation) as GameObject;
+            House turret = newTurret.GetComponent<House>();
+            turret.am = am;
+            turret.SetOwningCity(this);
+            turretsInCity.Add(turret);
+            housesInCity.Remove(houseToReplace.GetComponent<House>());
+            Destroy(houseToReplace);
+        }
+    }
     private bool IsTestLocationValid_Physics(Vector3 testPos)
     {
         Collider2D rchit = Physics2D.OverlapCircle(testPos, 0.3f, 1 << 8);
@@ -164,7 +155,7 @@ public class CitySquare : MonoBehaviour
             turret.SetHouseIFFAllegiance(newIFF);
         }
     }
-
+    #endregion  
 
     // Update is called once per frame
     void Update()
@@ -217,10 +208,7 @@ public class CitySquare : MonoBehaviour
     {
         int newAllegiance = capturingGO.GetComponentInParent<IFF>().GetIFFAllegiance();
         iff.SetIFFAllegiance(newAllegiance);
-        ownerMoneyHolder = capturingGO.transform.root.GetComponentInChildren<MoneyHolder>();
-
-        //FindBuildingsWithinCity();
-        //SetAllegianceForBuildingsInCity(newAllegiance);
+        SetAllegianceForBuildingsInCity(newAllegiance);
         timeSpentCapturing = 0;
     }
 
@@ -236,5 +224,6 @@ public class CitySquare : MonoBehaviour
     public void RemoveBuildingFromList(House deadThing)
     {
         housesInCity.Remove(deadThing);
+        turretsInCity.Remove(deadThing);
     }
 }

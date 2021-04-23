@@ -28,13 +28,23 @@ public class HouseHolder : MonoBehaviour
     public void DecrementHouseCount()
     {
         numberOfHouses--;
-        uim.houseCounter.text = numberOfHouses.ToString();
+        UpdateUI();
+
     }
 
     public void IncrementHouseCount()
     {
         numberOfHouses++;
-        uim.houseCounter.text = numberOfHouses.ToString();
+        UpdateUI();
     }
+
+    private void UpdateUI()
+    {
+        if (uim)
+        {
+            uim.houseCounter.text = numberOfHouses.ToString();
+        }
+    }
+
 
 }

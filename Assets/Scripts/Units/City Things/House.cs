@@ -51,8 +51,7 @@ public class House : MonoBehaviour
         iff.SetIFFAllegiance(newIFF);
 
         if (!GetComponent<DefenseTurret>())
-        {
-            //Debug.Log($"{am} was asked for the faction leader for {newIFF}");
+        { 
             GameObject owner = am.GetFactionLeader(newIFF).gameObject;
             owner.GetComponent<HouseHolder>().IncrementHouseCount();
         }
