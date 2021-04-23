@@ -136,6 +136,7 @@ MonoBehaviour:
   - {fileID: -2437946883914093047, guid: ddfb37ef8b41bbd488039708bdb8f9dd, type: 3}
   - {fileID: 7925904088023432219, guid: ddfb37ef8b41bbd488039708bdb8f9dd, type: 3}
   - {fileID: 9126172486708747978, guid: ddfb37ef8b41bbd488039708bdb8f9dd, type: 3}
+  iff: {fileID: 4925757410520306871}
   isHouse: 1
 --- !u!114 &1558687450862482328
 MonoBehaviour:
@@ -234,3 +235,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2875775542152799, guid: 45ee50abfdb27e4409ec916028138359, type: 3}
   m_PrefabInstance: {fileID: 518676120622037746}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4925757410520306871 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4857549374146276933, guid: 45ee50abfdb27e4409ec916028138359, type: 3}
+  m_PrefabInstance: {fileID: 518676120622037746}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beb073c21ed3d1e4b8dd4583668e5ec6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

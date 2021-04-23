@@ -7,7 +7,7 @@ public class House : MonoBehaviour
 {
     //init
     UnitTracker ut;
-    AllegianceManager am;
+    public AllegianceManager am;
     SpriteRenderer sr;
     [SerializeField] Sprite[] possibleHouseSprites = null;
     CitySquare cs;
@@ -22,8 +22,6 @@ public class House : MonoBehaviour
 
     void Start()
     {
-        am = FindObjectOfType<AllegianceManager>();
-        iff = GetComponentInChildren<IFF>();
         sr = GetComponent<SpriteRenderer>();
         if (isHouse)
         {
@@ -44,37 +42,32 @@ public class House : MonoBehaviour
 
     }
 
-
     public void SetOwningCity(CitySquare citysq)
     {
         cs = citysq;
-    }
-    public void DyingActions()
-    {
-        //Debug.Log("dying actions called");
-        if (!cs) { return; }
-        cs.RemoveBuildingFromList(this);
-        ut.RemoveUnitFromTargetableList(gameObject);
-        if (!GetComponent<DefenseTurret>())
-        {
-            GameObject owner = am.GetFactionLeader(iff.GetIFFAllegiance()).gameObject;
-            owner.GetComponent<HouseHolder>().DecrementHouseCount();
-        }
-    }
-
+    }    
     public void SetHouseIFFAllegiance(int newIFF)
     {
         iff.SetIFFAllegiance(newIFF);
-        //Debug.Log("asking AM for this iff: " + newIFF);
+
         if (!GetComponent<DefenseTurret>())
         {
+            //Debug.Log($"{am} was asked for the faction leader for {newIFF}");
             GameObject owner = am.GetFactionLeader(newIFF).gameObject;
             owner.GetComponent<HouseHolder>().IncrementHouseCount();
         }
     }
 
-    public int GetHouseIFFAllegiance()
+
+    public void DyingActions()
     {
-        return iff.GetIFFAllegiance();
+        if (!cs) { return; }
+        if (!GetComponent<DefenseTurret>())
+        {
+            GameObject owner = am.GetFactionLeader(iff.GetIFFAllegiance()).gameObject;
+            owner.GetComponent<HouseHolder>().DecrementHouseCount();
+        }
+        cs.RemoveBuildingFromList(this);
+        ut.RemoveUnitFromTargetableList(gameObject);
     }
 }

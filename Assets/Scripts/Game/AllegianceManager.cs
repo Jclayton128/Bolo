@@ -6,6 +6,7 @@ using UnityEngine;
 public class AllegianceManager : MonoBehaviour
 {
     //Init
+    [SerializeField] GameObject dummyFactionLeaderPrefab = null;
     [SerializeField] Sprite[] flagSource = null;
     SortedList<int, FactionLeader> factionLeaders = new SortedList<int, FactionLeader>();
 
@@ -51,9 +52,20 @@ public class AllegianceManager : MonoBehaviour
 
     public FactionLeader GetFactionLeader(int iffAllegiance)
     {
-        //Debug.Log("GFL asked for " + iffAllegiance);
-        FactionLeader fl = factionLeaders[iffAllegiance];
-        return fl;
+        if (!factionLeaders[iffAllegiance])
+        {
+            Debug.Log($"A faction leader doesn't exist for {iffAllegiance}. Creating a dummy");
+            GameObject dummy = Instantiate(dummyFactionLeaderPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+            dummyFactionLeaderPrefab.GetComponentInChildren<IFF>().SetIFFAllegiance(iffAllegiance);
+            factionLeaders[iffAllegiance] = dummy.GetComponent<FactionLeader>();
+            return factionLeaders[iffAllegiance];
+        }
+        else
+        {
+            FactionLeader fl = factionLeaders[iffAllegiance];
+            return fl;
+        }
+
     }
 
     public Sprite GetFlagOfAllegiance(int key)

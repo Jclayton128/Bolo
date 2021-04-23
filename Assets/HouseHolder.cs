@@ -5,6 +5,7 @@ using UnityEngine;
 public class HouseHolder : MonoBehaviour
 {
     //init
+    private UIManager uim;
 
     //param
 
@@ -14,7 +15,8 @@ public class HouseHolder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (transform.root.tag != "Player") { return; }
+        uim = FindObjectOfType<UIManager>();
     }
 
     // Update is called once per frame
@@ -26,11 +28,13 @@ public class HouseHolder : MonoBehaviour
     public void DecrementHouseCount()
     {
         numberOfHouses--;
+        uim.houseCounter.text = numberOfHouses.ToString();
     }
 
     public void IncrementHouseCount()
     {
         numberOfHouses++;
+        uim.houseCounter.text = numberOfHouses.ToString();
     }
 
 }

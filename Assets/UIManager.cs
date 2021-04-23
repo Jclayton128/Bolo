@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class UIManager : MonoBehaviour
     public Transform shiftPos_1 = null;
     public Transform shiftPos_2 = null;
     public Transform shiftPos_3 = null;
+    public TextMeshProUGUI houseCounter = null;
 
 
     // Start is called before the first frame update

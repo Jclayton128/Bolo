@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5a6e1dda45a3124e973141a33e17ae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dummyFactionLeaderPrefab: {fileID: 2453006131977656866, guid: 2fb6b570359b8354e918d69a6a56eb98, type: 3}
   flagSource:
   - {fileID: 5503460646655229670, guid: d02762bceb87cae42956cd8c2127ee50, type: 3}
   - {fileID: -4537281551234122163, guid: d02762bceb87cae42956cd8c2127ee50, type: 3}
@@ -30637,7 +30638,7 @@ Transform:
   m_Children:
   - {fileID: 30492352}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &519420033
 MonoBehaviour:
@@ -31363,6 +31364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afec47941d098e14dadbf1bbf6ed074c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetableUnits: []
 --- !u!4 &799267790
 Transform:
   m_ObjectHideFlags: 0
@@ -33705,7 +33707,7 @@ GameObject:
   - component: {fileID: 1145666181}
   m_Layer: 5
   m_Name: HouseCounter
-  m_TagString: MoneyBar
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36092,7 +36094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7210906992845139574, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7210906992845139574, guid: 1f6a7a3a88c84cf49906cbc353661795, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -106735,7 +106737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1891616051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108152,6 +108154,7 @@ MonoBehaviour:
   shiftPos_1: {fileID: 1992129930}
   shiftPos_2: {fileID: 729696989}
   shiftPos_3: {fileID: 1549328186}
+  houseCounter: {fileID: 1145666181}
 --- !u!1 &2132434253
 GameObject:
   m_ObjectHideFlags: 0

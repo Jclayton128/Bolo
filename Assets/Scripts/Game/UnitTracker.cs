@@ -5,7 +5,7 @@ using UnityEngine;
 public class UnitTracker : MonoBehaviour
 {
     //init
-    List<GameObject> targetableUnits = new List<GameObject>();
+    public List<GameObject> targetableUnits = new List<GameObject>();
     AllegianceManager am;
     private void Awake()
     {

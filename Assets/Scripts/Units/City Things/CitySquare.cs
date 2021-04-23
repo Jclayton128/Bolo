@@ -15,36 +15,52 @@ public class CitySquare : MonoBehaviour
     public MoneyHolder ownerMoneyHolder = null;
     [SerializeField] GameObject housePrefab = null;
     [SerializeField] GameObject turretPrefab = null;
+    AllegianceManager am;
 
     //param
-    public float cityRadius { get; private set; } = 6f;
-    float cityMinDistFromSquare = 0f;
-    public float timeToCapture = 15; //seconds
+    public float cityRadius { get; private set; } = 4f;
+    public float timeToCapture { get; private set; } = 15; //seconds
     public float timeBetweenMoneyDrops = 5f;
-    public int numberOfHousesToSpawn = 12;
-    public int numberOfTurretsToSpawn = 1;
+    int numberOfHousesToSpawn = 6;
+    int numberOfTurretsToSpawn = 1;
 
     //hood
     public string cityName { get; protected set; }
-    public List<House> buildingsInCity = new List<House>();
-    public float timeSpentCapturing = 0;
-    public int iffOfPreviousCaptureAttempt = 0;
+    List<House> housesInCity = new List<House>();
+    List<House> turretsInCity = new List<House>();
+    public float timeSpentCapturing { get; private set; } = 0;
+    int iffOfPreviousCaptureAttempt = 0;
     public GameObject capturingGO = null;
 
     float timeSinceLastMoneyDrop = 0;
 
     void Start()
     {
+        am = FindObjectOfType<AllegianceManager>();
         sr = GetComponent<SpriteRenderer>();
-        iff = GetComponentInChildren<IFF>();
         SelectCityName();
         SpawnHousesWithinCity(numberOfHousesToSpawn);
-        //ConvertHousesToTurrets();
+        ConvertHousesToTurrets();
         TurnOnNavMeshObstacle();
+        SetAllegianceForBuildingsInCity(iff.GetIFFAllegiance());
 
 
         //FindBuildingsWithinCity();
         //SetAllegianceForBuildingsInCity(iff.GetIFFAllegiance());       
+    }
+
+    private void ConvertHousesToTurrets()
+    {
+        for (int i = 0; i < numberOfTurretsToSpawn; i++)
+        {
+            if (housesInCity.Count == 0) { return; }
+            int random = UnityEngine.Random.Range(0, housesInCity.Count);
+            GameObject houseToReplace = housesInCity[random].gameObject;
+            GameObject newTurret = Instantiate(turretPrefab, houseToReplace.transform.position, turretPrefab.transform.rotation) as GameObject;
+            turretsInCity.Add(newTurret.GetComponent<House>());
+            housesInCity.Remove(houseToReplace.GetComponent<House>());
+            Destroy(houseToReplace);
+        }     
     }
 
     private void TurnOnNavMeshObstacle()
@@ -84,8 +100,10 @@ public class CitySquare : MonoBehaviour
             while (!(IsTestLocationValid_NavMesh(actualPos) & IsTestLocationValid_Physics(actualPos)));
 
             GameObject newHouse = Instantiate(housePrefab, actualPos, housePrefab.transform.rotation) as GameObject;
-
-            
+            House house = newHouse.GetComponent<House>();
+            housesInCity.Add(house);
+            house.am = am;
+            house.SetOwningCity(this);
         }
     }
 
@@ -94,16 +112,15 @@ public class CitySquare : MonoBehaviour
         Collider2D rchit = Physics2D.OverlapCircle(testPos, 0.3f, 1 << 8);
         if (rchit)
         {
-            Debug.Log($"invalid due to physics at {rchit.transform.position} on {rchit.transform.gameObject.name}");
+            //Debug.Log($"invalid due to physics at {rchit.transform.position} on {rchit.transform.gameObject.name}");
             return false;
         }
         else
         {
-            Debug.Log("physics is good");
+            //Debug.Log("physics is good");
             return true;
         }
     }
-
     private bool IsTestLocationValid_NavMesh(Vector3 testPos)
     {
         NavMeshHit hit;
@@ -115,48 +132,35 @@ public class CitySquare : MonoBehaviour
 
         if (layersFound[0])
         {
-            Debug.Log($"0 is good at {testPos}");
+            //Debug.Log($"0 is good at {testPos}");
             return true;
         }
         else
         {
-            Debug.Log($"Invalid at {testPos}");
+            //Debug.Log($"Invalid at {testPos}");
             return false;
         }
 
     }
-
-
-
-
-
-
     private void SelectCityName()
     {
         CityManager cnm = FindObjectOfType<CityManager>();
         cityName = cnm.GetRandomCityName();
     }
 
-    //private void FindBuildingsWithinCity()
-    //{
-    //    buildingsInCity.Clear();
-    //    List<GameObject> allGOs = Finder.FindAllGameObjectsWithinSearchRange(transform, cityRadius);
-    //    foreach (GameObject currentHouseGO in allGOs)
-    //    {
-    //        House currentHouse;
-    //        if (currentHouseGO.TryGetComponent<House>(out currentHouse) == false) { continue; }
-    //        buildingsInCity.Add(currentHouse);
-    //        currentHouse.SetOwningCity(this);
-    //    }
-    //}
-
-    //private void SetAllegianceForBuildingsInCity(int newIFF)
-    //{
-    //    foreach (House house in buildingsInCity)
-    //    {
-    //        house.SetHouseIFFAllegiance(newIFF);
-    //    }
-    //}
+    private void SetAllegianceForBuildingsInCity(int newIFF)
+    {
+        //Debug.Log($"{housesInCity.Count} houses should be changing iff state to {iff.GetIFFAllegiance()}");
+        //Debug.Log($"{turretsInCity.Count} turrets should be changing iff state to {iff.GetIFFAllegiance()}");
+        foreach (House house in housesInCity)
+        {
+            house.SetHouseIFFAllegiance(newIFF);
+        }
+        foreach (House turret in turretsInCity)
+        {
+            turret.SetHouseIFFAllegiance(newIFF);
+        }
+    }
 
 
     // Update is called once per frame
@@ -172,7 +176,7 @@ public class CitySquare : MonoBehaviour
         if (timeSinceLastMoneyDrop <= 0)
         {
             if (!ownerMoneyHolder) { return; }
-            ownerMoneyHolder.AddMoney(buildingsInCity.Count);
+            ownerMoneyHolder.AddMoney(housesInCity.Count);
             timeSinceLastMoneyDrop = timeBetweenMoneyDrops;
         }
     }
@@ -228,6 +232,6 @@ public class CitySquare : MonoBehaviour
 
     public void RemoveBuildingFromList(House deadThing)
     {
-        buildingsInCity.Remove(deadThing);
+        housesInCity.Remove(deadThing);
     }
 }
