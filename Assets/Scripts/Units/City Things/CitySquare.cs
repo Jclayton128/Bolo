@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.AI;
 [RequireComponent (typeof(IFF))]
 
 public class CitySquare : MonoBehaviour
@@ -12,11 +13,16 @@ public class CitySquare : MonoBehaviour
     public IFF iff;
     SpriteRenderer sr;
     public MoneyHolder ownerMoneyHolder = null;
+    [SerializeField] GameObject housePrefab = null;
+    [SerializeField] GameObject turretPrefab = null;
 
     //param
-    public float cityRadius = 5f;
+    public float cityRadius = 2f;
+    public float cityMinDistFromSquare = 1f;
     public float timeToCapture = 15; //seconds
     public float timeBetweenMoneyDrops = 5f;
+    public int numberOfHousesToSpawn = 6;
+    public int numberOfTurretsToSpawn = 1;
 
     //hood
     public string cityName { get; protected set; }
@@ -32,8 +38,58 @@ public class CitySquare : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         iff = GetComponentInChildren<IFF>();
         SelectCityName();
-        FindBuildingsWithinCity();
-        SetAllegianceForBuildingsInCity(iff.GetIFFAllegiance());       
+        SpawnHousesWithinCity(numberOfHousesToSpawn);
+        //ConvertHousesToTurrets();
+
+
+        //FindBuildingsWithinCity();
+        //SetAllegianceForBuildingsInCity(iff.GetIFFAllegiance());       
+    }
+
+    private void SpawnHousesWithinCity(int numberOfHouses)
+    {
+        Grid grid = FindObjectOfType<Grid>();
+        float gridUnit = grid.cellSize.x * 2;
+        for(int i = 0; i< numberOfHouses; i++)
+        {
+            Vector3 gridSnappedPos = Vector3.zero;
+            do
+            {
+                Vector2 pos = UnityEngine.Random.insideUnitCircle;
+                pos = pos * cityRadius;
+                gridSnappedPos = new Vector3(Mathf.Round(pos.x / gridUnit), Mathf.Round(pos.y / gridUnit), 0);
+                if (Mathf.Abs(gridSnappedPos.x) < cityMinDistFromSquare)
+                {
+                    float sign = Mathf.Sign(gridSnappedPos.x);
+                    gridSnappedPos.x = cityMinDistFromSquare * sign;
+                }
+                if (Mathf.Abs(gridSnappedPos.y) < cityMinDistFromSquare)
+                {
+                    float sign = Mathf.Sign(gridSnappedPos.y);
+                    gridSnappedPos.y = cityMinDistFromSquare * sign;
+                }
+            }
+            while (IsTestLocationValid(transform.position + gridSnappedPos) == false);
+
+            GameObject newHouse = Instantiate(housePrefab, transform.position + gridSnappedPos, housePrefab.transform.rotation) as GameObject;
+            
+
+        }
+    }
+
+    private bool IsTestLocationValid(Vector3 testPos)
+    {
+        RaycastHit2D hit = Physics2D.BoxCast(testPos, Vector2.one, 0, Vector2.one, 1 << 8);
+        if (hit)
+        {
+            Debug.Log($"{testPos} was not valid because of {hit.transform.gameObject.name}");
+            return true;
+        }
+        else
+        {
+            Debug.Log("location " + testPos + "must be valid");
+            return true;
+        }
     }
 
     private void SelectCityName()
@@ -42,26 +98,26 @@ public class CitySquare : MonoBehaviour
         cityName = cnm.GetRandomCityName();
     }
 
-    private void FindBuildingsWithinCity()
-    {
-        buildingsInCity.Clear();
-        List<GameObject> allGOs = Finder.FindAllGameObjectsWithinSearchRange(transform, cityRadius);
-        foreach (GameObject currentHouseGO in allGOs)
-        {
-            House currentHouse;
-            if (currentHouseGO.TryGetComponent<House>(out currentHouse) == false) { continue; }
-            buildingsInCity.Add(currentHouse);
-            currentHouse.SetOwningCity(this);
-        }
-    }
+    //private void FindBuildingsWithinCity()
+    //{
+    //    buildingsInCity.Clear();
+    //    List<GameObject> allGOs = Finder.FindAllGameObjectsWithinSearchRange(transform, cityRadius);
+    //    foreach (GameObject currentHouseGO in allGOs)
+    //    {
+    //        House currentHouse;
+    //        if (currentHouseGO.TryGetComponent<House>(out currentHouse) == false) { continue; }
+    //        buildingsInCity.Add(currentHouse);
+    //        currentHouse.SetOwningCity(this);
+    //    }
+    //}
 
-    private void SetAllegianceForBuildingsInCity(int newIFF)
-    {
-        foreach (House house in buildingsInCity)
-        {
-            house.SetHouseIFFAllegiance(newIFF);
-        }
-    }
+    //private void SetAllegianceForBuildingsInCity(int newIFF)
+    //{
+    //    foreach (House house in buildingsInCity)
+    //    {
+    //        house.SetHouseIFFAllegiance(newIFF);
+    //    }
+    //}
 
 
     // Update is called once per frame
@@ -69,7 +125,7 @@ public class CitySquare : MonoBehaviour
     {
         ReduceCaptureTimeIfNotBeingCaptured();
         HandleCaptureAttempt();
-        ProvideMoneyDropToOwner();
+        //ProvideMoneyDropToOwner();
     }
     private void ProvideMoneyDropToOwner()
     {
@@ -117,8 +173,8 @@ public class CitySquare : MonoBehaviour
         iff.SetIFFAllegiance(newAllegiance);
         ownerMoneyHolder = capturingGO.transform.root.GetComponentInChildren<MoneyHolder>();
 
-        FindBuildingsWithinCity();
-        SetAllegianceForBuildingsInCity(newAllegiance);
+        //FindBuildingsWithinCity();
+        //SetAllegianceForBuildingsInCity(newAllegiance);
         timeSpentCapturing = 0;
     }
 
