@@ -10,6 +10,7 @@ TagManager:
   - Turret
   - House
   - MoneyBar
+  - NavMeshSurface
   layers:
   - Default
   - TransparentFX

@@ -17,11 +17,11 @@ public class CitySquare : MonoBehaviour
     [SerializeField] GameObject turretPrefab = null;
 
     //param
-    public float cityRadius { get; private set; } = 2f;
+    public float cityRadius { get; private set; } = 6f;
     float cityMinDistFromSquare = 0f;
     public float timeToCapture = 15; //seconds
     public float timeBetweenMoneyDrops = 5f;
-    public int numberOfHousesToSpawn = 6;
+    public int numberOfHousesToSpawn = 12;
     public int numberOfTurretsToSpawn = 1;
 
     //hood
@@ -40,10 +40,16 @@ public class CitySquare : MonoBehaviour
         SelectCityName();
         SpawnHousesWithinCity(numberOfHousesToSpawn);
         //ConvertHousesToTurrets();
+        TurnOnNavMeshObstacle();
 
 
         //FindBuildingsWithinCity();
         //SetAllegianceForBuildingsInCity(iff.GetIFFAllegiance());       
+    }
+
+    private void TurnOnNavMeshObstacle()
+    {
+        GetComponent<NavMeshObstacle>().enabled = true;
     }
 
     private void SpawnHousesWithinCity(int numberOfHouses)
@@ -72,19 +78,20 @@ public class CitySquare : MonoBehaviour
 
                 //Vector3 halfStep = (new Vector3(1, 1, 1)) * gridUnit / 2f;
                 actualPos = transform.position + gridSnappedPos;
-                Debug.Log($"generated pos: {pos}, which is dist {(transform.position- pos3).magnitude} and {gridSnappedPos} is gsp.  ActualPos is {actualPos}. Distance is {(transform.position - actualPos).magnitude}");
+                //Debug.Log($"generated pos: {pos}, which is dist {(transform.position - pos3).magnitude} and {gridSnappedPos} is gsp.  ActualPos is {actualPos}. Distance is {(transform.position - actualPos).magnitude}");
 
             }
-            while (IsTestLocationValid_NavMesh(actualPos) == false && IsTestLocationValid_Physics(actualPos) == false);
+            while (!(IsTestLocationValid_NavMesh(actualPos) & IsTestLocationValid_Physics(actualPos)));
 
             GameObject newHouse = Instantiate(housePrefab, actualPos, housePrefab.transform.rotation) as GameObject;
+
             
         }
     }
 
     private bool IsTestLocationValid_Physics(Vector3 testPos)
     {
-        Collider2D rchit = Physics2D.OverlapCircle(testPos, 0.5f, 1 << 8);
+        Collider2D rchit = Physics2D.OverlapCircle(testPos, 0.3f, 1 << 8);
         if (rchit)
         {
             Debug.Log($"invalid due to physics at {rchit.transform.position} on {rchit.transform.gameObject.name}");
@@ -100,12 +107,15 @@ public class CitySquare : MonoBehaviour
     private bool IsTestLocationValid_NavMesh(Vector3 testPos)
     {
         NavMeshHit hit;
-        NavMesh.SamplePosition(testPos, out hit, 1.0f, NavMesh.AllAreas);
+        NavMeshQueryFilter filter = new NavMeshQueryFilter();
+        filter.areaMask = NavMesh.AllAreas;
+        filter.agentTypeID = GameObject.FindGameObjectWithTag("NavMeshSurface").GetComponent<NavMeshSurface2d>().agentTypeID;
+        NavMesh.SamplePosition(testPos, out hit, 0.1f, filter);
         bool[] layersFound = LayerMaskExtensions.HasLayers(hit.mask);
 
-        if (layersFound[3])
+        if (layersFound[0])
         {
-            Debug.Log($"3 is good at {testPos}");
+            Debug.Log($"0 is good at {testPos}");
             return true;
         }
         else

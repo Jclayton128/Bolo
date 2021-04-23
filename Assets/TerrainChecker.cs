@@ -22,10 +22,15 @@ public class TerrainChecker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log("agent id is" + );
+
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos = new Vector3(mousePos.x, mousePos.y, 0);
         NavMeshHit hit;
-        NavMesh.SamplePosition(mousePos, out hit, 0.6f, NavMesh.AllAreas);
+        NavMeshQueryFilter filter = new NavMeshQueryFilter();
+        filter.areaMask = NavMesh.AllAreas;
+        filter.agentTypeID = GameObject.FindGameObjectWithTag("NavMeshSurface").GetComponent<NavMeshSurface2d>().agentTypeID; //-1372625422;
+        NavMesh.SamplePosition(mousePos, out hit, 0.1f, filter);
         bool[] layersFound = LayerMaskExtensions.HasLayers(hit.mask);
 
         mousePositionText.text = mousePos.ToString();
