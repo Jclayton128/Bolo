@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI houseCounter = null;
     [SerializeField] TextMeshProUGUI moneyCounter = null;
     [SerializeField] Image flag = null;
+    [SerializeField] Slider energyBar = null;
+    [SerializeField] Image weaponIcon = null;
 
 
     // Start is called before the first frame update
@@ -103,6 +105,31 @@ public class UIManager : MonoBehaviour
         if (askingGameObject == playerAtThisComputer)
         {
             return flag;
+        }
+        else
+        {
+            //Debug.Log("Asking GO is not the local player! No UI for you!");
+            return null;
+        }
+    }
+
+    public Slider GetEnergyBar(GameObject askingGameObject)
+    {
+        if (askingGameObject == playerAtThisComputer)
+        {
+            return energyBar;
+        }
+        else
+        {
+            //Debug.Log("Asking GO is not the local player! No UI for you!");
+            return null;
+        }
+    }
+    public Image GetWeaponIcon(GameObject askingGameObject)
+    {
+        if (askingGameObject == playerAtThisComputer)
+        {
+            return weaponIcon;
         }
         else
         {
