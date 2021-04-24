@@ -12,7 +12,6 @@ public class CitySquare : MonoBehaviour
     //init
     public IFF iff;
     SpriteRenderer sr;
-    public MoneyHolder ownerMoneyHolder = null;
     [SerializeField] GameObject housePrefab = null;
     [SerializeField] GameObject turretPrefab = null;
     AllegianceManager am;
@@ -20,7 +19,6 @@ public class CitySquare : MonoBehaviour
     //param
     public float cityRadius { get; private set; } = 4f;
     public float timeToCapture { get; private set; } = 3; //seconds
-    public float timeBetweenMoneyDrops = 5f;
     int numberOfHousesToSpawn = 6;
     int numberOfTurretsToSpawn = 1;
 
@@ -32,7 +30,6 @@ public class CitySquare : MonoBehaviour
     int iffOfPreviousCaptureAttempt = 0;
     public GameObject capturingGO = null;
 
-    float timeSinceLastMoneyDrop = 0;
 
     void Start()
     {
@@ -149,10 +146,12 @@ public class CitySquare : MonoBehaviour
         foreach (House house in housesInCity)
         {
             house.SetHouseIFFAllegiance(newIFF);
+            house.UpdateCurrentOwner();
         }
         foreach (House turret in turretsInCity)
         {
             turret.SetHouseIFFAllegiance(newIFF);
+            turret.UpdateCurrentOwner();
         }
     }
     #endregion  
@@ -163,16 +162,6 @@ public class CitySquare : MonoBehaviour
         ReduceCaptureTimeIfNotBeingCaptured();
         HandleCaptureAttempt();
         //ProvideMoneyDropToOwner();
-    }
-    private void ProvideMoneyDropToOwner()
-    {
-        timeSinceLastMoneyDrop -= Time.deltaTime;
-        if (timeSinceLastMoneyDrop <= 0)
-        {
-            if (!ownerMoneyHolder) { return; }
-            ownerMoneyHolder.AddMoney(housesInCity.Count);
-            timeSinceLastMoneyDrop = timeBetweenMoneyDrops;
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

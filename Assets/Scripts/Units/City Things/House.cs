@@ -13,14 +13,19 @@ public class House : MonoBehaviour
     CitySquare cs;
     public IFF iff;
 
+
     //param
     public bool isHouse = true;
-
+    public float timeBetweenMoneyDrops = 5f;
+    public int amountOfMoneyOnEachDrop = 1;
 
     //hood
+    public GameObject owner;
+    float timeSinceLastMoneyDrop;
+    
 
 
-    void Start()
+    public void Start()
     {
         sr = GetComponent<SpriteRenderer>();
         if (isHouse)
@@ -29,6 +34,8 @@ public class House : MonoBehaviour
         }
         ut = FindObjectOfType<UnitTracker>();
         ut.AddUnitToTargetableList(gameObject);
+        UpdateCurrentOwner();
+        timeSinceLastMoneyDrop = UnityEngine.Random.Range(0, timeBetweenMoneyDrops);
     }
     private void ChooseHouseImage()
     {
@@ -39,9 +46,23 @@ public class House : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        GenerateMoneyForOwner();
     }
 
+    private void GenerateMoneyForOwner()
+    {
+        timeSinceLastMoneyDrop -= Time.deltaTime;
+        if (timeSinceLastMoneyDrop <= 0)
+        {
+            owner.GetComponent<MoneyHolder>().AddMoney(amountOfMoneyOnEachDrop);
+            timeSinceLastMoneyDrop = timeBetweenMoneyDrops;
+        }
+    }
+
+    public void UpdateCurrentOwner()
+    {
+        owner = am.GetFactionLeader(iff.GetIFFAllegiance()).gameObject;
+    }
     public void SetOwningCity(CitySquare citysq)
     {
         cs = citysq;
@@ -51,8 +72,13 @@ public class House : MonoBehaviour
         iff.SetIFFAllegiance(newIFF);
 
         if (!GetComponent<DefenseTurret>())
-        { 
-            GameObject owner = am.GetFactionLeader(newIFF).gameObject;
+        {
+            if (owner) //don't decrement if there isn't a previous owner to decrement from
+            {
+                owner.GetComponent<HouseHolder>().DecrementHouseCount();  //owner reference should still be the old owner
+            }
+
+            owner = am.GetFactionLeader(newIFF).gameObject; //now owner reference becomes the new owner.
             owner.GetComponent<HouseHolder>().IncrementHouseCount();
         }
     }
@@ -63,7 +89,7 @@ public class House : MonoBehaviour
         if (!cs) { return; }
         if (!GetComponent<DefenseTurret>())
         {
-            GameObject owner = am.GetFactionLeader(iff.GetIFFAllegiance()).gameObject;
+            UpdateCurrentOwner();
             owner.GetComponent<HouseHolder>().DecrementHouseCount();
         }
         cs.RemoveBuildingFromList(this);

@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Asking GO is not the local player! No UI for you!");
+            //Debug.Log("Asking GO is not the local player! No UI for you!");
             return null;
         }
     }
