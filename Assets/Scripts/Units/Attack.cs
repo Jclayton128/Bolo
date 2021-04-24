@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+[RequireComponent(typeof(Energy))]
 
 public abstract class Attack : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public abstract class Attack : MonoBehaviour
     protected ControlSource cs;
     [SerializeField] protected GameObject projectilePrefab = null;
     [SerializeField] protected AudioClip[] firingSounds = null;
+    protected Energy energy;
 
     //param
 
@@ -23,6 +25,7 @@ public abstract class Attack : MonoBehaviour
         cs = GetComponentInParent<ControlSource>();
         move = transform.parent.GetComponentInChildren<Movement>();
         SelectFiringSound();
+        energy = GetComponent<Energy>();
     }
 
     private void SelectFiringSound()

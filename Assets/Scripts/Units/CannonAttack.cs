@@ -7,11 +7,12 @@ public class CannonAttack : Attack
     //init
 
     //param
-    float timeBetweenAttacks = 1.0f;
+    float timeBetweenAttacks = 0.3f;
     float weaponSpeed = 10f;
     float weaponLifetime = .75f;
     float weaponDamage = 1f;
     float offset = .5f;
+    float energyCost = 40f;
 
     //hood
     float timeSinceLastAttack = 0;
@@ -28,7 +29,7 @@ public class CannonAttack : Attack
 
     public override void AttackCommence()
     {
-        if (timeSinceLastAttack < 0)
+        if (timeSinceLastAttack < 0 && energy.GetCurrentEnergy() >= energyCost)
         {
             AudioSource.PlayClipAtPoint(selectedFiringSound, transform.position);
             GameObject shell = Instantiate(projectilePrefab, transform.position + (transform.up * offset), transform.rotation) as GameObject;
@@ -39,8 +40,8 @@ public class CannonAttack : Attack
 
             Destroy(shell, weaponLifetime);
 
-
             timeSinceLastAttack = timeBetweenAttacks;
+            energy.ModifyCurrentEnergy(-1 * energyCost);
         }
 
     }

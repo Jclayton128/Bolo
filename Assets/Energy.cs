@@ -55,5 +55,10 @@ public class Energy : MonoBehaviour
         energyBar.maxValue = maxEnergy;
     }
 
+    public float GetCurrentEnergy()
+    {
+        return currentEnergy;
+    }
+
 
 }
