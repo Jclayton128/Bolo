@@ -16,8 +16,8 @@ public class House : MonoBehaviour
 
     //param
     public bool isHouse = true;
-    public float timeBetweenMoneyDrops = 5f;
-    public int amountOfMoneyOnEachDrop = 1;
+    float timeBetweenMoneyDrops = 5f;
+    int amountOfMoneyOnEachDrop = 1;
 
     //hood
     public GameObject owner;
