@@ -40,10 +40,8 @@ public class PlayerInput : ControlSource
 
     private void AssignShiftKnobs()
     {
-        shiftKnob = uim.shiftKnob;
-        gearShiftPositions[0] = uim.shiftPos_1;
-        gearShiftPositions[1] = uim.shiftPos_2;
-        gearShiftPositions[2] = uim.shiftPos_3;
+        shiftKnob = uim.GetShiftKnob(gameObject);
+        uim.GetShiftPositions(gameObject, out gearShiftPositions[0], out gearShiftPositions[1], out gearShiftPositions[2]);
     }
 
     // Update is called once per frame

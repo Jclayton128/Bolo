@@ -22,7 +22,7 @@ public class StealthSeeker : MonoBehaviour
 
         Debug.Log("detection");
 
-        if (transform.root.GetComponentInChildren<IFF>().isPlayer == true)
+        if (transform.root.tag == "Player")
         {
             collision.GetComponent<StealthHider>().MakeObjectVisible();
         }
@@ -32,7 +32,7 @@ public class StealthSeeker : MonoBehaviour
     {
         Debug.Log("back to hiding");
 
-        if (transform.root.GetComponentInChildren<IFF>().isPlayer == true)
+        if (transform.root.tag == "Player" )
         {
             collision.GetComponent<StealthHider>().MakeObjectInvisible();
         }

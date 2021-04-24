@@ -16,11 +16,9 @@ public class MoneyHolder : MonoBehaviour
     public int money = 0;
     void Start()
     {
-       if (transform.root.GetComponentInChildren<IFF>().isPlayer == true)
-        {
-            moneyBar = GameObject.FindGameObjectWithTag("MoneyBar").GetComponent<TextMeshProUGUI>();
-            moneyBar.text = "$ " + money.ToString();
-        }
+        moneyBar = FindObjectOfType<UIManager>().GetMoneyCounter(gameObject);
+        UpdateUI();
+
     }
     
 
@@ -38,9 +36,12 @@ public class MoneyHolder : MonoBehaviour
     public void AddMoney(int amount)
     {
         money += amount;
-        if (moneyBar)
-        {
-            moneyBar.text = "$ " +money.ToString();
-        }
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        if (!moneyBar) { return; }
+        moneyBar.text = "$ " + money.ToString();
     }
 }

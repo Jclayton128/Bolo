@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class HouseHolder : MonoBehaviour
 {
     //init
-    private UIManager uim;
+    TextMeshProUGUI houseCounter;
+
 
     //param
 
@@ -15,8 +17,7 @@ public class HouseHolder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (transform.root.tag != "Player") { return; }
-        uim = FindObjectOfType<UIManager>();
+        houseCounter = FindObjectOfType<UIManager>().GetHouseCounter(gameObject);
     }
 
     // Update is called once per frame
@@ -40,10 +41,9 @@ public class HouseHolder : MonoBehaviour
 
     private void UpdateUI()
     {
-        if (uim)
-        {
-            uim.houseCounter.text = numberOfHouses.ToString();
-        }
+        if (!houseCounter) { return; }
+        houseCounter.text = numberOfHouses.ToString();
+
     }
 
 

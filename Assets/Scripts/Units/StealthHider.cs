@@ -97,7 +97,7 @@ public class StealthHider : MonoBehaviour
 
     public void MakeObjectInvisible()
     {
-        if (transform.root.GetComponentInChildren<IFF>().isPlayer == false)
+        if (transform.root.tag != "Player")
         {
             foreach (SpriteRenderer thisSR in srs)
             {

@@ -108168,6 +108168,8 @@ MonoBehaviour:
   shiftPos_2: {fileID: 729696989}
   shiftPos_3: {fileID: 1549328186}
   houseCounter: {fileID: 1145666181}
+  moneyCounter: {fileID: 1922037577}
+  flag: {fileID: 479298206}
 --- !u!1 &2132434253
 GameObject:
   m_ObjectHideFlags: 0

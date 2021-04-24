@@ -32,7 +32,7 @@ public class Health : MonoBehaviour
     void Start()
     {
         uim = FindObjectOfType<UIManager>();
-        healthBar = uim.healthBar;
+        healthBar = uim.GetHealthBar(transform.root.gameObject);
         sr = transform.root.GetComponentInChildren<SpriteRenderer>();
         currentHealth = startingHealth;
         UpdateHealthBar();
@@ -45,6 +45,7 @@ public class Health : MonoBehaviour
 
     private void UpdateHealthBar()
     {
+        if (!healthBar) { return; }
         healthBar.maxValue = startingHealth;
         healthBar.minValue = 0;
         healthBar.value = currentHealth;
