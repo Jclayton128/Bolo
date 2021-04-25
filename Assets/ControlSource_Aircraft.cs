@@ -2,17 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ControlSource_Aircraft : MonoBehaviour
+public class ControlSource_Aircraft : ControlSource
 {
-    // Start is called before the first frame update
-    void Start()
+    public override GameObject GetTargetObject()
     {
-        
+        return base.GetTargetObject();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnDestroy()
     {
-        
+        base.OnDestroy();
     }
+
+    protected override void Scan()
+    {
+
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+    }
+
 }

@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76701173f64e384a978e7522896649e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sensorGhostPrefab: {fileID: 4202776216934073759, guid: 4999daf485209424e8309db7989ee6f6, type: 3}
   hiderRadius_Base: 5
   hiderGrowthRate: 1
   hiderShrinkRate: 0.4

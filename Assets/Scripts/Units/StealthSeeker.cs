@@ -24,6 +24,7 @@ public class StealthSeeker : MonoBehaviour
 
         if (transform.root.tag == "Player")
         {
+            //Debug.Log($"detected {collision.transform.root.name} and trying to make it visible to player");
             collision.GetComponent<StealthHider>().MakeObjectVisible();
         }
     }

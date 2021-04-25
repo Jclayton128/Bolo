@@ -203,7 +203,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iffAllegiance: 0
-  isPlayer: 0
 --- !u!195 &9099403132476446125
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -508,7 +507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c382cdbd5984de9499dca545478515da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed_normal: 0
+  moveSpeed_normal: 1
   turnSpeed_normal: 180
   terrainMod_field: 1
   terrainMod_road: 1.25

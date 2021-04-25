@@ -12,15 +12,20 @@ public class StealthHider : MonoBehaviour
     Rigidbody2D rb;
     CircleCollider2D hiderColl;
     ControlSource cs;
+    [SerializeField] GameObject sensorGhostPrefab = null;
+
 
     //param
     public float hiderRadius_Base;
     public float hiderGrowthRate = .5f; //per second;
     public float hiderShrinkRate = .2f; //per second;
 
+    float fadeRateSensorGhost = .2f; // 5 seconds at .2f
+
     //hood
     public float hiderRadius_Modified;
     public float hiderRadius_TerrainModifier = 1;
+    public GameObject sensorGhost;
 
     // Start is called before the first frame update
     void Start()
@@ -37,8 +42,19 @@ public class StealthHider : MonoBehaviour
     void Update()
     {
         UpdateHiderRadiusInputBasedOnSpeed();
+        FadeOutSensorGhost();
 
     }
+
+    private void FadeOutSensorGhost()
+    {
+        if (!sensorGhost) { return; }
+        SpriteRenderer sr = sensorGhost.GetComponent<SpriteRenderer>();
+        float a = Mathf.MoveTowards(sr.color.a, 0, fadeRateSensorGhost * Time.deltaTime);
+        sr.color = new Color(0, 0, 0, a);
+        if (a <= Mathf.Epsilon) { Destroy(sensorGhost); }
+    }
+
     private void UpdateHiderRadiusInputBasedOnSpeed()
     {
         float vel = rb.velocity.magnitude;
@@ -99,6 +115,7 @@ public class StealthHider : MonoBehaviour
     {
         if (transform.root.tag != "Player")
         {
+            sensorGhost = CreateSensorGhost();
             foreach (SpriteRenderer thisSR in srs)
             {
                 thisSR.enabled = false;
@@ -106,8 +123,28 @@ public class StealthHider : MonoBehaviour
         }
     }
 
+    private GameObject CreateSensorGhost()
+    {
+        if (sensorGhost)
+        {
+            Debug.Log($"Destroying {sensorGhost}");
+            Destroy(sensorGhost);
+        }
+        float z = transform.root.GetComponentInChildren<Rigidbody2D>().rotation;
+        Quaternion currentRot = Quaternion.Euler(0, 0, z);
+        GameObject sg = Instantiate(sensorGhostPrefab, transform.position, currentRot) as GameObject;
+        SpriteRenderer sr = sg.GetComponent<SpriteRenderer>();
+        sr.sprite = srs[0].sprite;
+        return sg;
+    }
+
     public void MakeObjectVisible()
     {
+        if (sensorGhost)
+        {
+            Destroy(sensorGhost);
+        }
+
         foreach (SpriteRenderer thisSR in srs)
         {
             thisSR.enabled = true;
