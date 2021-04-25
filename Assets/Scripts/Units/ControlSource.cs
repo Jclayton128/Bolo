@@ -66,6 +66,7 @@ public abstract class ControlSource : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
+        if (!ut) { return; }
         ut.RemoveUnitFromTargetableList(gameObject);
     }
 

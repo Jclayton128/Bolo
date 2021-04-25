@@ -20,10 +20,15 @@ public class HouseHolder : MonoBehaviour
         houseCounter = FindObjectOfType<UIManager>().GetHouseCounter(gameObject);
     }
 
+    public void Reinitialize()
+    {
+        Start();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateUI();
     }
 
     public void DecrementHouseCount()

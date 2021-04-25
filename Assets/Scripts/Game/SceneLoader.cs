@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
+    //init
+    GameManager gm;
     private void Awake()
     {
         int slCount = FindObjectsOfType<SceneLoader>().Length;
@@ -17,6 +19,11 @@ public class SceneLoader : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        gm = FindObjectOfType<GameManager>();
     }
 
     private void Update()
@@ -36,6 +43,7 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene(currentSceneIndex - 1);
 
     }
+
 
     public void LoadSecondScene()
     {

@@ -8,7 +8,7 @@ using System;
 public class CityManager : MonoBehaviour
 {
     //init
-    [SerializeField] List<string> cityNames = new List<string>();
+    public List<string> cityNames = new List<string>();
     CitySquare[] citySquares;
     Slider cityCaptureSlider;
     TextMeshProUGUI cityNameTextBar;
@@ -16,10 +16,14 @@ public class CityManager : MonoBehaviour
 
     //hood
     CitySquare closestCS;
+
+    private void Awake()
+    {
+        citySquares = FindObjectsOfType<CitySquare>();
+    }
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        citySquares = FindObjectsOfType<CitySquare>();
         SetupCityCaptureSlider();
         cityNameTextBar = GameObject.FindGameObjectWithTag("CityNameTextBar").GetComponent<TextMeshProUGUI>();
     }
@@ -37,8 +41,17 @@ public class CityManager : MonoBehaviour
         closestCS = FindNearestCitySquare(player.transform);
         DisplayCityName();
         BoldCityNameIfWithinRange();
-        UpdateCaptureBarWithClosestCityInfo();
-        
+        UpdateCaptureBarWithClosestCityInfo();        
+    }
+
+    public int GetNumberOfCitySquares()
+    {
+        return citySquares.Length;
+    }
+
+    public CitySquare GetCitySquare(int i)
+    {
+        return citySquares[i];
     }
 
     private void DisplayCityName()

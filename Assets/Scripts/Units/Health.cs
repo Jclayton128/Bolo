@@ -12,6 +12,7 @@ public class Health : MonoBehaviour
     [SerializeField] AudioClip[] dieAudioClips = null;
     [SerializeField] Sprite[] spritesByHealth = null;
     UIManager uim;
+    public Slider healthBar;
 
     SpriteRenderer sr;
     AudioClip chosenHurtSound;
@@ -27,7 +28,7 @@ public class Health : MonoBehaviour
     bool isDying = false;
     public float currentHealth;
     GameObject ownerOfLastDamageDealerToBeHitBy;
-    Slider healthBar;
+
 
     void Start()
     {
@@ -43,6 +44,10 @@ public class Health : MonoBehaviour
         SelectDieSound();
     }
 
+    public void Reinitialize()
+    {
+        Start();
+    }
     private void UpdateHealthBar()
     {
         if (!healthBar) { return; }

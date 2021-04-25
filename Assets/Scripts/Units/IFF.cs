@@ -22,13 +22,21 @@ public class IFF : MonoBehaviour
         }
 
         am = FindObjectOfType<AllegianceManager>();
+        GetFlagUIElement();
+        SetFlag();
+    }
+
+    private void GetFlagUIElement()
+    {
         if (transform.root.tag == "Player")
         {
             flagImage = FindObjectOfType<UIManager>().GetFlag(transform.root.gameObject);
             iffAllegiance = am.playerAllegiance;
-            flagImage.sprite = am.GetFlagOfAllegiance(iffAllegiance);
+            if (flagImage)
+            {
+                flagImage.sprite = am.GetFlagOfAllegiance(iffAllegiance);
+            }
         }
-        SetFlag();
     }
 
     public void SetIFFAllegiance(int value)
@@ -44,6 +52,7 @@ public class IFF : MonoBehaviour
     }
     private void SetFlag()
     {
+        if (!flagSR) { GetFlagUIElement(); }
         if (!flagSR) { return; }
         flagSR.sprite = am.GetFlagOfAllegiance(iffAllegiance);
     }

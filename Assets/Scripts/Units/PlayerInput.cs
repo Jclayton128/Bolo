@@ -38,6 +38,15 @@ public class PlayerInput : ControlSource
         AssignShiftKnobs();
     }
 
+    public void ReinitializePlayer()
+    {
+        Start();
+        GetComponentInChildren<Health>().Reinitialize();
+        GetComponentInChildren<MoneyHolder>().Reinitialize();
+        GetComponentInChildren<HouseHolder>().Reinitialize();
+        GetComponentInChildren<Energy>().Reinitialize();
+    }
+
     private void AssignShiftKnobs()
     {
         shiftKnob = uim.GetShiftKnob(gameObject);
@@ -99,6 +108,7 @@ public class PlayerInput : ControlSource
             }
         }
 
+        if (!shiftKnob) { return; }
         shiftKnob.transform.position = gearShiftPositions[speedSetting-1].transform.position;
     }
 

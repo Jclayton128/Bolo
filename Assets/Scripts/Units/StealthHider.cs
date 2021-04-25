@@ -101,12 +101,12 @@ public class StealthHider : MonoBehaviour
 
         if (hiderRadius_Modified > hiderColl.radius)
         {
-            Debug.Log("hider radius needs to grow");
+            //Debug.Log("hider radius needs to grow");
             hiderColl.radius += hiderGrowthRate * Time.deltaTime;
         }
         if (hiderRadius_Modified < hiderColl.radius)
         {
-            Debug.Log("hider radius needs to shrink");
+            //Debug.Log("hider radius needs to shrink");
             hiderColl.radius -= hiderShrinkRate * Time.deltaTime;
         }
         hiderColl.radius = Mathf.Clamp(hiderColl.radius, hiderRadius_Base / 4, hiderRadius_Base * 4);

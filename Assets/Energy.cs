@@ -25,6 +25,11 @@ public class Energy : MonoBehaviour
 
     }
 
+    public void Reinitialize()
+    {
+        Start();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -40,6 +45,7 @@ public class Energy : MonoBehaviour
 
     private void UpdateUI()
     {
+        if (!energyBar) { return; }
         energyBar.value = currentEnergy;
     }
 

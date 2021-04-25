@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AllegianceManager : MonoBehaviour
 {
     //Init
+    SceneLoader sl;
     [SerializeField] GameObject dummyFactionLeaderPrefab = null;
     [SerializeField] Sprite[] flagSource = null;
     SortedList<int, FactionLeader> factionLeaders = new SortedList<int, FactionLeader>();
@@ -27,9 +29,11 @@ public class AllegianceManager : MonoBehaviour
     }
     void Start()
     {
-        //GameObject.FindGameObjectWithTag("Player").GetComponent<IFF>().SetIFFAllegiance(playerAllegiance);
 
+        sl = FindObjectOfType<SceneLoader>();
     }
+    
+
 
 
     // Update is called once per frame

@@ -37,7 +37,7 @@ public class FlagButtonManager : MonoBehaviour
     {
         int allegiance = buttons.IndexOf(button);
         am.playerAllegiance = allegiance;
-        sl.LoadNextScene();
+        sl.LoadSecondScene();
         
     }
 

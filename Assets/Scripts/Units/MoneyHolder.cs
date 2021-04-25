@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class MoneyHolder : MonoBehaviour
 {
     //init
-    TextMeshProUGUI moneyBar;
+    public TextMeshProUGUI moneyBar;
 
 
     //param
@@ -20,7 +20,12 @@ public class MoneyHolder : MonoBehaviour
         UpdateUI();
 
     }
-    
+
+    public void Reinitialize()
+    {
+        Start();
+    }
+
 
     // Update is called once per frame
     void Update()

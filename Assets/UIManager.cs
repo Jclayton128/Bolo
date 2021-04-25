@@ -35,6 +35,7 @@ public class UIManager : MonoBehaviour
     }
     public Slider GetHealthBar(GameObject askingGameObject)
     {
+        if (!playerAtThisComputer) { playerAtThisComputer = GameObject.FindGameObjectWithTag("Player"); }
         if (askingGameObject == playerAtThisComputer)
         {
             return healthBar;
@@ -47,6 +48,7 @@ public class UIManager : MonoBehaviour
     }
     public GameObject GetShiftKnob(GameObject askingGameObject)
     {
+        if (!playerAtThisComputer) { playerAtThisComputer = GameObject.FindGameObjectWithTag("Player"); }
         if (askingGameObject == playerAtThisComputer)
         {
             return shiftKnob;
@@ -59,6 +61,7 @@ public class UIManager : MonoBehaviour
     }
     public void GetShiftPositions(GameObject askingGameObject, out Transform shift1, out Transform shift2, out Transform shift3)
     {
+        if (!playerAtThisComputer) { playerAtThisComputer = GameObject.FindGameObjectWithTag("Player"); }
         if (askingGameObject == playerAtThisComputer)
         {
             shift1 = shiftPos_1;
@@ -76,6 +79,7 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI GetHouseCounter (GameObject askingGameObject)
     {
+        if (!playerAtThisComputer) { playerAtThisComputer = GameObject.FindGameObjectWithTag("Player"); }
         if (askingGameObject == playerAtThisComputer)
         {
             return houseCounter;
@@ -89,6 +93,7 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI GetMoneyCounter (GameObject askingGameObject)
     {
+        if (!playerAtThisComputer) { playerAtThisComputer = GameObject.FindGameObjectWithTag("Player"); }
         if (askingGameObject == playerAtThisComputer)
         {
             return moneyCounter;
@@ -102,6 +107,7 @@ public class UIManager : MonoBehaviour
 
     public Image GetFlag (GameObject askingGameObject)
     {
+        if (!playerAtThisComputer) { playerAtThisComputer = GameObject.FindGameObjectWithTag("Player"); }
         if (askingGameObject == playerAtThisComputer)
         {
             return flag;
@@ -115,6 +121,7 @@ public class UIManager : MonoBehaviour
 
     public Slider GetEnergyBar(GameObject askingGameObject)
     {
+        if (!playerAtThisComputer) { playerAtThisComputer = GameObject.FindGameObjectWithTag("Player"); }
         if (askingGameObject == playerAtThisComputer)
         {
             return energyBar;
@@ -127,6 +134,7 @@ public class UIManager : MonoBehaviour
     }
     public Image GetWeaponIcon(GameObject askingGameObject)
     {
+        if (!playerAtThisComputer) { playerAtThisComputer = GameObject.FindGameObjectWithTag("Player"); }
         if (askingGameObject == playerAtThisComputer)
         {
             return weaponIcon;

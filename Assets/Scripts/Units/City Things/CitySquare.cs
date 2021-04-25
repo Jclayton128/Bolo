@@ -139,7 +139,7 @@ public class CitySquare : MonoBehaviour
         cityName = cnm.GetRandomCityName();
     }
 
-    private void SetAllegianceForBuildingsInCity(int newIFF)
+    public void SetAllegianceForBuildingsInCity(int newIFF)
     {
         //Debug.Log($"{housesInCity.Count} houses should be changing iff state to {iff.GetIFFAllegiance()}");
         //Debug.Log($"{turretsInCity.Count} turrets should be changing iff state to {iff.GetIFFAllegiance()}");
