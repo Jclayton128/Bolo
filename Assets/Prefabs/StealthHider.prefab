@@ -44,12 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76701173f64e384a978e7522896649e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mat: {fileID: 2100000, guid: 15f12ef28d512104eae4925ece8b1a8a, type: 2}
   sensorGhostPrefab: {fileID: 4202776216934073759, guid: 4999daf485209424e8309db7989ee6f6, type: 3}
   hiderRadius_Base: 5
   hiderGrowthRate: 1
   hiderShrinkRate: 0.4
   hiderRadius_Modified: 0
   hiderRadius_TerrainModifier: 1
+  sensorGhost: {fileID: 0}
 --- !u!58 &1175755379160955192
 CircleCollider2D:
   m_ObjectHideFlags: 0

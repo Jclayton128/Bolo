@@ -8,6 +8,7 @@ using UnityEngine;
 public class StealthHider : MonoBehaviour
 {
     //init
+    [SerializeField] Material mat = null;
     SpriteRenderer[] srs;
     Rigidbody2D rb;
     CircleCollider2D hiderColl;
@@ -51,7 +52,7 @@ public class StealthHider : MonoBehaviour
         if (!sensorGhost) { return; }
         SpriteRenderer sr = sensorGhost.GetComponent<SpriteRenderer>();
         float a = Mathf.MoveTowards(sr.color.a, 0, fadeRateSensorGhost * Time.deltaTime);
-        sr.color = new Color(0, 0, 0, a);
+        sr.color = new Color(1, 1, 1, a);
         if (a <= Mathf.Epsilon) { Destroy(sensorGhost); }
     }
 
@@ -135,6 +136,7 @@ public class StealthHider : MonoBehaviour
         GameObject sg = Instantiate(sensorGhostPrefab, transform.position, currentRot) as GameObject;
         SpriteRenderer sr = sg.GetComponent<SpriteRenderer>();
         sr.sprite = srs[0].sprite;
+        sr.material = mat;
         return sg;
     }
 
