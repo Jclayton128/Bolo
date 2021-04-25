@@ -159,56 +159,18 @@ public class CitySquare : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ReduceCaptureTimeIfNotBeingCaptured();
-        HandleCaptureAttempt();
-        //ProvideMoneyDropToOwner();
+
     }
+    
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        capturingGO = collision.gameObject;
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        capturingGO = null;
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (!capturingGO) { return; }
-        if (capturingGO.GetComponentInParent<IFF>().GetIFFAllegiance() != iff.GetIFFAllegiance() && timeSpentCapturing < timeToCapture)
-        {
-            timeSpentCapturing += Time.deltaTime;
-        }
-    }
-
-    private void HandleCaptureAttempt()
-    {
-        if (!capturingGO) { return; }
-
-        if (timeSpentCapturing >= timeToCapture)
-        {
-            CompleteSuccessfulCapture();
-        }
-    }
-
-    private void CompleteSuccessfulCapture()
+    public void CompleteSuccessfulCapture()
     {
         int newAllegiance = capturingGO.GetComponentInParent<IFF>().GetIFFAllegiance();
         iff.SetIFFAllegiance(newAllegiance);
         SetAllegianceForBuildingsInCity(newAllegiance);
-        timeSpentCapturing = 0;
     }
 
-    private void ReduceCaptureTimeIfNotBeingCaptured()
-    {
-        if (!capturingGO)
-        {
-            timeSpentCapturing -= Time.deltaTime * 2;
-            timeSpentCapturing = Mathf.Clamp(timeSpentCapturing, 0, timeToCapture);
-        }
-    }
 
     public void RemoveBuildingFromList(House deadThing)
     {

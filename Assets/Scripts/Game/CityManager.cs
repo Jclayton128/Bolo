@@ -61,7 +61,10 @@ public class CityManager : MonoBehaviour
 
     private void UpdateCaptureBarWithClosestCityInfo()
     {
-        cityCaptureSlider.value = closestCS.timeSpentCapturing;
+        if (closestCS.capturingGO == player)
+        {
+            cityCaptureSlider.value = closestCS.timeSpentCapturing;
+        }
     }
 
     private void BoldCityNameIfWithinRange()

@@ -7,7 +7,7 @@ using Cinemachine;
 public class GameManager : MonoBehaviour
 {
     //init
-    GameObject player;
+    public GameObject player;
     [SerializeField] GameObject playerPrefab = null;
     SceneLoader sl;
     CityManager cm;
@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
         int count = FindObjectsOfType<GameManager>().Length;
         if (count > 1)
         {
+            Debug.Log("destroying the GM");
             Destroy(gameObject);
         }
         else
@@ -35,10 +36,10 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         if (!player)
         {
-            player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+            player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity) as GameObject;            
             if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))  //for those development times where i start in Arena scene
             {
-                Camera.main.GetComponent<CinemachineVirtualCamera>().Follow = player.transform;
+                Camera.main.GetComponentInChildren<CinemachineVirtualCamera>().Follow = player.transform;
             }
         }
     }

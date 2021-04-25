@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Image flag = null;
     [SerializeField] Slider energyBar = null;
     [SerializeField] Image weaponIcon = null;
+    [SerializeField] Slider cityCaptureSlider = null;
 
 
     // Start is called before the first frame update
@@ -138,6 +139,20 @@ public class UIManager : MonoBehaviour
         if (askingGameObject == playerAtThisComputer)
         {
             return weaponIcon;
+        }
+        else
+        {
+            //Debug.Log("Asking GO is not the local player! No UI for you!");
+            return null;
+        }
+    }
+
+    public Slider GetCityCaptureSlider(GameObject askingGameObject)
+    {
+        if (!playerAtThisComputer) { playerAtThisComputer = GameObject.FindGameObjectWithTag("Player"); }
+        if (askingGameObject == playerAtThisComputer)
+        {
+            return cityCaptureSlider;
         }
         else
         {

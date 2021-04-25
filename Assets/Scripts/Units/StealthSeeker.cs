@@ -20,7 +20,7 @@ public class StealthSeeker : MonoBehaviour
     {
         if(collision.transform.root == transform.root) { return; } //dont detect oneself;
 
-        Debug.Log("detection");
+        //Debug.Log("detection");
 
         if (transform.root.tag == "Player")
         {
@@ -31,7 +31,7 @@ public class StealthSeeker : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("back to hiding");
+        //Debug.Log("back to hiding");
 
         if (transform.root.tag == "Player" )
         {

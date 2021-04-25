@@ -33,10 +33,8 @@ public class SpawnPanel : MonoBehaviour
 
     private void ListenForKeyPressForTesting()
     {
-        Debug.Log("listening");
         if (Input.GetKeyUp(KeyCode.Tab))
         {
-            Debug.Log("tab was pressed");
             isExtended = !isExtended;
         }
     }
