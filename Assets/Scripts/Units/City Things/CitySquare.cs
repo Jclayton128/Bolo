@@ -18,7 +18,6 @@ public class CitySquare : MonoBehaviour
 
     //param
     public float cityRadius { get; private set; } = 4f;
-    public float timeToCapture { get; private set; } = 3; //seconds
     int numberOfHousesToSpawn = 6;
     int numberOfTurretsToSpawn = 1;
 
@@ -26,10 +25,6 @@ public class CitySquare : MonoBehaviour
     public string cityName { get; protected set; }
     public List<House> housesInCity = new List<House>();
     public List<House> turretsInCity = new List<House>();
-    public float timeSpentCapturing { get; private set; } = 0;
-    int iffOfPreviousCaptureAttempt = 0;
-    public GameObject capturingGO = null;
-
 
     void Start()
     {
@@ -163,13 +158,6 @@ public class CitySquare : MonoBehaviour
     }
     
 
-
-    public void CompleteSuccessfulCapture()
-    {
-        int newAllegiance = capturingGO.GetComponentInParent<IFF>().GetIFFAllegiance();
-        iff.SetIFFAllegiance(newAllegiance);
-        SetAllegianceForBuildingsInCity(newAllegiance);
-    }
 
 
     public void RemoveBuildingFromList(House deadThing)

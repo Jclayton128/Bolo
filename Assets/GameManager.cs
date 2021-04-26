@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
 
     public void InitializePlayerInArena()
     {
-        int playerIFF = am.playerAllegiance;
+        int playerIFF = am.GetPlayerIFF();
         am.AddFactionLeaderToList(playerIFF, player.GetComponent<FactionLeader>());
         player.GetComponent<PlayerInput>().ReinitializePlayer();
         player.GetComponent<IFF>().SetIFFAllegiance(playerIFF);

@@ -36,7 +36,8 @@ public class FlagButtonManager : MonoBehaviour
     public void SelectAFlag(Button button)
     {
         int allegiance = buttons.IndexOf(button);
-        am.playerAllegiance = allegiance;
+        am.SetPlayerIFF(allegiance);
+        Debug.Log("FBM is setting allegiance of: " + allegiance);
         sl.LoadSecondScene();
         
     }

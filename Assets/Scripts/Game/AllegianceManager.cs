@@ -10,10 +10,10 @@ public class AllegianceManager : MonoBehaviour
     SceneLoader sl;
     [SerializeField] GameObject dummyFactionLeaderPrefab = null;
     [SerializeField] Sprite[] flagSource = null;
-    SortedList<int, FactionLeader> factionLeaders = new SortedList<int, FactionLeader>();
+    public SortedList<int, FactionLeader> factionLeaders = new SortedList<int, FactionLeader>();    
 
     //hood
-    public int playerAllegiance = 1;
+    private int playerAllegiance = -1;
 
     private void Awake()
     {
@@ -41,25 +41,35 @@ public class AllegianceManager : MonoBehaviour
     {
 
     }
+
+    public int GetPlayerIFF()
+    {
+        return playerAllegiance;
+    }
+
+    public void SetPlayerIFF(int newIff)
+    {
+        playerAllegiance = newIff;
+    }
     public void AddFactionLeaderToList(int allegiance, FactionLeader fl) //call this when the Arena scene is loaded.
     {
         if (factionLeaders.ContainsKey(allegiance))
         {
-            //Debug.Log("faction " + allegiance + " already has a leader!");
+            Debug.Log("faction " + allegiance + " already has a leader!");
         }
         else
         {
-            //Debug.Log("added faction leader for faction " + allegiance + ".");
+            Debug.Log($"added {fl.transform.gameObject} for faction " + allegiance + ".");
             factionLeaders.Add(allegiance, fl);
         }
     }
 
     public FactionLeader GetFactionLeader(int iffAllegiance)
     {
-        //Debug.Log($"I was asked for the faction leader for {iffAllegiance}");
+        Debug.Log($"I was asked for the faction leader for {iffAllegiance}");
         if (!factionLeaders.ContainsKey(iffAllegiance))
         {
-            //Debug.Log($"A faction leader doesn't exist for {iffAllegiance}. Creating a dummy");
+            Debug.Log($"A faction leader doesn't exist for {iffAllegiance}. Creating a dummy");
             GameObject dummy = Instantiate(dummyFactionLeaderPrefab, Vector3.zero, Quaternion.identity) as GameObject;
             dummyFactionLeaderPrefab.GetComponentInChildren<IFF>().SetIFFAllegiance(iffAllegiance);
             factionLeaders[iffAllegiance] = dummy.GetComponent<FactionLeader>();

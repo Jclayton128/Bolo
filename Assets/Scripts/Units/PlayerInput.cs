@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class PlayerInput : ControlSource
 {
     //init
     public UIManager uim;
-    public GameObject shiftKnob; 
+    public GameObject shiftKnob;
     public Transform[] gearShiftPositions = null;
 
 
@@ -45,6 +41,7 @@ public class PlayerInput : ControlSource
         GetComponentInChildren<MoneyHolder>().Reinitialize();
         GetComponentInChildren<HouseHolder>().Reinitialize();
         GetComponentInChildren<Energy>().Reinitialize();
+        GetComponentInChildren<CaptureTool>().Reinitialize();
     }
 
     private void AssignShiftKnobs()
@@ -99,7 +96,7 @@ public class PlayerInput : ControlSource
     private void HandleGearShifting()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
-        {            
+        {
             speedSetting++;
             //TODO: Play an audioclip with gear shifting 'clunk'
             if (speedSetting > gearShiftPositions.Length)
@@ -109,7 +106,7 @@ public class PlayerInput : ControlSource
         }
 
         if (!shiftKnob) { return; }
-        shiftKnob.transform.position = gearShiftPositions[speedSetting-1].transform.position;
+        shiftKnob.transform.position = gearShiftPositions[speedSetting - 1].transform.position;
     }
 
     protected override void OnDestroy()

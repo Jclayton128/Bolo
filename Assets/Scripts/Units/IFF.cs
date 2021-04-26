@@ -11,7 +11,7 @@ public class IFF : MonoBehaviour
     Image flagImage;
 
     //param
-    public int iffAllegiance;
+    int iffAllegiance;
 
     private void Start()
     {
@@ -31,7 +31,7 @@ public class IFF : MonoBehaviour
         if (transform.root.tag == "Player")
         {
             flagImage = FindObjectOfType<UIManager>().GetFlag(transform.root.gameObject);
-            iffAllegiance = am.playerAllegiance;
+            iffAllegiance = am.GetPlayerIFF();
             if (flagImage)
             {
                 flagImage.sprite = am.GetFlagOfAllegiance(iffAllegiance);

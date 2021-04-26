@@ -24,24 +24,18 @@ public class CityManager : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        SetupCityCaptureSlider();
+
         cityNameTextBar = GameObject.FindGameObjectWithTag("CityNameTextBar").GetComponent<TextMeshProUGUI>();
     }
 
 
-    private void SetupCityCaptureSlider()
-    {
-        cityCaptureSlider = GameObject.FindGameObjectWithTag("CCB").GetComponent<Slider>();
-        cityCaptureSlider.maxValue = citySquares[0].timeToCapture;
-        cityCaptureSlider.minValue = 0;
-        cityCaptureSlider.value = 0;
-    }
+
     private void Update()
     {
         closestCS = FindNearestCitySquare(player.transform);
         DisplayCityName();
         BoldCityNameIfWithinRange();
-        UpdateCaptureBarWithClosestCityInfo();        
+      
     }
 
     public int GetNumberOfCitySquares()
@@ -58,15 +52,6 @@ public class CityManager : MonoBehaviour
     {
         cityNameTextBar.text = closestCS.cityName;
     }
-
-    private void UpdateCaptureBarWithClosestCityInfo()
-    {
-        if (closestCS.capturingGO == player)
-        {
-            cityCaptureSlider.value = closestCS.timeSpentCapturing;
-        }
-    }
-
     private void BoldCityNameIfWithinRange()
     {
         float dist = (player.transform.position - closestCS.transform.position).magnitude;

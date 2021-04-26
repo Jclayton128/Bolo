@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class CaptureTool : MonoBehaviour
 {
     //init
-    Slider cityCaptureSlider;
-    CaptureSite capSite;
+    public Slider cityCaptureSlider;
+    public CaptureSite capSite;
 
     //param
 
@@ -18,6 +18,16 @@ public class CaptureTool : MonoBehaviour
     void Start()
     {
         cityCaptureSlider = FindObjectOfType<UIManager>().GetCityCaptureSlider(transform.root.gameObject);
+    }
+
+    public void Reinitialize()
+    {
+        Start();
+    }
+
+    private void Update()
+    {
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -42,23 +52,28 @@ public class CaptureTool : MonoBehaviour
             capSite.transform.root.GetComponentInChildren<IFF>().SetIFFAllegiance(newAllegiance);
             capSite.transform.root.GetComponentInChildren<CitySquare>().SetAllegianceForBuildingsInCity(newAllegiance);
             capSite.ResetCaptureStatus();
+            capSite = null;
         }
 
     }
 
     private void UpdateUI()
     {
+        if (!cityCaptureSlider) { return; }
         cityCaptureSlider.maxValue = capSite.GetTimeRequiredToCapture();
         cityCaptureSlider.value = capSite.GetTimeSpentCapturing();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if(!capSite) { return; }
+        capSite.ResetCaptureStatus();
         capSite.SetCapturer(null);
     }
 
     private void OnDestroy()
     {
+        if (!capSite) { return; }
         capSite.ResetCaptureStatus();
         capSite.SetCapturer(null);
     }

@@ -28,10 +28,10 @@ public class UnitSpawner : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Alpha1))
         {
-            GameObject factionLeader = am.GetFactionLeader(am.playerAllegiance).gameObject;
-            CitySquare closestCSToPlayer = cm.FindNearestCitySquare(factionLeader.transform.transform, am.playerAllegiance);
+            GameObject factionLeader = am.GetFactionLeader(am.GetPlayerIFF()).gameObject;
+            CitySquare closestCSToPlayer = cm.FindNearestCitySquare(factionLeader.transform.transform, am.GetPlayerIFF());
             GameObject unit = Instantiate(spawnableUnits[0], closestCSToPlayer.transform.position, Quaternion.identity) as GameObject;
-            unit.GetComponentInChildren<IFF>().SetIFFAllegiance(am.playerAllegiance);
+            unit.GetComponentInChildren<IFF>().SetIFFAllegiance(am.GetPlayerIFF());
         }
     }
 }

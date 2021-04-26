@@ -8,7 +8,6 @@ public class CaptureSite : MonoBehaviour
 {
     //param
     float timeToCapture = 5f;
-    float captureBleedOutRate = 3f; //you lose 3 second of capture every second you aren't on the tile;
 
     //hood
     float timeSpentCapturing = 0;
@@ -22,7 +21,6 @@ public class CaptureSite : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ReduceCaptureTimeIfNotBeingCaptured();
         CheckIfCaptured();
     }
 
@@ -43,15 +41,7 @@ public class CaptureSite : MonoBehaviour
     {
         isCaptured = false;
         timeSpentCapturing = 0;
-    }
-
-    private void ReduceCaptureTimeIfNotBeingCaptured()
-    {
-        if (!capturer)
-        {
-            timeSpentCapturing -= Time.deltaTime * captureBleedOutRate;
-            timeSpentCapturing = Mathf.Clamp(timeSpentCapturing, 0, timeToCapture);
-        }
+        capturer = null;
     }
 
     public void BuildCaptureTime(float amount)
