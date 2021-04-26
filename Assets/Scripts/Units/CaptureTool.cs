@@ -69,6 +69,7 @@ public class CaptureTool : MonoBehaviour
         if(!capSite) { return; }
         capSite.ResetCaptureStatus();
         capSite.SetCapturer(null);
+        UpdateUI();
     }
 
     private void OnDestroy()

@@ -1699,6 +1699,7 @@ MonoBehaviour:
   flag: {fileID: 0}
   energyBar: {fileID: 0}
   weaponIcon: {fileID: 0}
+  cityCaptureSlider: {fileID: 0}
 --- !u!4 &2107367983
 Transform:
   m_ObjectHideFlags: 0
@@ -1720,6 +1721,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2494395584027823945, guid: a969b79aaf531824f850e40b539dc54b, type: 3}
+      propertyPath: dummyFactionLeaderPrefab
+      value: 
+      objectReference: {fileID: 182887017551331595, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
     - target: {fileID: 2494395584027823947, guid: a969b79aaf531824f850e40b539dc54b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
