@@ -59,11 +59,11 @@ public class AllegianceManager : MonoBehaviour
     {
         if (factionLeaders.ContainsKey(allegiance))
         {
-            Debug.Log("faction " + allegiance + " already has a leader!");
+            //Debug.Log("faction " + allegiance + " already has a leader!");
         }
         else
         {
-            Debug.Log($"added {fl.transform.gameObject} for faction " + allegiance + ".");
+            //Debug.Log($"added {fl.transform.gameObject} for faction " + allegiance + ".");
             factionLeaders.Add(allegiance, fl);
         }
     }
@@ -80,10 +80,10 @@ public class AllegianceManager : MonoBehaviour
     public FactionLeader GetFactionLeader(int iffAllegiance)
     {
         //Debug.Log($"I was asked for the faction leader for {iffAllegiance}");
-        if (!factionLeaders.ContainsKey(iffAllegiance))
+        if (!factionLeaders.ContainsKey(iffAllegiance) || factionLeaders[iffAllegiance] == null)
         {
-            Debug.Log($"A faction leader doesn't exist for {iffAllegiance}.");
-            return null;
+            Debug.Log($"A faction leader doesn't exist for {iffAllegiance}. Returning to Feral");
+            return factionLeaders[IFF.feralIFF];
         }
         else
         {

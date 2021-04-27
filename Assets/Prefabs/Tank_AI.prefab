@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 182887017605779125}
   - component: {fileID: 182887017605779122}
   - component: {fileID: 5884238059541052863}
+  - component: {fileID: 5188828775683236015}
   m_Layer: 8
   m_Name: TankTurret
   m_TagString: Untagged
@@ -393,6 +394,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 180
+--- !u!114 &5188828775683236015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182887017605779120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c30c683bca808bc46a85dcade2ead3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &182887018754021692
 GameObject:
   m_ObjectHideFlags: 0

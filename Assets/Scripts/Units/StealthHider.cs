@@ -152,4 +152,12 @@ public class StealthHider : MonoBehaviour
             thisSR.enabled = true;
         }
     }
+
+    private void OnDestroy()
+    {
+       if (sensorGhost)
+        {
+            Destroy(sensorGhost);
+        }
+    }
 }

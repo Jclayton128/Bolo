@@ -54,6 +54,7 @@ public class House : MonoBehaviour
         timeSinceLastMoneyDrop -= Time.deltaTime;
         if (timeSinceLastMoneyDrop <= 0)
         {
+            UpdateCurrentOwner();
             owner.GetComponent<MoneyHolder>().AddMoney(amountOfMoneyOnEachDrop);
             timeSinceLastMoneyDrop = timeBetweenMoneyDrops;
         }
@@ -62,10 +63,6 @@ public class House : MonoBehaviour
     public void UpdateCurrentOwner()
     {
         owner = am.GetFactionLeader(iff.GetIFFAllegiance()).gameObject;
-        if (!owner)
-        {
-            owner = am.GetFactionLeader(iff.GetFeralIFF()).gameObject;
-        }
     }
     public void SetOwningCity(CitySquare citysq)
     {
@@ -77,11 +74,11 @@ public class House : MonoBehaviour
 
         if (!GetComponent<DefenseTurret>())
         {
+
             if (owner) //don't decrement if there isn't a previous owner to decrement from
             {
                 owner.GetComponent<HouseHolder>().DecrementHouseCount();  //owner reference should still be the old owner
             }
-
             owner = am.GetFactionLeader(newIFF).gameObject; //now owner reference becomes the new owner.
             owner.GetComponent<HouseHolder>().IncrementHouseCount();
         }
