@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2010904512559209385}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: 0.49548405, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 520309447919383725}
@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5717bb1cfe087a49aa30f39ab07b732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  am: {fileID: 0}
   possibleHouseSprites:
   - {fileID: -5809132127048867963, guid: ddfb37ef8b41bbd488039708bdb8f9dd, type: 3}
   - {fileID: -8742719537365509113, guid: ddfb37ef8b41bbd488039708bdb8f9dd, type: 3}
@@ -138,6 +139,7 @@ MonoBehaviour:
   - {fileID: 9126172486708747978, guid: ddfb37ef8b41bbd488039708bdb8f9dd, type: 3}
   iff: {fileID: 4925757410520306871}
   isHouse: 1
+  owner: {fileID: 0}
 --- !u!114 &1558687450862482328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +155,7 @@ MonoBehaviour:
   hurtAudioClips: []
   dieAudioClips: []
   spritesByHealth: []
+  healthBar: {fileID: 0}
   startingHealth: 5
   armorLevel: 0
   canMove: 0

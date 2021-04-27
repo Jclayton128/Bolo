@@ -11,7 +11,7 @@ public class IFF : MonoBehaviour
     Image flagImage;
 
     //param
-    int iffAllegiance;
+    [SerializeField] int iffAllegiance;
 
     private void Start()
     {
