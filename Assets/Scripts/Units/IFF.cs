@@ -12,7 +12,7 @@ public class IFF : MonoBehaviour
 
     //param
     [SerializeField] int iffAllegiance;
-    int feralIFF = 0;
+    public static readonly int feralIFF = 0;
 
     private void Start()
     {

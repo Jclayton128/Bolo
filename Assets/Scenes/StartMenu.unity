@@ -2275,6 +2275,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2494395584027823990, guid: a969b79aaf531824f850e40b539dc54b, type: 3}
+      propertyPath: actualFactionLeaderPrefab
+      value: 
+      objectReference: {fileID: 182887017551331595, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
+    - target: {fileID: 2494395584027823990, guid: a969b79aaf531824f850e40b539dc54b, type: 3}
+      propertyPath: dummyFactionLeaderPrefab
+      value: 
+      objectReference: {fileID: 2453006131977656866, guid: 2fb6b570359b8354e918d69a6a56eb98, type: 3}
     - target: {fileID: 2494395584027823991, guid: a969b79aaf531824f850e40b539dc54b, type: 3}
       propertyPath: m_Name
       value: GameManager
