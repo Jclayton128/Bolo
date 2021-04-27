@@ -62,6 +62,10 @@ public class House : MonoBehaviour
     public void UpdateCurrentOwner()
     {
         owner = am.GetFactionLeader(iff.GetIFFAllegiance()).gameObject;
+        if (!owner)
+        {
+            owner = am.GetFactionLeader(iff.GetFeralIFF()).gameObject;
+        }
     }
     public void SetOwningCity(CitySquare citysq)
     {

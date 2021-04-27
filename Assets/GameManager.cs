@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cinemachine;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -53,7 +54,24 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene == SceneManager.GetSceneByBuildIndex(0)) { return; }  //don't call rest of this method if still on starting screen
+
+
         InitializePlayerInArena();
+        InitializeAIsInArena();
+    }        
+
+    private void InitializeAIsInArena()
+    {
+        am.PopulateFactionLeaders();  //TODO: this role should be performed by the Game Manager. NEed to move the prefabs over. AM should only serve, not instantiate
+        int factions = am.GetNumberOfFactionsIncludingFeral();
+        for (int i = 1; i <= factions-1; i++)
+        {
+            GameObject thisLeader = am.GetFactionLeader(i).gameObject;
+            CitySquare startingCS = cm.FindNearestCitySquare(transform, i);
+            Vector3 startingPos = startingCS.transform.position;
+            thisLeader.transform.position = startingPos;
+            startingCS.SetAllegianceForBuildingsInCity(i);
+        }
     }
 
     public void InitializePlayerInArena()
@@ -63,10 +81,7 @@ public class GameManager : MonoBehaviour
         player.GetComponent<PlayerInput>().ReinitializePlayer();
         player.GetComponent<IFF>().SetIFFAllegiance(playerIFF);
         cm = FindObjectOfType<CityManager>(); //City Manager won't exist on start scene
-        //Debug.Log($"{cm} was asked for number of cities and reported {cm.GetNumberOfCitySquares()}");
-        int randomCity = Random.Range(0, cm.GetNumberOfCitySquares());
-        CitySquare playerCity = cm.GetCitySquare(randomCity);
-        //Debug.Log($"Player city is {playerCity.name}");
+        CitySquare playerCity = cm.FindNearestCitySquare(transform, playerIFF);
         playerCity.GetComponentInChildren<IFF>().SetIFFAllegiance(playerIFF);
         player.transform.position = playerCity.transform.position;
         Camera.main.GetComponentInChildren<CinemachineVirtualCamera>().Follow = player.transform;

@@ -106,6 +106,7 @@ public class CityManager : MonoBehaviour
                 distance = diff;
             }
         }
+        Debug.Log($"Closest CS for {allegianceToLookFor} is at {closestCitySquare.transform.position}");
         return closestCitySquare;
     }
 

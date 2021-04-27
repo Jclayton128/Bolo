@@ -8,6 +8,7 @@ public class FactionLeader : MonoBehaviour
     //init
     AllegianceManager am;
     IFF iff;
+
     void Start()
     {
         am = FindObjectOfType<AllegianceManager>();

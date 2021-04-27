@@ -59,7 +59,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iffAllegiance: 0
-  isPlayer: 0
 --- !u!114 &8323131440690885673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,4 +84,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9125f48ad823a4ab23f83bef44b017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moneyBar: {fileID: 0}
   money: 0

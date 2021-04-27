@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dummyFactionLeaderPrefab: {fileID: 2453006131977656866, guid: 2fb6b570359b8354e918d69a6a56eb98, type: 3}
+  actualFactionLeaderPrefab: {fileID: 182887017551331595, guid: 40fbef8f766f070499e0c54d5b963adb, type: 3}
   flagSource:
   - {fileID: 5503460646655229670, guid: d02762bceb87cae42956cd8c2127ee50, type: 3}
   - {fileID: -4537281551234122163, guid: d02762bceb87cae42956cd8c2127ee50, type: 3}
@@ -67,8 +68,6 @@ MonoBehaviour:
   - {fileID: -5947672368319390862, guid: d02762bceb87cae42956cd8c2127ee50, type: 3}
   - {fileID: 150133700988709528, guid: d02762bceb87cae42956cd8c2127ee50, type: 3}
   - {fileID: -3052584668763156646, guid: d02762bceb87cae42956cd8c2127ee50, type: 3}
-  - {fileID: -2775086590558178504, guid: d02762bceb87cae42956cd8c2127ee50, type: 3}
-  playerAllegiance: 3
 --- !u!114 &2494395584027823990
 MonoBehaviour:
   m_ObjectHideFlags: 0

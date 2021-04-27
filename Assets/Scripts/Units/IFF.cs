@@ -12,6 +12,7 @@ public class IFF : MonoBehaviour
 
     //param
     [SerializeField] int iffAllegiance;
+    int feralIFF = 0;
 
     private void Start()
     {
@@ -55,5 +56,10 @@ public class IFF : MonoBehaviour
         if (!flagSR) { GetFlagUIElement(); }
         if (!flagSR) { return; }
         flagSR.sprite = am.GetFlagOfAllegiance(iffAllegiance);
+    }
+
+    public int GetFeralIFF()
+    {
+        return feralIFF;
     }
 }

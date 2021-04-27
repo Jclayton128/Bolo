@@ -24,7 +24,7 @@ public class FlagButtonManager : MonoBehaviour
     {
         foreach (Button button in buttons)
         {
-            button.GetComponent<Image>().sprite = am.GetFlagOfAllegiance(buttons.IndexOf(button));
+            button.GetComponent<Image>().sprite = am.GetFlagOfAllegiance(button.gameObject.GetComponent<IFF>().GetIFFAllegiance());
         }
     }
 
@@ -33,11 +33,10 @@ public class FlagButtonManager : MonoBehaviour
         
     }
 
-    public void SelectAFlag(Button button)
+    public void SelectAFlag(int chosenIFF)
     {
-        int allegiance = buttons.IndexOf(button);
-        am.SetPlayerIFF(allegiance);
-        Debug.Log("FBM is setting allegiance of: " + allegiance);
+        am.SetPlayerIFF(chosenIFF);
+        //Debug.Log("FBM is setting allegiance of: " + chosenIFF);
         sl.LoadSecondScene();
         
     }
