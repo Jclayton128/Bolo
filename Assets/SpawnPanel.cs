@@ -10,12 +10,17 @@ public class SpawnPanel : MonoBehaviour
     [SerializeField] RectTransform panel = null;
     [SerializeField] RectTransform retractPos = null;
     [SerializeField] RectTransform extendPos = null;
+    [SerializeField] Transform[] queueStack = null;
+    [SerializeField] Image soldierIcon = null;
+    [SerializeField] Image tankIcon = null;
+    [SerializeField] Image missileVanIcon = null;
+    [SerializeField] Image helicopterIcon = null;
 
     //param
     float lerpSpeed = 400f; //pixels per second. panel is 200 pixel wide
 
     //hood
-    public bool isExtended = false;
+    public bool isExtended { get; private set; } = false;
 
 
     // Start is called before the first frame update
@@ -53,6 +58,5 @@ public class SpawnPanel : MonoBehaviour
             //x = Mathf.Clamp(x, retractPos.position.x, extendPos.position.x);
             panel.position = new Vector2(x, panel.position.y);
         }
-
     }
 }
