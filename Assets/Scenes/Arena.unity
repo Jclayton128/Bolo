@@ -30219,9 +30219,6 @@ MonoBehaviour:
   - {fileID: 174423870}
   - {fileID: 500748521}
   - {fileID: 1925969986}
-  intensityTarget: 0
-  fadeRate: 0
-  riseRate: 0
 --- !u!1 &358238474
 GameObject:
   m_ObjectHideFlags: 0
@@ -31689,11 +31686,11 @@ MonoBehaviour:
   - {fileID: 906655173}
   targets: []
   timeBetweenScans: 0.3
-  radarRange: 20
+  radarRange: 30
   fadePerSecond: 0.4
   risePerSecond: 2
   signalFudge: 0.1
-  radarAccuracy: 45
+  radarAccuracy: 30
 --- !u!114 &638955289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32827,9 +32824,6 @@ MonoBehaviour:
   - {fileID: 731614021}
   - {fileID: 710843504}
   - {fileID: 1197249375}
-  intensityTarget: 0
-  fadeRate: 0
-  riseRate: 0
 --- !u!1 &882492040
 GameObject:
   m_ObjectHideFlags: 0
@@ -33057,9 +33051,6 @@ MonoBehaviour:
   - {fileID: 1935821050}
   - {fileID: 856987089}
   - {fileID: 2088970292}
-  intensityTarget: 0
-  fadeRate: 0
-  riseRate: 0
 --- !u!1 &911215302
 GameObject:
   m_ObjectHideFlags: 0
@@ -35536,9 +35527,6 @@ MonoBehaviour:
   - {fileID: 758002279}
   - {fileID: 1366920265}
   - {fileID: 1554338025}
-  intensityTarget: 0
-  fadeRate: 0
-  riseRate: 0
 --- !u!1 &1191843466
 GameObject:
   m_ObjectHideFlags: 0
@@ -35977,9 +35965,6 @@ MonoBehaviour:
   - {fileID: 1046861017}
   - {fileID: 2011453584}
   - {fileID: 1536613413}
-  intensityTarget: 0
-  fadeRate: 0
-  riseRate: 0
 --- !u!1 &1264698335
 GameObject:
   m_ObjectHideFlags: 0
@@ -37664,9 +37649,6 @@ MonoBehaviour:
   - {fileID: 1842523813}
   - {fileID: 1233176696}
   - {fileID: 1989135164}
-  intensityTarget: 0
-  fadeRate: 0
-  riseRate: 0
 --- !u!1 &1498531341
 GameObject:
   m_ObjectHideFlags: 0
@@ -109571,9 +109553,6 @@ MonoBehaviour:
   - {fileID: 1853872915}
   - {fileID: 1999371778}
   - {fileID: 390845666}
-  intensityTarget: 0
-  fadeRate: 0
-  riseRate: 0
 --- !u!1 &1970485920
 GameObject:
   m_ObjectHideFlags: 0
@@ -109708,9 +109687,6 @@ MonoBehaviour:
   - {fileID: 1028523002}
   - {fileID: 1191843468}
   - {fileID: 739864094}
-  intensityTarget: 0
-  fadeRate: 0
-  riseRate: 0
 --- !u!1 &1989135162
 GameObject:
   m_ObjectHideFlags: 0

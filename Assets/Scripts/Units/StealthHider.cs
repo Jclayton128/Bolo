@@ -18,8 +18,9 @@ public class StealthHider : MonoBehaviour
 
     //param
     public float hiderRadius_Base;
-    public float hiderGrowthRate = .5f; //per second;
-    public float hiderShrinkRate = .2f; //per second;
+    public float hiderGrowthRate; //per second;
+    public float hiderShrinkRate; //per second;
+    public float attackModifier = 3f; //attacking multiplies the size of hiderRadius_Base, 
 
     float fadeRateSensorGhost = .2f; // 5 seconds at .2f
 
@@ -42,7 +43,7 @@ public class StealthHider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateHiderRadiusInputBasedOnSpeed();
+        UpdateHiderRadiusInputBasedOnSpeedAndTerrain();
         FadeOutSensorGhost();
 
     }
@@ -56,7 +57,7 @@ public class StealthHider : MonoBehaviour
         if (a <= Mathf.Epsilon) { Destroy(sensorGhost); }
     }
 
-    private void UpdateHiderRadiusInputBasedOnSpeed()
+    private void UpdateHiderRadiusInputBasedOnSpeedAndTerrain()
     {
         float vel = rb.velocity.magnitude;
         hiderRadius_TerrainModifier = GetTerrainModifier();
@@ -96,6 +97,12 @@ public class StealthHider : MonoBehaviour
 
     }
 
+    public void SpikeLoudnessDueToAttack()
+    {
+
+        hiderColl.radius = attackModifier * hiderRadius_Base;
+        Debug.Log("Spike the stealth!");
+    }
     private void AdjustHiderRadius()
     {
 
@@ -109,7 +116,7 @@ public class StealthHider : MonoBehaviour
             //Debug.Log("hider radius needs to shrink");
             hiderColl.radius -= hiderShrinkRate * Time.deltaTime;
         }
-        hiderColl.radius = Mathf.Clamp(hiderColl.radius, hiderRadius_Base / 4, hiderRadius_Base * 4);
+        hiderColl.radius = Mathf.Clamp(hiderColl.radius, hiderRadius_Base / 4, hiderRadius_Base*attackModifier*hiderRadius_TerrainModifier);
     }
 
     public void MakeObjectInvisible()

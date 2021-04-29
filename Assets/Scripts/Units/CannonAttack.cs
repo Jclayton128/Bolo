@@ -6,6 +6,7 @@ public class CannonAttack : Attack
 {
     //init
 
+
     //param
     float timeBetweenAttacks = 0.3f;
     float weaponSpeed = 10f;
@@ -19,6 +20,7 @@ public class CannonAttack : Attack
     protected override void Start()
     {
         base.Start();
+
     }
 
     // Update is called once per frame
@@ -29,8 +31,10 @@ public class CannonAttack : Attack
 
     public override void AttackCommence()
     {
+
         if (timeSinceLastAttack < 0 && energy.GetCurrentEnergy() >= energyCost)
         {
+            sh.SpikeLoudnessDueToAttack();
             AudioSource.PlayClipAtPoint(selectedFiringSound, transform.position);
             GameObject shell = Instantiate(projectilePrefab, transform.position + (transform.up * offset), transform.rotation) as GameObject;
             shell.GetComponent<Rigidbody2D>().velocity = shell.transform.up * weaponSpeed;

@@ -14,6 +14,7 @@ public abstract class Attack : MonoBehaviour
     [SerializeField] protected GameObject projectilePrefab = null;
     [SerializeField] protected AudioClip[] firingSounds = null;
     protected Energy energy;
+    protected StealthHider sh;
 
     //param
 
@@ -22,6 +23,7 @@ public abstract class Attack : MonoBehaviour
 
     protected virtual void Start()
     {
+        sh = transform.root.GetComponentInChildren<StealthHider>();
         cs = GetComponentInParent<ControlSource>();
         move = transform.parent.GetComponentInChildren<Movement>();
         SelectFiringSound();

@@ -47,8 +47,9 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: 15f12ef28d512104eae4925ece8b1a8a, type: 2}
   sensorGhostPrefab: {fileID: 4202776216934073759, guid: 4999daf485209424e8309db7989ee6f6, type: 3}
   hiderRadius_Base: 5
-  hiderGrowthRate: 1
-  hiderShrinkRate: 0.4
+  hiderGrowthRate: 3
+  hiderShrinkRate: 3
+  attackModifier: 3
   hiderRadius_Modified: 0
   hiderRadius_TerrainModifier: 1
   sensorGhost: {fileID: 0}
