@@ -16,9 +16,9 @@ public class RadarSector : MonoBehaviour
 
     //hood
     float intensityActual;
-    public float intensityTarget;
-    public float fadeRate;
-    public float riseRate;
+    float intensityTarget;
+    float fadeRate;
+    float riseRate;
 
 
     // Start is called before the first frame update
@@ -34,6 +34,13 @@ public class RadarSector : MonoBehaviour
             dot.color = new Color(0.2195399f, 0.95f, .2134212f, 0);
         }
     }
+
+    public void SetRates(float newRise, float newFade)
+    {
+        riseRate = newRise;
+        fadeRate = newFade;
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -68,5 +75,10 @@ public class RadarSector : MonoBehaviour
         dotLevels[2].color = new Color(radarGreen.r, radarGreen.g, radarGreen.b, alpha_2);
         dotLevels[3].color = new Color(radarYellow.r, radarYellow.g, radarYellow.b, alpha_3);
         dotLevels[4].color = new Color(radarRed.r, radarRed.g, radarRed.b, alpha_4);
+    }
+
+    public void SetIntensityLevel(float value)
+    {
+        intensityTarget = value;
     }
 }

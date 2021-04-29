@@ -31688,10 +31688,11 @@ MonoBehaviour:
   - {fileID: 352772685}
   - {fileID: 906655173}
   targets: []
+  timeBetweenScans: 0.3
   radarRange: 20
   fadePerSecond: 0.4
   risePerSecond: 2
-  signalFudge: 0.3
+  signalFudge: 0.1
   radarAccuracy: 45
 --- !u!114 &638955289
 MonoBehaviour:

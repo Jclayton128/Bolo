@@ -17,14 +17,16 @@ public class RadarScreen : MonoBehaviour
 
 
     //param
-    public float radarRange = 20;
-    public float fadePerSecond = 0.3f;
-    public float risePerSecond = 1.0f;
+    public float timeBetweenScans;
+    public float radarRange;
+    public float fadePerSecond;
+    public float risePerSecond;
     //public float signalIntensity;
     public float signalFudge;
     public float radarAccuracy; //how far off can the direction-of-arrival be, in degrees.
 
     //hood
+    float timeSinceLastScan = 0;
 
 
     // Start is called before the first frame update
@@ -32,19 +34,12 @@ public class RadarScreen : MonoBehaviour
     {
         ut = FindObjectOfType<UnitTracker>();
         player = GameObject.FindGameObjectWithTag("Player"); //TODO multiplayer this
-        //ResetAllSectorsToZero();
+
         PopulateSectorIntensitieswithZero();
+        SetFadeTimeInEachSector();
 
     }
 
-    private void SetFadeTimeInEachSector()
-    {
-        foreach (RadarSector rs in radarSectors)
-        {
-            rs.fadeRate = fadePerSecond;
-            rs.riseRate = risePerSecond;
-        }
-    }
 
     private void PopulateSectorIntensitieswithZero()
     {
@@ -53,20 +48,30 @@ public class RadarScreen : MonoBehaviour
             sectorIntensities.Add(i, 0);
         }
     }
+    private void SetFadeTimeInEachSector()
+    {
+        foreach (RadarSector rs in radarSectors)
+        {
+            rs.SetRates(risePerSecond, fadePerSecond);
+        }
+    }
 
 
 
     // Update is called once per frame
     void Update()
     {
-        SetFadeTimeInEachSector();
-        ResetSectorIntensityToZero();
-        GetTargets();
-        IncreaseIntensityFromNoiseInEachSector();
-        ClampIntensityLevelFloorToSelfNoiseInEachSector();
-        //ConstantIntensityDecreaseForEachSector();
-        AssignCurrentIntensityToEachSector();
-        //TurnIntensityIntoImageAdjustment();
+        timeSinceLastScan += Time.deltaTime;
+        if (timeSinceLastScan >= timeBetweenScans)
+        {
+            ResetSectorIntensityToZero();
+            GetTargets();
+            IncreaseIntensityFromNoiseInEachSector();
+            ClampIntensityLevelFloorToSelfNoiseInEachSector();
+            AssignCurrentIntensityToEachSector();
+            timeSinceLastScan = 0;
+        }
+
     }
 
     private void ClampIntensityLevelFloorToSelfNoiseInEachSector()
@@ -92,7 +97,7 @@ public class RadarScreen : MonoBehaviour
     {
         for (int i = 0; i < 8; i++)
         {
-            radarSectors[i].intensityTarget = sectorIntensities[i];
+            radarSectors[i].SetIntensityLevel(sectorIntensities[i]);
         }
     }
 
@@ -117,7 +122,7 @@ public class RadarScreen : MonoBehaviour
         float dist = (target.transform.position - player.transform.position).magnitude;
         float dist_normalized = dist / radarRange;
         float targetNoiseLevel = target.GetComponentInChildren<StealthHider>().gameObject.GetComponent<CircleCollider2D>().radius;
-        float intensity = targetNoiseLevel / dist_normalized * signalFudge;
+        float intensity = targetNoiseLevel / (dist_normalized) * signalFudge;
         //Debug.Log("intensity: " + intensity);
         return intensity;
 
@@ -161,12 +166,4 @@ public class RadarScreen : MonoBehaviour
         targets = ut.FindUnitsWithinSearchRange(player, radarRange);
     }
 
-    private void ConstantIntensityDecreaseForEachSector()
-    {
-        for (int i = 0; i < 8; i++)
-        {
-            sectorIntensities[i] -= fadePerSecond * Time.deltaTime;
-            sectorIntensities[i] = Mathf.Clamp01(sectorIntensities[i]);
-        }
-    }
 }
