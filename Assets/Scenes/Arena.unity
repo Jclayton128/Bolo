@@ -34607,8 +34607,8 @@ RectTransform:
   - {fileID: 1005364121}
   - {fileID: 638955287}
   - {fileID: 845828811}
-  - {fileID: 1634973701}
   - {fileID: 1498531342}
+  - {fileID: 1634973701}
   - {fileID: 1436143507}
   m_Father: {fileID: 0}
   m_RootOrder: 10
@@ -37706,7 +37706,7 @@ RectTransform:
   - {fileID: 461333437}
   - {fileID: 1254652369}
   m_Father: {fileID: 1000102359}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -106222,7 +106222,7 @@ GameObject:
   - component: {fileID: 1634973701}
   - component: {fileID: 1634973702}
   m_Layer: 5
-  m_Name: SpawnPanel
+  m_Name: TurretBuyPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106243,7 +106243,7 @@ RectTransform:
   - {fileID: 1007079724}
   - {fileID: 1398010007}
   m_Father: {fileID: 1000102359}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}

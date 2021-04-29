@@ -120,7 +120,7 @@ public class UnitSpawner : MonoBehaviour
             queueStack[0].sprite = null;
             return;
         }
-        for (int i = 0; i < unitsInQueue.Count-1; i++)
+        for (int i = 0; i < unitsInQueue.Count; i++)
         {
             queueStack[i].sprite = queueStack[i + 1].sprite;
         }
