@@ -10,6 +10,7 @@ public class DefenseTurret : MonoBehaviour
     UnitTracker ut;
     List<GameObject> targets = new List<GameObject>();
     IFF ownIFF;
+    StealthHider sh;
 
     //param
     public float timeBetweenShots = .25f;
@@ -34,6 +35,7 @@ public class DefenseTurret : MonoBehaviour
         ownIFF = GetComponentInChildren<IFF>();
         attackRange = weaponLifetime * weaponSpeed;
         selectedFiringSound = SelectSoundFromArray(firingSounds);
+        sh = GetComponentInChildren<StealthHider>();
     }
 
     // Update is called once per frame
@@ -63,6 +65,7 @@ public class DefenseTurret : MonoBehaviour
         //Debug.Log("distance: " + diff + ". AtkRng: " + attackRange);
         if (diff <= attackRange && timeSinceLastShot <= 0)
         {
+            sh.SpikeLoudnessDueToAttack();
             AudioSource.PlayClipAtPoint(selectedFiringSound, transform.position);
             selectedFiringSound = SelectSoundFromArray(firingSounds);
             float zAng = Vector3.SignedAngle(Vector2.up, dir, Vector3.forward);

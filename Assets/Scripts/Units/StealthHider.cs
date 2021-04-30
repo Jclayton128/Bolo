@@ -21,7 +21,7 @@ public class StealthHider : MonoBehaviour
     public float hiderGrowthRate; //per second;
     public float hiderShrinkRate; //per second;
     public float attackModifier = 3f; //attacking multiplies the size of hiderRadius_Base, 
-
+    public bool isBuilding = false;
     float fadeRateSensorGhost = .2f; // 5 seconds at .2f
 
     //hood
@@ -44,8 +44,10 @@ public class StealthHider : MonoBehaviour
     void Update()
     {
         UpdateHiderRadiusInputBasedOnSpeedAndTerrain();
-        FadeOutSensorGhost();
-
+        if (!isBuilding)
+        {
+            FadeOutSensorGhost();
+        }
     }
 
     private void FadeOutSensorGhost()
@@ -59,9 +61,16 @@ public class StealthHider : MonoBehaviour
 
     private void UpdateHiderRadiusInputBasedOnSpeedAndTerrain()
     {
-        float vel = rb.velocity.magnitude;
-        hiderRadius_TerrainModifier = GetTerrainModifier();
-        hiderRadius_Modified = hiderRadius_Base * vel * hiderRadius_TerrainModifier;
+        if (!isBuilding)
+        {
+            float vel = rb.velocity.magnitude;
+            hiderRadius_TerrainModifier = GetTerrainModifier();
+            hiderRadius_Modified = hiderRadius_Base * vel * hiderRadius_TerrainModifier;
+        }
+        else
+        {
+            hiderRadius_Modified = 0;
+        }
         AdjustHiderRadius();
     }
 
@@ -105,7 +114,7 @@ public class StealthHider : MonoBehaviour
     }
     private void AdjustHiderRadius()
     {
-
+        //Debug.Log($"coll mod {hiderRadius_Modified} and hider rad {hiderColl.radius}");
         if (hiderRadius_Modified > hiderColl.radius)
         {
             //Debug.Log("hider radius needs to grow");
@@ -121,6 +130,7 @@ public class StealthHider : MonoBehaviour
 
     public void MakeObjectInvisible()
     {
+        if (isBuilding) { return; }
         if (transform.root.tag != "Player")
         {
             sensorGhost = CreateSensorGhost();
@@ -135,7 +145,7 @@ public class StealthHider : MonoBehaviour
     {
         if (sensorGhost)
         {
-            Debug.Log($"Destroying {sensorGhost}");
+            //Debug.Log($"Destroying {sensorGhost}");
             Destroy(sensorGhost);
         }
         float z = transform.root.GetComponentInChildren<Rigidbody2D>().rotation;
@@ -149,6 +159,7 @@ public class StealthHider : MonoBehaviour
 
     public void MakeObjectVisible()
     {
+        if (isBuilding) { return; }
         if (sensorGhost)
         {
             Destroy(sensorGhost);

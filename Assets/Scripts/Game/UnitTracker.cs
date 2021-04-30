@@ -75,7 +75,7 @@ public class UnitTracker : MonoBehaviour
         return unitsWithinRange;
     }
 
-    public List<GameObject> FindUnitsWithinSearchRange(GameObject callingGameObject, float searchRange)
+    public List<GameObject> FindUnitsWithinSearchRange(GameObject callingGameObject, float searchRange )
     {
         List<GameObject> unitsWithinRange = new List<GameObject>();
 
