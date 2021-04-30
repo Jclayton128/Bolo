@@ -36,7 +36,7 @@ public class StealthHider : MonoBehaviour
         MakeObjectInvisible();
         rb = transform.root.GetComponentInChildren<Rigidbody2D>();
         hiderColl = GetComponent<CircleCollider2D>();
-        hiderColl.radius = hiderRadius_Base;
+        hiderColl.radius = 0; //hiderRadius_Base;
         cs = transform.root.GetComponentInChildren<ControlSource>();
     }
 
@@ -125,7 +125,15 @@ public class StealthHider : MonoBehaviour
             //Debug.Log("hider radius needs to shrink");
             hiderColl.radius -= hiderShrinkRate * Time.deltaTime;
         }
-        hiderColl.radius = Mathf.Clamp(hiderColl.radius, hiderRadius_Base / 4, hiderRadius_Base*attackModifier*hiderRadius_TerrainModifier);
+        if (!isBuilding)
+        {
+            hiderColl.radius = Mathf.Clamp(hiderColl.radius, hiderRadius_Base / 4, hiderRadius_Base * attackModifier * hiderRadius_TerrainModifier);
+        }
+        if (isBuilding)
+        {
+            hiderColl.radius = Mathf.Clamp(hiderColl.radius, 0, attackModifier * hiderRadius_Base);
+        }
+
     }
 
     public void MakeObjectInvisible()
@@ -143,6 +151,7 @@ public class StealthHider : MonoBehaviour
 
     private GameObject CreateSensorGhost()
     {
+        Debug.Log("Create sensor ghost");
         if (sensorGhost)
         {
             //Debug.Log($"Destroying {sensorGhost}");

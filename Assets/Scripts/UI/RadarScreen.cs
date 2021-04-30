@@ -122,7 +122,7 @@ public class RadarScreen : MonoBehaviour
         float dist = (target.transform.position - player.transform.position).magnitude;
         float dist_normalized = dist / radarRange;
         float targetNoiseLevel = target.GetComponentInChildren<StealthHider>().gameObject.GetComponent<CircleCollider2D>().radius;
-        Debug.Log($"{target} is making {targetNoiseLevel} noise");
+        //Debug.Log($"{target} is making {targetNoiseLevel} noise");
         float intensity = targetNoiseLevel / (dist_normalized) * signalFudge;
         //Debug.Log("intensity: " + intensity);
         return intensity;
@@ -164,7 +164,7 @@ public class RadarScreen : MonoBehaviour
 
     private void GetTargets()
     {
-        targets = ut.FindUnitsWithinSearchRange(player, radarRange);  //TODO this ut function needs to return Turrets
+        targets = ut.FindUnitsWithinSearchRange(player, radarRange, true);  //TODO this ut function needs to return Turrets
     }
 
 }

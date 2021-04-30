@@ -31687,9 +31687,9 @@ MonoBehaviour:
   targets: []
   timeBetweenScans: 0.3
   radarRange: 30
-  fadePerSecond: 0.4
-  risePerSecond: 2
-  signalFudge: 0.1
+  fadePerSecond: 1
+  risePerSecond: 3
+  signalFudge: 0.05
   radarAccuracy: 30
 --- !u!114 &638955289
 MonoBehaviour:

@@ -75,14 +75,22 @@ public class UnitTracker : MonoBehaviour
         return unitsWithinRange;
     }
 
-    public List<GameObject> FindUnitsWithinSearchRange(GameObject callingGameObject, float searchRange )
+    public List<GameObject> FindUnitsWithinSearchRange(GameObject callingGameObject, float searchRange, bool includeDefenseTurrets )
     {
         List<GameObject> unitsWithinRange = new List<GameObject>();
 
         foreach (GameObject unit in targetableUnits)
         {
             if (unit == callingGameObject) { continue; }
-            if (unit.transform.root.GetComponent<ControlSource>() == false) { continue ; }
+            if (includeDefenseTurrets)
+            {
+                if (unit.transform.root.GetComponent<DefenseTurret>() == false & unit.transform.root.GetComponent<ControlSource>() == false) { continue; }
+            }
+            if (!includeDefenseTurrets)
+            {
+                if (unit.transform.root.GetComponent<ControlSource>() == false ) { continue; }
+            }
+
             float diff = (callingGameObject.transform.position - unit.transform.position).magnitude;
             if (diff <= searchRange)
             {
