@@ -36,7 +36,7 @@ public class StealthHider : MonoBehaviour
         MakeObjectInvisible();
         rb = transform.root.GetComponentInChildren<Rigidbody2D>();
         hiderColl = GetComponent<CircleCollider2D>();
-        hiderColl.radius = 0; //hiderRadius_Base;
+        hiderColl.radius = hiderRadius_Base;
         cs = transform.root.GetComponentInChildren<ControlSource>();
     }
 
@@ -169,7 +169,7 @@ public class StealthHider : MonoBehaviour
     public void MakeObjectVisible()
     {
         if (isBuilding) { return; }
-        if (sensorGhost)
+        if (sensorGhost != null)
         {
             Destroy(sensorGhost);
         }
