@@ -2131,6 +2131,7 @@ MonoBehaviour:
   energyBar: {fileID: 0}
   weaponIcon: {fileID: 0}
   cityCaptureSlider: {fileID: 0}
+  followMeText: {fileID: 0}
 --- !u!4 &2107367983
 Transform:
   m_ObjectHideFlags: 0

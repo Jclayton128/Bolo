@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Slider energyBar = null;
     [SerializeField] Image weaponIcon = null;
     [SerializeField] Slider cityCaptureSlider = null;
+    [SerializeField] TextMeshProUGUI followMeText = null;
 
 
     // Start is called before the first frame update
@@ -153,6 +154,20 @@ public class UIManager : MonoBehaviour
         if (askingGameObject == playerAtThisComputer)
         {
             return cityCaptureSlider;
+        }
+        else
+        {
+            //Debug.Log("Asking GO is not the local player! No UI for you!");
+            return null;
+        }
+    }
+
+    public TextMeshProUGUI GetFollowMeText(GameObject askingGameObject)
+    {
+        if (!playerAtThisComputer) { playerAtThisComputer = GameObject.FindGameObjectWithTag("Player"); }
+        if (askingGameObject == playerAtThisComputer)
+        {
+            return followMeText;
         }
         else
         {

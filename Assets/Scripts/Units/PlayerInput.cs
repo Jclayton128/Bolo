@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using TMPro;
+using System;
 
 public class PlayerInput : ControlSource
 {
@@ -6,6 +8,7 @@ public class PlayerInput : ControlSource
     public UIManager uim;
     public GameObject shiftKnob;
     public Transform[] gearShiftPositions = null;
+    TextMeshProUGUI followMeText;
 
 
     //param
@@ -14,6 +17,7 @@ public class PlayerInput : ControlSource
     public bool LMBdown = false;
     public bool RMBdown = false;
     public Vector3 mousePos = new Vector3(0, 0, 0);
+    bool isFollowMeOn = true;
 
     private void Awake()
     {
@@ -32,6 +36,7 @@ public class PlayerInput : ControlSource
         base.Start();
         uim = FindObjectOfType<UIManager>();
         AssignShiftKnobs();
+        followMeText = uim.GetFollowMeText(gameObject);
     }
 
     public void ReinitializePlayer()
@@ -89,8 +94,25 @@ public class PlayerInput : ControlSource
     {
         horizComponent = Input.GetAxis("Horizontal");
         vertComponent = Input.GetAxis("Vertical");
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            isFollowMeOn = !isFollowMeOn;
+            UpdateFollowMeLightUI();
+        }
         HandleGearShifting();
 
+    }
+
+    private void UpdateFollowMeLightUI()
+    {
+        if (isFollowMeOn)
+        {
+            followMeText.color = new Color(1, 1, 0, 1);
+        }
+        if (!isFollowMeOn)
+        {
+            followMeText.color = new Color(1, 1, 0, 0.2f);
+        }
     }
 
     private void HandleGearShifting()
