@@ -7,6 +7,7 @@ public class ControlSourceSoldier : ControlSource
 {
     //init
     public GameObject factionLeader;
+    ControlSource factionLeaderCS;
     public CitySquare homeCity;
     public CitySquare targetCity;
     public GameObject closestEnemyTurret;
@@ -31,6 +32,7 @@ public class ControlSourceSoldier : ControlSource
         speedSetting = 2;
         ss = GetComponentInChildren<StealthSeeker>();
         factionLeader = am.factionLeaders[ownAllegiance].gameObject;
+        factionLeaderCS = factionLeader.GetComponent<ControlSource>();
     }
 
     protected override void Update()
@@ -77,7 +79,7 @@ public class ControlSourceSoldier : ControlSource
 
     }
 
-
+    #region behavior implementation
     private void MoveToAttack()
     {
         if (closestEnemyTurret && !closestEnemyUnit)
@@ -145,6 +147,7 @@ public class ControlSourceSoldier : ControlSource
         speedSetting = 2;
     }
 
+    #endregion
 
     protected override void Scan()
     {
@@ -159,11 +162,12 @@ public class ControlSourceSoldier : ControlSource
         }
 
         float distToFactionLeader = (transform.position - factionLeader.transform.position).magnitude;
-        if (distToFactionLeader <= scanRange)
+        if (distToFactionLeader <= scanRange  && factionLeaderCS.GetFollowMeStatus())
         {
             playerToFollow = factionLeader;
             return;
         }
+        FindClosestHomeCity();
         if (homeCity)
         {
             float distToHome = (homeCity.transform.position - transform.position).magnitude;
@@ -205,64 +209,4 @@ public class ControlSourceSoldier : ControlSource
         DebugDrawPath(nma.path.corners);
 
     }
-
-    private void UpdateNavTarget()
-    {
-        if (closestEnemyUnit)
-        {
-            //move to within 50% attack range of closest attacking unit and face i
-            if (TestForLOSForAttack(closestEnemyUnit.transform.position, attackRange * .7f))
-            {
-                Debug.Log("called for attack");
-                attack.AttackCommence();
-                speedSetting = 1; //slowdown
-                Vector3 dir = (transform.position - closestEnemyUnit.transform.position).normalized;
-                navTarget = closestEnemyUnit.transform.position + (dir * attackRange * .5f);
-            }
-            else
-            {
-                speedSetting = 2;
-                navTarget = closestEnemyUnit.transform.position;
-            }
-
-            Debug.Log("closest attacking unit");
-            return;
-        }
-        if (closestEnemyTurret)
-        {
-            //move to within 50% attack range of closest Defense Turret and face it.
-            if (TestForLOSForAttack(closestEnemyTurret.transform.position, attackRange * .5f))
-            {
-                Debug.Log("called for attack");
-                attack.AttackCommence();
-                speedSetting = 1; //slowdown
-                Vector3 dir = (closestEnemyTurret.transform.position - transform.position).normalized;
-                navTarget = transform.position + (dir * 0.5f);
-            }
-            else
-            {
-                speedSetting = 2;
-                navTarget = closestEnemyTurret.transform.position;
-            }
-            Debug.Log("closest defense turret");
-            speedSetting = 1;
-            return;
-        }
-
-        if (targetCity && !closestEnemyTurret)
-        {
-            //move to exactly on target CitySquare.
-            navTarget = targetCity.transform.position;
-            Debug.Log("capturing city");
-            speedSetting = 2;
-            return;
-        }
-
-       
-
-    }
-
-
-
-
 }

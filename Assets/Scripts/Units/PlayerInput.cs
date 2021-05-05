@@ -17,7 +17,7 @@ public class PlayerInput : ControlSource
     public bool LMBdown = false;
     public bool RMBdown = false;
     public Vector3 mousePos = new Vector3(0, 0, 0);
-    bool isFollowMeOn = true;
+
 
     private void Awake()
     {
