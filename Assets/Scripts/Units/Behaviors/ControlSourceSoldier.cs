@@ -9,17 +9,18 @@ public class ControlSourceSoldier : ControlSource
     public GameObject factionLeader;
     public CitySquare homeCity;
     public CitySquare targetCity;
-    public GameObject closestDefenseTurret;
-    public GameObject closestAttackingUnit;
+    public GameObject closestEnemyTurret;
+    public GameObject closestEnemyUnit;
+    public GameObject playerToFollow;
+    StealthSeeker ss;
 
     //param
     float attackRange;
-    float offsetPointAmount = 1.0f;
+    float distToChangeSpeedWhenFollowing = 1.0f;
 
     //hood
     Vector3 navTarget;
     Vector3 nextSteeringPoint;
-    public bool isInvader = false;
     int ownAllegiance; //this is fine to set because combat units don't just change allegiance...
 
     protected override void Start()
@@ -27,49 +28,162 @@ public class ControlSourceSoldier : ControlSource
         base.Start();
         ownAllegiance = iff.GetIFFAllegiance();
         attackRange = attack.GetAttackRange();
-        DetermineMissionAtStart();
         speedSetting = 2;
+        ss = GetComponentInChildren<StealthSeeker>();
+        factionLeader = am.factionLeaders[ownAllegiance].gameObject;
     }
 
-    private void DetermineMissionAtStart()
-    {
-
-        Transform factionLeaderTransform = am.GetFactionLeader(ownAllegiance).transform;
-        CitySquare closestAlliedCS = cm.FindNearestCitySquare(factionLeaderTransform, ownAllegiance);
-
-        CitySquare closestCSOfAll = cm.FindNearestCitySquare(factionLeaderTransform);
-
-        if (closestAlliedCS == closestCSOfAll)
-        {
-            isInvader = false;
-            homeCity = closestAlliedCS;
-            //faction leader is in an allied region.
-            //while in sight of leader, follow him.
-            //if lose sight of leader, return to spawned City and Patrol it.
-        }
-        else
-        {
-            isInvader = true;
-            targetCity = closestCSOfAll;
-            //faction leader is in an enemy region.
-            //move towards that enemy region's city square          
-
-        }
-
-        //regardless of initial mission:
-        //if the region's city square is in sight, determine if guarded (defense turrets within range of City Square).
-        //if not guarded, move towards city square
-        //if guarded, move towards and attack defense turrets within 'range' of the City Square
-
-    }
-
-    // Update is called once per frame
     protected override void Update()
     {
         base.Update();
-        UpdateNavTarget();
+        DecideBehavior();
         GenerateControlVectorTowardsNavTarget();
+
+        //UpdateNavTarget();
+        //GenerateControlVectorTowardsNavTarget();
     }
+
+    private void DecideBehavior()
+    {
+        if (closestEnemyUnit || closestEnemyTurret)
+        {
+            MoveToAttack();
+            Attack();
+            return;
+        }
+        if (playerToFollow)
+        {
+            FollowPlayer();
+            return;
+        }
+        if (targetCity)
+        {
+            InvadeCity();
+            return;
+        }
+        if (!homeCity)
+        {
+            FindClosestHomeCity();
+        }
+        if (homeCity)
+        {
+            DefendHomeCity();
+            return;
+        }
+        else
+        {
+            Debug.Log("No behaviour selected!");
+        }
+
+    }
+
+
+    private void MoveToAttack()
+    {
+        if (closestEnemyTurret && !closestEnemyUnit)
+        {
+            navTarget = closestEnemyTurret.transform.position;
+        }
+
+        if (closestEnemyUnit)
+        {
+            navTarget = closestEnemyUnit.transform.position;
+        }
+
+        float distToNavTarget = (transform.position - navTarget).magnitude;
+        if (distToNavTarget > attackRange)
+        {
+            speedSetting = 2;
+        }
+        if (distToNavTarget < attackRange * 0.75f)
+        {
+            speedSetting = 1;
+        }
+        if (distToNavTarget < attackRange * 0.3f)
+        {
+            speedSetting = 0;
+        }
+    }
+
+    private void Attack()
+    {
+        if (TestForLOSForAttack(closestEnemyUnit.transform.position, attackRange * .7f))
+        {
+            Debug.Log("called for attack");
+            attack.AttackCommence();
+            speedSetting = 1; //slowdown
+        }
+    }
+
+    private void FollowPlayer()
+    {
+        navTarget = playerToFollow.transform.position;
+        float distToNavTarget = (navTarget - transform.position).magnitude;
+        if (distToNavTarget > distToChangeSpeedWhenFollowing)
+        {
+            speedSetting = 2;
+        }
+        else
+        {
+            speedSetting = 1;
+        }
+    }
+
+    private void InvadeCity()
+    {
+        navTarget = targetCity.transform.position;
+        speedSetting = 2;
+    }
+
+    private void FindClosestHomeCity()
+    {
+        homeCity = cm.FindNearestCitySquare(transform, ownAllegiance);
+    }
+    private void DefendHomeCity()
+    {
+        navTarget = homeCity.transform.position;
+        speedSetting = 2;
+    }
+
+
+    protected override void Scan()
+    {
+        float scanRange = ss.GetComponent<CircleCollider2D>().radius;
+        if (ut.TryGetClosestUnitWithinRange(gameObject, scanRange, "Turret", ownAllegiance, out closestEnemyTurret) == true)
+        {
+            return;
+        }
+        if (ut.TryGetClosestAttackerWithinRange(gameObject, scanRange, ownAllegiance, out closestEnemyUnit) == true)
+        {
+            return;
+        }
+
+        float distToFactionLeader = (transform.position - factionLeader.transform.position).magnitude;
+        if (distToFactionLeader <= scanRange)
+        {
+            playerToFollow = factionLeader;
+            return;
+        }
+        if (homeCity)
+        {
+            float distToHome = (homeCity.transform.position - transform.position).magnitude;
+            CitySquare possibleTargetCity = cm.FindNearestCitySquare_IgnoreIFF(transform, ownAllegiance);
+            float distToInvade = (possibleTargetCity.transform.position - transform.position).magnitude;
+            if (distToHome > distToInvade)
+            {
+                targetCity = possibleTargetCity;
+            }
+            else
+            {
+                targetCity = null;
+            }
+        }
+        playerToFollow = null;
+        closestEnemyTurret = null;
+        closestEnemyTurret = null;
+    }
+
+
 
     private void GenerateControlVectorTowardsNavTarget()
     {
@@ -94,48 +208,48 @@ public class ControlSourceSoldier : ControlSource
 
     private void UpdateNavTarget()
     {
-        if (closestAttackingUnit)
+        if (closestEnemyUnit)
         {
             //move to within 50% attack range of closest attacking unit and face i
-            if (TestForLOSForAttack(closestAttackingUnit.transform.position, attackRange * .7f))
+            if (TestForLOSForAttack(closestEnemyUnit.transform.position, attackRange * .7f))
             {
                 Debug.Log("called for attack");
                 attack.AttackCommence();
                 speedSetting = 1; //slowdown
-                Vector3 dir = (transform.position - closestAttackingUnit.transform.position).normalized;
-                navTarget = closestAttackingUnit.transform.position + (dir * attackRange * .5f);
+                Vector3 dir = (transform.position - closestEnemyUnit.transform.position).normalized;
+                navTarget = closestEnemyUnit.transform.position + (dir * attackRange * .5f);
             }
             else
             {
                 speedSetting = 2;
-                navTarget = closestAttackingUnit.transform.position;
+                navTarget = closestEnemyUnit.transform.position;
             }
 
             Debug.Log("closest attacking unit");
             return;
         }
-        if (closestDefenseTurret)
+        if (closestEnemyTurret)
         {
             //move to within 50% attack range of closest Defense Turret and face it.
-            if (TestForLOSForAttack(closestDefenseTurret.transform.position, attackRange * .5f))
+            if (TestForLOSForAttack(closestEnemyTurret.transform.position, attackRange * .5f))
             {
                 Debug.Log("called for attack");
                 attack.AttackCommence();
                 speedSetting = 1; //slowdown
-                Vector3 dir = (closestDefenseTurret.transform.position - transform.position).normalized;
+                Vector3 dir = (closestEnemyTurret.transform.position - transform.position).normalized;
                 navTarget = transform.position + (dir * 0.5f);
             }
             else
             {
                 speedSetting = 2;
-                navTarget = closestDefenseTurret.transform.position;
+                navTarget = closestEnemyTurret.transform.position;
             }
             Debug.Log("closest defense turret");
             speedSetting = 1;
             return;
         }
 
-        if (targetCity && !closestDefenseTurret)
+        if (targetCity && !closestEnemyTurret)
         {
             //move to exactly on target CitySquare.
             navTarget = targetCity.transform.position;
@@ -144,59 +258,10 @@ public class ControlSourceSoldier : ControlSource
             return;
         }
 
-        if (!isInvader && factionLeader)
-        {
-            //move to a point nearby leader via CUR picker.
-            if ((factionLeader.transform.position - navTarget).magnitude > offsetPointAmount)
-            {
-                Vector3 centerPos = factionLeader.transform.position;
-                navTarget = CUR.CreateRandomPointNearInputPoint(centerPos, 1.0f, 0.5f);
-            }
-            Debug.Log("following faction leader");
-            speedSetting = 2;
-            return;
-        }
-        if (!isInvader && !factionLeader)
-        {
-            //move to a point nearby home City Square.
-            if ((homeCity.transform.position - navTarget).magnitude > offsetPointAmount)
-            {
-                Vector3 centerPos = homeCity.transform.position;
-                navTarget = CUR.CreateRandomPointNearInputPoint(centerPos, 1.0f, 0.5f);
-            }
-            Debug.Log("guarding home");
-            speedSetting = 2;
-            return;
-        }
+       
 
     }
 
-
-
-    protected override void Scan()
-    {
-        if (!isInvader)
-        {
-            factionLeader = am.GetFactionLeader(ownAllegiance).gameObject;
-            if ((factionLeader.transform.position - transform.position).magnitude > scanRange)
-            {
-                factionLeader = null;
-            }
-            Debug.Log(cm.TryGetCitySquareWithinRange(transform, scanRange, ownAllegiance, out targetCity));
-        }
-        if (isInvader)
-        {
-            if (targetCity.transform.root.GetComponentInChildren<IFF>().GetIFFAllegiance() == ownAllegiance)
-            {
-                isInvader = false;
-                homeCity = targetCity;
-                targetCity = null;
-            }
-        }
-
-        ut.TryGetClosestUnitWithinRange(gameObject, scanRange, "Turret", out closestDefenseTurret);
-        ut.TryGetClosestAttackerWithinRange(gameObject, scanRange, ownAllegiance, out closestAttackingUnit);
-    }
 
 
 
