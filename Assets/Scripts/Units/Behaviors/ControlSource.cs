@@ -32,6 +32,7 @@ public abstract class ControlSource : MonoBehaviour
     protected float timeSinceLastScan = 0;
     //public int currentTerrainType { get; protected set; } = 3;
     public int currentTerrainType;
+    bool isFollowMeOn = false;
 
     protected virtual void Start()
     {
@@ -63,6 +64,10 @@ public abstract class ControlSource : MonoBehaviour
         }
     }
 
+    public virtual bool GetFollowMeStatus()
+    {
+        return isFollowMeOn;
+    }
     protected virtual void OnDestroy()
     {
         if (!ut) { return; }
