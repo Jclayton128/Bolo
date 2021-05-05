@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class StealthSeeker : MonoBehaviour
 {
-    // Start is called before the first frame update
+    //init
+    ControlSource cs;
     void Start()
     {
-        
+        cs = GetComponentInParent<ControlSource>();
     }
 
     // Update is called once per frame
@@ -27,6 +28,8 @@ public class StealthSeeker : MonoBehaviour
             //Debug.Log($"detected {collision.transform.root.name} and trying to make it visible to player");
             collision.GetComponent<StealthHider>().MakeObjectVisible();
         }
+
+        cs.Scan();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
