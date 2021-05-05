@@ -215,7 +215,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba8e860ea9ec77740a17ac999417a4c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scanRange: 3
   currentTerrainType: 0
   uim: {fileID: 0}
   shiftKnob: {fileID: 0}

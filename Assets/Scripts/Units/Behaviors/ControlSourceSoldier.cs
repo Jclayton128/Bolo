@@ -16,7 +16,7 @@ public class ControlSourceSoldier : ControlSource
 
     //param
     float attackRange;
-    float offsetPointAmount = 1.0f;
+    float distToChangeSpeedWhenFollowing = 1.0f;
 
     //hood
     Vector3 navTarget;
@@ -37,7 +37,7 @@ public class ControlSourceSoldier : ControlSource
     {
         base.Update();
         DecideBehavior();
-        //Navigate();
+        GenerateControlVectorTowardsNavTarget();
 
         //UpdateNavTarget();
         //GenerateControlVectorTowardsNavTarget();
@@ -47,22 +47,27 @@ public class ControlSourceSoldier : ControlSource
     {
         if (closestEnemyUnit || closestEnemyTurret)
         {
-            //Attack();
+            MoveToAttack();
+            Attack();
             return;
         }
         if (playerToFollow)
         {
-            //FollowPlayer();
+            FollowPlayer();
             return;
         }
         if (targetCity)
         {
-            //InvadeCity();
+            InvadeCity();
             return;
+        }
+        if (!homeCity)
+        {
+            FindClosestHomeCity();
         }
         if (homeCity)
         {
-            //DefendCity();
+            DefendHomeCity();
             return;
         }
         else
@@ -73,8 +78,75 @@ public class ControlSourceSoldier : ControlSource
     }
 
 
+    private void MoveToAttack()
+    {
+        if (closestEnemyTurret && !closestEnemyUnit)
+        {
+            navTarget = closestEnemyTurret.transform.position;
+        }
 
-    public override void Scan()
+        if (closestEnemyUnit)
+        {
+            navTarget = closestEnemyUnit.transform.position;
+        }
+
+        float distToNavTarget = (transform.position - navTarget).magnitude;
+        if (distToNavTarget > attackRange)
+        {
+            speedSetting = 2;
+        }
+        if (distToNavTarget < attackRange * 0.75f)
+        {
+            speedSetting = 1;
+        }
+        if (distToNavTarget < attackRange * 0.3f)
+        {
+            speedSetting = 0;
+        }
+    }
+
+    private void Attack()
+    {
+        if (TestForLOSForAttack(closestEnemyUnit.transform.position, attackRange * .7f))
+        {
+            Debug.Log("called for attack");
+            attack.AttackCommence();
+            speedSetting = 1; //slowdown
+        }
+    }
+
+    private void FollowPlayer()
+    {
+        navTarget = playerToFollow.transform.position;
+        float distToNavTarget = (navTarget - transform.position).magnitude;
+        if (distToNavTarget > distToChangeSpeedWhenFollowing)
+        {
+            speedSetting = 2;
+        }
+        else
+        {
+            speedSetting = 1;
+        }
+    }
+
+    private void InvadeCity()
+    {
+        navTarget = targetCity.transform.position;
+        speedSetting = 2;
+    }
+
+    private void FindClosestHomeCity()
+    {
+        homeCity = cm.FindNearestCitySquare(transform, ownAllegiance);
+    }
+    private void DefendHomeCity()
+    {
+        navTarget = homeCity.transform.position;
+        speedSetting = 2;
+    }
+
+
+    protected override void Scan()
     {
         float scanRange = ss.GetComponent<CircleCollider2D>().radius;
         if (ut.TryGetClosestUnitWithinRange(gameObject, scanRange, "Turret", ownAllegiance, out closestEnemyTurret) == true)
@@ -92,9 +164,19 @@ public class ControlSourceSoldier : ControlSource
             playerToFollow = factionLeader;
             return;
         }
-        if (cm.TryGetCitySquareWithinRange(transform, scanRange, ownAllegiance, out targetCity) == false)
+        if (homeCity)
         {
-            homeCity = cm.FindNearestCitySquare(transform, ownAllegiance);
+            float distToHome = (homeCity.transform.position - transform.position).magnitude;
+            CitySquare possibleTargetCity = cm.FindNearestCitySquare_IgnoreIFF(transform, ownAllegiance);
+            float distToInvade = (possibleTargetCity.transform.position - transform.position).magnitude;
+            if (distToHome > distToInvade)
+            {
+                targetCity = possibleTargetCity;
+            }
+            else
+            {
+                targetCity = null;
+            }
         }
         playerToFollow = null;
         closestEnemyTurret = null;

@@ -13,7 +13,7 @@ public class CannonAttack : Attack
     float weaponLifetime = .75f;
     float weaponDamage = 1f;
     float offset = .5f;
-    float energyCost = 40f;
+    float energyCost = 20f;
 
     //hood
     float timeSinceLastAttack = 0;

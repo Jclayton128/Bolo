@@ -106,14 +106,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 387c07ed43118524d81eafb0aabe0544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scanRange: 3
   currentTerrainType: 0
   factionLeader: {fileID: 0}
   homeCity: {fileID: 0}
   targetCity: {fileID: 0}
-  closestDefenseTurret: {fileID: 0}
-  closestAttackingUnit: {fileID: 0}
-  isInvader: 0
+  closestEnemyTurret: {fileID: 0}
+  closestEnemyUnit: {fileID: 0}
+  playerToFollow: {fileID: 0}
 --- !u!1 &8088434247709780994
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbc934b6f90080241b98f61bb5dc61fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed_normal: 1
+  moveSpeed_normal: 0.5
   turnSpeed_normal: 180
   commandedVector: {x: 0, y: 0, z: 0}
 --- !u!114 &9136451331689818370

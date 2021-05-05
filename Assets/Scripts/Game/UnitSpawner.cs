@@ -17,7 +17,7 @@ public class UnitSpawner : MonoBehaviour
     GameObject playerAtComputer;
 
     //param
-    float timeBetweenSpawningUnits = 5f; //seconds
+    float timeBetweenSpawningUnits = 1f; //seconds
     int[] unitCosts = new int[] { 10, 50, 30, 100 };
 
     //hood

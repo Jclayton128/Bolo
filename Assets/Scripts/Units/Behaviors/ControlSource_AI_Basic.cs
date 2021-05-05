@@ -50,7 +50,7 @@ public class ControlSource_AI_Basic : ControlSource
 
     protected override void Scan()
     {
-        targets = ut.FindTargetsWithinSearchRange(gameObject, scanRange);
+        //targets = ut.FindTargetsWithinSearchRange(gameObject, scanRange);
     }
 
     private void DetermineTargets()

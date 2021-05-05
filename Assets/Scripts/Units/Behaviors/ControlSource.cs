@@ -21,8 +21,7 @@ public abstract class ControlSource : MonoBehaviour
 
 
     //param
-    public float scanRange = 3f;
-    protected float timeBetweenScans = 0.2f;
+    protected float timeBetweenScans = 1f;
     protected int layerMask_weaponryBlockers = 1 << 8;
 
     //hood
@@ -76,6 +75,11 @@ public abstract class ControlSource : MonoBehaviour
     }
 
     protected abstract void Scan();
+
+    public void RequestScan()
+    {
+        Scan();
+    }
 
     public static void DebugDrawPath(Vector3[] corners)
     {

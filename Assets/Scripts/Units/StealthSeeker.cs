@@ -28,8 +28,7 @@ public class StealthSeeker : MonoBehaviour
             //Debug.Log($"detected {collision.transform.root.name} and trying to make it visible to player");
             collision.GetComponent<StealthHider>().MakeObjectVisible();
         }
-
-        cs.Scan();
+        cs.RequestScan();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
