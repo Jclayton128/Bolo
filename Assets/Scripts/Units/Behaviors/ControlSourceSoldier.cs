@@ -103,7 +103,7 @@ public class ControlSourceSoldier : ControlSource
         }
         if (distToNavTarget < attackRange * 0.3f)
         {
-            speedSetting = 0;
+            navTarget = transform.position;
         }
     }
 
@@ -125,9 +125,13 @@ public class ControlSourceSoldier : ControlSource
         {
             speedSetting = 2;
         }
-        else
+        if (distToNavTarget <= distToChangeSpeedWhenFollowing)
         {
             speedSetting = 1;
+        }
+        if (distToNavTarget < 0.3f)
+        {
+            navTarget = transform.position;
         }
     }
 
