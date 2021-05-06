@@ -137,7 +137,7 @@ public class ControlSourceSoldier : ControlSource
     private void FollowPlayer()
     {
         navTarget = playerToFollow.transform.position + currentTargetOffset;
-        float distToNavTarget = (navTarget - transform.position).magnitude;
+        float distToNavTarget = (navTarget - currentTargetOffset - transform.position).magnitude;
         if (distToNavTarget > distToChangeSpeedWhenFollowing)
         {
             speedSetting = 2;
@@ -198,10 +198,6 @@ public class ControlSourceSoldier : ControlSource
         NavMeshHit navMeshHit;
         int layerMask = 1 << 3 | 1 << 4 | 1 << 5;
         NavMesh.SamplePosition(point, out navMeshHit, 0.1f, layerMask);
-        if (navMeshHit.hit == false)
-        {
-            Debug.Log("can't get to " + point);
-        }
         return navMeshHit.hit;
 
     }
@@ -258,7 +254,7 @@ public class ControlSourceSoldier : ControlSource
         vertComponent = commandedVector.y;
 
 
-        Debug.DrawLine(transform.position, transform.position + new Vector3(horizComponent, vertComponent, 0), Color.green);
+        //Debug.DrawLine(transform.position, transform.position + new Vector3(horizComponent, vertComponent, 0), Color.green);
 
         DebugDrawPath(nma.path.corners);
 
