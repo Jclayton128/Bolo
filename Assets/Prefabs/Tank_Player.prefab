@@ -737,6 +737,10 @@ PrefabInstance:
       propertyPath: hiderRadius_Base
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 98783280044415056, guid: c79ca92d78de98e409367e9aa8836258, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4088707487694004261, guid: c79ca92d78de98e409367e9aa8836258, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -784,6 +788,10 @@ PrefabInstance:
     - target: {fileID: 7379235896863207635, guid: c79ca92d78de98e409367e9aa8836258, type: 3}
       propertyPath: m_Name
       value: StealthHider
+      objectReference: {fileID: 0}
+    - target: {fileID: 7379235896863207635, guid: c79ca92d78de98e409367e9aa8836258, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c79ca92d78de98e409367e9aa8836258, type: 3}

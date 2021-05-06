@@ -14,6 +14,8 @@ public class StealthHider : MonoBehaviour
     CircleCollider2D hiderColl;
     ControlSource cs;
     [SerializeField] GameObject sensorGhostPrefab = null;
+    public IFF iff;
+    AllegianceManager am;
 
 
     //param
@@ -23,21 +25,27 @@ public class StealthHider : MonoBehaviour
     public float attackModifier = 3f; //attacking multiplies the size of hiderRadius_Base, 
     public bool isBuilding = false;
     float fadeRateSensorGhost = .2f; // 5 seconds at .2f
+    float playerUnitFadeAmount = 0.5f;
+
 
     //hood
     public float hiderRadius_Modified;
     public float hiderRadius_TerrainModifier = 1;
-    public GameObject sensorGhost;
+    GameObject sensorGhost;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         srs = transform.root.GetComponentsInChildren<SpriteRenderer>();
-        MakeObjectInvisible();
+
         rb = transform.root.GetComponentInChildren<Rigidbody2D>();
         hiderColl = GetComponent<CircleCollider2D>();
         hiderColl.radius = hiderRadius_Base;
         cs = transform.root.GetComponentInChildren<ControlSource>();
+        iff = transform.root.GetComponentInChildren<IFF>();
+        am = FindObjectOfType<AllegianceManager>();
+        FadeOrTurnInvisible();
     }
 
     // Update is called once per frame
@@ -134,8 +142,30 @@ public class StealthHider : MonoBehaviour
         }
 
     }
+    public void FadeOrTurnInvisible()
+    {
+        if (iff.GetIFFAllegiance() == am.GetPlayerIFF())
+        {
+            SlightlyFadeOutForPlayerUnit();
+        }
+        else
+        {
+            MakeObjectInvisible();
+        }
+    }
 
-    public void MakeObjectInvisible()
+    private void SlightlyFadeOutForPlayerUnit()
+    {
+        if (isBuilding) { return; }
+        foreach (SpriteRenderer thisSR in srs)
+        {
+            Color curCol = thisSR.color;
+            thisSR.color = new Color(curCol.r, curCol.g, curCol.b, playerUnitFadeAmount);
+        }
+    }
+
+
+    private void MakeObjectInvisible()
     {
         if (isBuilding) { return; }
         if (transform.root.tag != "Player")
@@ -163,7 +193,7 @@ public class StealthHider : MonoBehaviour
         return sg;
     }
 
-    public void MakeObjectVisible()
+    public void MakeObjectFullyVisible()
     {
         if (isBuilding) { return; }
         if (sensorGhost != null)
@@ -175,6 +205,8 @@ public class StealthHider : MonoBehaviour
         foreach (SpriteRenderer thisSR in srs)
         {
             thisSR.enabled = true;
+            Color curCol = thisSR.color;
+            thisSR.color = new Color(curCol.r, curCol.g, curCol.b, 1);
         }
     }
 
