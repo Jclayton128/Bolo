@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ControlSourceSoldier : ControlSource
 {
@@ -13,6 +14,7 @@ public class ControlSourceSoldier : ControlSource
     public GameObject closestEnemyTurret;
     public GameObject closestEnemyUnit;
     public GameObject playerToFollow;
+
     StealthSeeker ss;
 
     //param
@@ -20,8 +22,10 @@ public class ControlSourceSoldier : ControlSource
     float distToChangeSpeedWhenFollowing = 1.0f;
 
     //hood
-    Vector3 navTarget;
+    float offsetRange;
+    public Vector3 navTarget;
     Vector3 nextSteeringPoint;
+    Vector3 currentTargetOffset;
     int ownAllegiance; //this is fine to set because combat units don't just change allegiance...
 
     protected override void Start()
@@ -30,6 +34,7 @@ public class ControlSourceSoldier : ControlSource
         ownAllegiance = iff.GetIFFAllegiance();
         attackRange = attack.GetAttackRange();
         speedSetting = 2;
+        CreateNewOffset(1);
         ss = GetComponentInChildren<StealthSeeker>();
         factionLeader = am.factionLeaders[ownAllegiance].gameObject;
         factionLeaderCS = factionLeader.GetComponent<ControlSource>();
@@ -38,11 +43,21 @@ public class ControlSourceSoldier : ControlSource
     protected override void Update()
     {
         base.Update();
-        DecideBehavior();
-        GenerateControlVectorTowardsNavTarget();
 
+        DecideBehavior();
+        CheckIfNewOffsetNeeded();
+        GenerateControlVectorTowardsNavTarget();
         //UpdateNavTarget();
         //GenerateControlVectorTowardsNavTarget();
+    }
+
+    private void CheckIfNewOffsetNeeded()
+    {
+        float distToOffset = (transform.position - navTarget).magnitude;
+        if (distToOffset < 0.6f)
+        {
+            CreateNewOffset(offsetRange);
+        }
     }
 
     private void DecideBehavior()
@@ -84,12 +99,14 @@ public class ControlSourceSoldier : ControlSource
     {
         if (closestEnemyTurret && !closestEnemyUnit)
         {
-            navTarget = closestEnemyTurret.transform.position;
+            navTarget = closestEnemyTurret.transform.position + currentTargetOffset;
+            facingTargetPoint = closestEnemyTurret.transform.position;
         }
 
         if (closestEnemyUnit)
         {
-            navTarget = closestEnemyUnit.transform.position;
+            navTarget = closestEnemyUnit.transform.position + currentTargetOffset;
+            facingTargetPoint = closestEnemyUnit.transform.position;
         }
 
         float distToNavTarget = (transform.position - navTarget).magnitude;
@@ -103,7 +120,8 @@ public class ControlSourceSoldier : ControlSource
         }
         if (distToNavTarget < attackRange * 0.3f)
         {
-            navTarget = transform.position;
+            speedSetting = -1;
+            //navTarget = transform.position;
         }
     }
 
@@ -113,31 +131,38 @@ public class ControlSourceSoldier : ControlSource
         {
             //Debug.Log("called for attack");
             attack.AttackCommence();
-            speedSetting = 1; //slowdown
         }
     }
 
     private void FollowPlayer()
     {
-        navTarget = playerToFollow.transform.position;
+        navTarget = playerToFollow.transform.position + currentTargetOffset;
         float distToNavTarget = (navTarget - transform.position).magnitude;
         if (distToNavTarget > distToChangeSpeedWhenFollowing)
         {
             speedSetting = 2;
+            offsetRange = 2;
+            facingTargetPoint = navTarget;
         }
         if (distToNavTarget <= distToChangeSpeedWhenFollowing)
         {
             speedSetting = 1;
+            offsetRange = 1;
+            facingTargetPoint = navTarget;
         }
         if (distToNavTarget < 0.3f)
         {
-            navTarget = transform.position;
+            speedSetting = -1;
+            offsetRange = 1;
+            facingTargetPoint = transform.position + currentTargetOffset;
         }
     }
 
     private void InvadeCity()
     {
         navTarget = targetCity.transform.position;
+        facingTargetPoint = targetCity.transform.position;
+        offsetRange = .5f;
         speedSetting = 2;
     }
 
@@ -147,12 +172,39 @@ public class ControlSourceSoldier : ControlSource
     }
     private void DefendHomeCity()
     {
-        navTarget = homeCity.transform.position;
+        navTarget = homeCity.transform.position + currentTargetOffset;
+        facingTargetPoint = transform.position + currentTargetOffset;
         speedSetting = 2;
+        offsetRange = 4f;
     }
 
     #endregion
 
+    private void CreateNewOffset(float offsetMaxRange)
+    {
+        Vector3 oldOffset = currentTargetOffset;
+        bool isReachable = false;
+        do
+        {
+            currentTargetOffset = UnityEngine.Random.insideUnitCircle * offsetMaxRange;
+            isReachable = TestPointForReachability(navTarget - oldOffset + currentTargetOffset);
+        }
+        while (isReachable == false);
+
+    }
+
+    private bool TestPointForReachability(Vector3 point)
+    {
+        NavMeshHit navMeshHit;
+        int layerMask = 1 << 3 | 1 << 4 | 1 << 5;
+        NavMesh.SamplePosition(point, out navMeshHit, 0.1f, layerMask);
+        if (navMeshHit.hit == false)
+        {
+            Debug.Log("can't get to " + point);
+        }
+        return navMeshHit.hit;
+
+    }
     protected override void Scan()
     {
         float scanRange = ss.GetComponent<CircleCollider2D>().radius;
@@ -190,8 +242,6 @@ public class ControlSourceSoldier : ControlSource
         closestEnemyTurret = null;
         closestEnemyTurret = null;
     }
-
-
 
     private void GenerateControlVectorTowardsNavTarget()
     {

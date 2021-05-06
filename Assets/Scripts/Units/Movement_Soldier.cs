@@ -36,15 +36,18 @@ public class Movement_Soldier : Movement
     private void TurnToCommandedVector()
     {
         if (!isCommandedToMove) { return; }
-        float ang = Vector3.SignedAngle(transform.up, commandedVector, Vector3.forward);
-        if (ang > -0.1f)
+        Vector3 lookDir = (transform.position - cs.facingTargetPoint );
+        float ang = Vector3.SignedAngle(transform.up, lookDir, Vector3.forward);
+
+        if (ang < -0.1f)
         {
             rb.angularVelocity = turnSpeed_normal;
         }
-        if (ang < 0.1f)
+        if (ang > 0.1f)
         {
             rb.angularVelocity = -turnSpeed_normal;
         }
+
     }
 
     private void WalkInCommandedVector()

@@ -33,6 +33,7 @@ public abstract class ControlSource : MonoBehaviour
     //public int currentTerrainType { get; protected set; } = 3;
     public int currentTerrainType;
     protected bool isFollowMeOn = true;
+    public Vector3 facingTargetPoint;
 
     protected virtual void Start()
     {

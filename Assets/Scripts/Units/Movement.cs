@@ -48,7 +48,15 @@ public class Movement : MonoBehaviour
     {
         //TODO: Get and use terrain speed modifier
         float gearModifier = (cs.speedSetting) / 2f;
-        moveSpeed_current = moveSpeed_normal * gearModifier;
+        if (cs.speedSetting >= 0)
+        {
+            moveSpeed_current = moveSpeed_normal * gearModifier;
+        }
+        if (cs.speedSetting < 0)
+        {
+            moveSpeed_current = 0;
+        }
+
         //Debug.Log("CS speed setting: " + cs.speedSetting +  ". gear mod: " + gearModifier + " . MSC: " + moveSpeed_current);
 
     }

@@ -216,6 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTerrainType: 0
+  facingTargetPoint: {x: 0, y: 0, z: 0}
   uim: {fileID: 0}
   shiftKnob: {fileID: 0}
   gearShiftPositions:

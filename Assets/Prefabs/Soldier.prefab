@@ -81,7 +81,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 6257612345854220658}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.01
+  m_Radius: 0.16
   m_Speed: 0
   m_Acceleration: 0
   avoidancePriority: 50
@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTerrainType: 0
+  facingTargetPoint: {x: 0, y: 0, z: 0}
   factionLeader: {fileID: 0}
   homeCity: {fileID: 0}
   targetCity: {fileID: 0}
