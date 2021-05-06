@@ -111,7 +111,7 @@ public class ControlSourceSoldier : ControlSource
     {
         if (TestForLOSForAttack(closestEnemyUnit.transform.position, attackRange * .7f))
         {
-            Debug.Log("called for attack");
+            //Debug.Log("called for attack");
             attack.AttackCommence();
             speedSetting = 1; //slowdown
         }

@@ -123,7 +123,7 @@ public abstract class ControlSource : MonoBehaviour
         }
         if (hitDist > 0.1f)
         {
-            Debug.Log(hit.collider.name + " is between " + gameObject.name + " and " + targetPos);
+            //Debug.Log(hit.collider.name + " is between " + gameObject.name + " and " + targetPos);
             hasLOS = false;
             return hasLOS;
         }
