@@ -56,7 +56,10 @@ public class StealthHider : MonoBehaviour
         SpriteRenderer sr = sensorGhost.GetComponent<SpriteRenderer>();
         float a = Mathf.MoveTowards(sr.color.a, 0, fadeRateSensorGhost * Time.deltaTime);
         sr.color = new Color(1, 1, 1, a);
-        if (a <= Mathf.Epsilon) { Destroy(sensorGhost); }
+        if (a <= Mathf.Epsilon)
+        {
+            Destroy(sensorGhost);
+        }
     }
 
     private void UpdateHiderRadiusInputBasedOnSpeedAndTerrain()
@@ -102,15 +105,11 @@ public class StealthHider : MonoBehaviour
             //Debug.Log("hiding in field");
             return hiderRadius_TerrainModifier;
         }
-
-
     }
 
     public void SpikeLoudnessDueToAttack()
     {
-
         hiderColl.radius = attackModifier * hiderRadius_Base;
-        Debug.Log("Spike the stealth!");
     }
     private void AdjustHiderRadius()
     {
@@ -151,10 +150,8 @@ public class StealthHider : MonoBehaviour
 
     private GameObject CreateSensorGhost()
     {
-        Debug.Log("Create sensor ghost");
-        if (sensorGhost)
+        if (sensorGhost != null)
         {
-            //Debug.Log($"Destroying {sensorGhost}");
             Destroy(sensorGhost);
         }
         float z = transform.root.GetComponentInChildren<Rigidbody2D>().rotation;
@@ -171,6 +168,7 @@ public class StealthHider : MonoBehaviour
         if (isBuilding) { return; }
         if (sensorGhost != null)
         {
+           
             Destroy(sensorGhost);
         }
 
